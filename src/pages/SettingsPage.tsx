@@ -1,6 +1,8 @@
 import type { CSSProperties } from 'react';
+import { Link } from 'react-router-dom';
 import { APP_NAME, APP_VERSION } from '../config/app';
 import { useApp } from '../context/AppContext';
+import { EQUIPMENT_CATALOG } from '../data/equipment';
 import {
   ACCENT_OPTIONS,
   THEME_OPTIONS,
@@ -8,7 +10,7 @@ import {
 import type { AccentColor, ThemePreference } from '../types';
 
 export function SettingsPage() {
-  const { state, clearAllData, setAppearance } = useApp();
+  const { state, clearAllData, setAppearance, toggleEquipment } = useApp();
 
   function handleReset() {
     if (
@@ -59,6 +61,37 @@ export function SettingsPage() {
       </section>
 
       <section className="card">
+        <h2>Equipamiento de cocina</h2>
+        <p className="muted">
+          Marca lo que tienes. Las recetas se adaptarán a estos métodos cuando sea posible.
+        </p>
+        <div className="equipment-grid">
+          {EQUIPMENT_CATALOG.map((eq) => {
+            const on = state.equipmentIds.includes(eq.id);
+            return (
+              <button
+                key={eq.id}
+                type="button"
+                className={`chip chip--lg${on ? ' chip--selected' : ''}`}
+                onClick={() => toggleEquipment(eq.id)}
+                aria-pressed={on}
+              >
+                {on ? '☑' : '☐'} {eq.label}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="card">
+        <h2>Mis recetas</h2>
+        <p className="muted">Crea, edita y usa tus propias recetas en las recomendaciones.</p>
+        <Link to="/mis-recetas" className="btn btn--primary btn--block">
+          Abrir Mis recetas
+        </Link>
+      </section>
+
+      <section className="card">
         <h2>Almacenamiento</h2>
         <p className="muted">
           Tus datos se guardan solo en este dispositivo (localStorage). No hay cuentas ni servidor.
@@ -66,6 +99,7 @@ export function SettingsPage() {
         <ul className="stats-list">
           <li>Alimentos disponibles: {state.availableFoodIds.length}</li>
           <li>Personalizados: {state.customFoods.length}</li>
+          <li>Recetas propias: {state.customRecipes.length}</li>
           <li>Registros de comidas: {state.mealEntries.length}</li>
           <li>Favoritos: {state.favoriteRecipeIds.length}</li>
         </ul>

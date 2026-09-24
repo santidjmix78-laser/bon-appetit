@@ -7,6 +7,7 @@ export type FoodCategory =
   | 'lacteos'
   | 'cereales'
   | 'conservas'
+  | 'preparados'
   | 'otros';
 
 export type FodmapLevel = 'low' | 'moderate' | 'high';
@@ -29,6 +30,21 @@ export type AccentColor =
   | 'pink'
   | 'turquoise';
 
+/** Extensible: añadir IDs aquí y en EQUIPMENT_CATALOG. */
+export type EquipmentId =
+  | 'horno'
+  | 'microondas'
+  | 'airfryer'
+  | 'freidora'
+  | 'vitro'
+  | 'sarten'
+  | 'olla'
+  | 'plancha'
+  | 'batidora'
+  | 'tostadora';
+
+export type RecommendMode = 'strict' | 'flexible';
+
 export interface FoodItem {
   id: string;
   name: string;
@@ -43,28 +59,43 @@ export interface RecipeIngredient {
   optional?: boolean;
 }
 
+/** Un método de cocción (principal o alternativo). */
+export interface CookingMethod {
+  id: string;
+  label: string;
+  /** Equipamiento necesario para este método (todos). */
+  equipmentIds: EquipmentId[];
+  steps: string[];
+}
+
 export interface Recipe {
   id: string;
   name: string;
   timeMinutes: number;
   difficulty: Difficulty;
   ingredients: RecipeIngredient[];
+  /**
+   * Pasos por defecto si no hay methods o ninguno es compatible.
+   * Preferir methods cuando existan alternativas.
+   */
   steps: string[];
-  /** Tipos de comida para los que encaja esta receta. */
   mealTypes: MealType[];
-  /** Orientación FODMAP demostrativa; editable en el futuro. */
+  /** Métodos de cocción (el primero compatible con el equipamiento del usuario se usa). */
+  methods?: CookingMethod[];
   fodmap: {
     level: FodmapLevel;
     note?: string;
   };
   tags?: string[];
   imageHue?: number;
+  /** Receta creada por el usuario. */
+  custom?: boolean;
 }
 
 export interface MealEntry {
   id: string;
-  date: string; // YYYY-MM-DD
-  time: string; // HH:mm
+  date: string;
+  time: string;
   mealType: MealType;
   text: string;
   recipeId?: string;
@@ -80,13 +111,16 @@ export interface AppearancePrefs {
 
 export interface AppState {
   availableFoodIds: string[];
-  /** Alimentos de la biblioteca por defecto ocultados por el usuario. */
   hiddenFoodIds: string[];
   customFoods: FoodItem[];
   favoriteRecipeIds: string[];
   mealEntries: MealEntry[];
   recipeFeelings: Record<string, Feeling>;
   appearance: AppearancePrefs;
+  /** Equipamiento disponible en casa. */
+  equipmentIds: EquipmentId[];
+  /** Recetas creadas por el usuario. */
+  customRecipes: Recipe[];
 }
 
 export interface RecipeMatch {
@@ -94,4 +128,17 @@ export interface RecipeMatch {
   available: string[];
   missing: string[];
   hasAll: boolean;
+  /** Nº de ingredientes principales (no condimento) que el usuario tiene. */
+  mainAvailableCount: number;
+  /** Método de cocción seleccionado según equipamiento. */
+  selectedMethod: CookingMethod | null;
+  /** Si falta equipamiento obligatorio (ningún método compatible). */
+  missingEquipment: EquipmentId[];
+  equipmentOk: boolean;
+}
+
+export interface RecommendResult {
+  ready: RecipeMatch[];
+  needOne: RecipeMatch[];
+  needTwo: RecipeMatch[];
 }

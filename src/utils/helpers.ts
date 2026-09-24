@@ -1,16 +1,13 @@
-import { ALWAYS_AVAILABLE, DEFAULT_FOODS } from '../data/foods';
+import { DEFAULT_FOODS } from '../data/foods';
 import { RECIPES } from '../data/recipes';
-import type { FoodItem, MealType, RecipeMatch, TimeOption } from '../types';
+import type { FoodItem, MealType, Recipe } from '../types';
 
 export function getAllFoods(
   customFoods: FoodItem[],
   hiddenFoodIds: string[] = [],
 ): FoodItem[] {
   const hidden = new Set(hiddenFoodIds);
-  return [
-    ...DEFAULT_FOODS.filter((f) => !hidden.has(f.id)),
-    ...customFoods,
-  ];
+  return [...DEFAULT_FOODS.filter((f) => !hidden.has(f.id)), ...customFoods];
 }
 
 export function getFoodName(foodId: string, customFoods: FoodItem[]): string {
@@ -18,62 +15,16 @@ export function getFoodName(foodId: string, customFoods: FoodItem[]): string {
   return food?.name ?? foodId;
 }
 
-export function isFoodAvailable(
-  foodId: string,
-  availableFoodIds: string[],
-): boolean {
-  return ALWAYS_AVAILABLE.has(foodId) || availableFoodIds.includes(foodId);
+/** Biblioteca builtin + recetas personalizadas del usuario. */
+export function getAllRecipes(customRecipes: Recipe[] = []): Recipe[] {
+  return [...RECIPES, ...customRecipes];
 }
 
-export function matchRecipes(
-  availableFoodIds: string[],
-  customFoods: FoodItem[],
-  maxMinutes: TimeOption,
-  mealType?: MealType | null,
-): RecipeMatch[] {
-  const matches: RecipeMatch[] = [];
-
-  for (const recipe of RECIPES) {
-    if (recipe.timeMinutes > maxMinutes) continue;
-    if (mealType && !recipe.mealTypes.includes(mealType)) continue;
-
-    const required = recipe.ingredients.filter((i) => !i.optional);
-    const available: string[] = [];
-    const missing: string[] = [];
-
-    for (const ing of required) {
-      const name = getFoodName(ing.foodId, customFoods);
-      if (isFoodAvailable(ing.foodId, availableFoodIds)) {
-        available.push(name);
-      } else {
-        missing.push(name);
-      }
-    }
-
-    for (const ing of recipe.ingredients.filter((i) => i.optional)) {
-      if (isFoodAvailable(ing.foodId, availableFoodIds)) {
-        available.push(getFoodName(ing.foodId, customFoods));
-      }
-    }
-
-    matches.push({
-      recipe,
-      available,
-      missing,
-      hasAll: missing.length === 0,
-    });
-  }
-
-  matches.sort((a, b) => {
-    if (a.missing.length !== b.missing.length) {
-      return a.missing.length - b.missing.length;
-    }
-    return a.recipe.timeMinutes - b.recipe.timeMinutes;
-  });
-
-  const filtered = matches.filter((m) => m.missing.length <= 2);
-  const pool = filtered.length >= 3 ? filtered : matches;
-  return pool.slice(0, 5);
+export function getRecipeById(
+  id: string,
+  customRecipes: Recipe[] = [],
+): Recipe | undefined {
+  return getAllRecipes(customRecipes).find((r) => r.id === id);
 }
 
 export function todayISO(): string {

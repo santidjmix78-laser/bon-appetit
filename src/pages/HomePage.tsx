@@ -105,6 +105,9 @@ export function HomePage() {
         <Link to="/cocina" className="text-link">
           Ir a Mi cocina →
         </Link>
+        <Link to="/mis-recetas" className="text-link">
+          Mis recetas →
+        </Link>
         <Link to="/semana" className="text-link">
           Ver mi semana →
         </Link>

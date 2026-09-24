@@ -13,6 +13,7 @@ const CATEGORIES: FoodCategory[] = [
   'lacteos',
   'cereales',
   'conservas',
+  'preparados',
   'otros',
 ];
 

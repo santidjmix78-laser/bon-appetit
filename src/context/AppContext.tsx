@@ -10,11 +10,13 @@ import {
 import type {
   AppState,
   AppearancePrefs,
+  EquipmentId,
   Feeling,
   FoodCategory,
   FoodItem,
   MealEntry,
   MealType,
+  Recipe,
   StorageZone,
 } from '../types';
 import { applyAppearance } from '../utils/appearance';
@@ -46,6 +48,9 @@ interface AppContextValue {
   }) => MealEntry;
   setFeeling: (recipeId: string, feeling: Feeling, mealEntryId?: string) => void;
   setAppearance: (partial: Partial<AppearancePrefs>) => void;
+  toggleEquipment: (id: EquipmentId) => void;
+  saveCustomRecipe: (recipe: Recipe) => void;
+  deleteCustomRecipe: (id: string) => void;
   clearAllData: () => void;
   todayMeals: MealEntry[];
 }
@@ -203,6 +208,38 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }));
   }, []);
 
+  const toggleEquipment = useCallback((id: EquipmentId) => {
+    setState((prev) => {
+      const has = prev.equipmentIds.includes(id);
+      return {
+        ...prev,
+        equipmentIds: has
+          ? prev.equipmentIds.filter((e) => e !== id)
+          : [...prev.equipmentIds, id],
+      };
+    });
+  }, []);
+
+  const saveCustomRecipe = useCallback((recipe: Recipe) => {
+    setState((prev) => {
+      const exists = prev.customRecipes.some((r) => r.id === recipe.id);
+      return {
+        ...prev,
+        customRecipes: exists
+          ? prev.customRecipes.map((r) => (r.id === recipe.id ? recipe : r))
+          : [...prev.customRecipes, recipe],
+      };
+    });
+  }, []);
+
+  const deleteCustomRecipe = useCallback((id: string) => {
+    setState((prev) => ({
+      ...prev,
+      customRecipes: prev.customRecipes.filter((r) => r.id !== id),
+      favoriteRecipeIds: prev.favoriteRecipeIds.filter((fid) => fid !== id),
+    }));
+  }, []);
+
   const clearAllData = useCallback(() => {
     setState(getDefaultState());
   }, []);
@@ -226,6 +263,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       addMealEntry,
       setFeeling,
       setAppearance,
+      toggleEquipment,
+      saveCustomRecipe,
+      deleteCustomRecipe,
       clearAllData,
       todayMeals,
     }),
@@ -242,6 +282,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       addMealEntry,
       setFeeling,
       setAppearance,
+      toggleEquipment,
+      saveCustomRecipe,
+      deleteCustomRecipe,
       clearAllData,
       todayMeals,
     ],

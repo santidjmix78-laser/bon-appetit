@@ -3,16 +3,22 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FeelingPicker } from '../components/FeelingPicker';
 import { FodmapBadge } from '../components/FodmapBadge';
 import { useApp } from '../context/AppContext';
-import { getRecipeById } from '../data/recipes';
-import { getFoodName, isFoodAvailable } from '../utils/helpers';
+import { equipmentLabel } from '../data/equipment';
 import type { Feeling } from '../types';
+import { getFoodName, getRecipeById } from '../utils/helpers';
+import { isFoodAvailable, resolveRecipeSteps } from '../utils/recommend';
 
 export function RecipePage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { state, isFavorite, toggleFavorite, setFeeling } = useApp();
-  const recipe = id ? getRecipeById(id) : undefined;
+  const { state, isFavorite, toggleFavorite, setFeeling, deleteCustomRecipe } = useApp();
+  const recipe = id ? getRecipeById(id, state.customRecipes) : undefined;
   const [showFeeling, setShowFeeling] = useState(false);
+
+  const resolved = useMemo(() => {
+    if (!recipe) return null;
+    return resolveRecipeSteps(recipe, state.equipmentIds);
+  }, [recipe, state.equipmentIds]);
 
   const ingredientRows = useMemo(() => {
     if (!recipe) return [];
@@ -23,7 +29,7 @@ export function RecipePage() {
     }));
   }, [recipe, state.availableFoodIds, state.customFoods]);
 
-  if (!recipe) {
+  if (!recipe || !resolved) {
     return (
       <div className="page">
         <p>Receta no encontrada.</p>
@@ -33,10 +39,18 @@ export function RecipePage() {
   }
 
   const feeling = state.recipeFeelings[recipe.id];
+  const canCook = resolved.missingEquipment.length === 0;
 
   function onFeeling(f: Feeling) {
     setFeeling(recipe!.id, f);
     setShowFeeling(true);
+  }
+
+  function handleDelete() {
+    if (!recipe?.custom) return;
+    if (!window.confirm(`¿Eliminar la receta «${recipe.name}»?`)) return;
+    deleteCustomRecipe(recipe.id);
+    navigate('/mis-recetas');
   }
 
   return (
@@ -60,6 +74,12 @@ export function RecipePage() {
           <span>{recipe.timeMinutes} min</span>
           <span>·</span>
           <span className="capitalize">{recipe.difficulty}</span>
+          {resolved.methodLabel && (
+            <>
+              <span>·</span>
+              <span>{resolved.methodLabel}</span>
+            </>
+          )}
         </div>
       </header>
 
@@ -71,8 +91,38 @@ export function RecipePage() {
       />
 
       <FodmapBadge level={recipe.fodmap.level} />
-      {recipe.fodmap.note && (
-        <p className="muted">{recipe.fodmap.note}</p>
+      {recipe.fodmap.note && <p className="muted">{recipe.fodmap.note}</p>}
+
+      {!canCook && (
+        <p className="card missing">
+          Necesitas:{' '}
+          {resolved.missingEquipment.map(equipmentLabel).join(', ')}. Puedes ver la receta, pero
+          no entrará en «Puedes hacer ahora» hasta que marques ese equipamiento en Ajustes.
+        </p>
+      )}
+
+      {recipe.methods && recipe.methods.length > 1 && (
+        <section className="card">
+          <h2>Métodos posibles</h2>
+          <ul className="method-list">
+            {recipe.methods.map((method) => {
+              const ok = method.equipmentIds.every((e) =>
+                state.equipmentIds.includes(e),
+              );
+              return (
+                <li key={method.id} className={ok ? 'ok' : 'muted'}>
+                  {ok ? '✓' : '○'} {method.label}
+                  {method.equipmentIds.length > 0 && (
+                    <span className="muted">
+                      {' '}
+                      ({method.equipmentIds.map(equipmentLabel).join(', ')})
+                    </span>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
       )}
 
       <section className="card">
@@ -90,14 +140,34 @@ export function RecipePage() {
         </ul>
       </section>
 
-      <Link to={`/receta/${recipe.id}/cocinar`} className="btn btn--primary btn--block btn--xl">
-        Modo cocinar
-      </Link>
+      {canCook ? (
+        <Link to={`/receta/${recipe.id}/cocinar`} className="btn btn--primary btn--block btn--xl">
+          Modo cocinar
+          {resolved.methodLabel ? ` · ${resolved.methodLabel}` : ''}
+        </Link>
+      ) : (
+        <button type="button" className="btn btn--ghost btn--block btn--xl" disabled>
+          Falta equipamiento
+        </button>
+      )}
+
+      {recipe.custom && (
+        <div className="custom-recipe-actions">
+          <Link to={`/mis-recetas/editar/${recipe.id}`} className="btn btn--ghost btn--block">
+            Editar receta
+          </Link>
+          <button type="button" className="btn btn--danger btn--block" onClick={handleDelete}>
+            Eliminar receta
+          </button>
+        </div>
+      )}
 
       <section className="card">
         <FeelingPicker value={feeling} onChange={onFeeling} />
         {showFeeling && feeling && (
-          <p className="ok muted">Valoración guardada. Se tendrá en cuenta junto a la orientación FODMAP.</p>
+          <p className="ok muted">
+            Valoración guardada. Se tendrá en cuenta junto a la orientación FODMAP.
+          </p>
         )}
       </section>
     </div>

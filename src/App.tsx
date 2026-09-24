@@ -5,6 +5,8 @@ import { CookModePage } from './pages/CookModePage';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { HomePage } from './pages/HomePage';
 import { KitchenPage } from './pages/KitchenPage';
+import { MyRecipesPage } from './pages/MyRecipesPage';
+import { RecipeFormPage } from './pages/RecipeFormPage';
 import { RecipePage } from './pages/RecipePage';
 import { RecommendPage } from './pages/RecommendPage';
 import { SettingsPage } from './pages/SettingsPage';
@@ -20,6 +22,9 @@ export default function App() {
             <Route path="cocina" element={<KitchenPage />} />
             <Route path="semana" element={<WeekPage />} />
             <Route path="favoritos" element={<FavoritesPage />} />
+            <Route path="mis-recetas" element={<MyRecipesPage />} />
+            <Route path="mis-recetas/nueva" element={<RecipeFormPage />} />
+            <Route path="mis-recetas/editar/:id" element={<RecipeFormPage />} />
             <Route path="ajustes" element={<SettingsPage />} />
             <Route path="recomendar" element={<RecommendPage />} />
             <Route path="receta/:id" element={<RecipePage />} />

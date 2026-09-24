@@ -1,5 +1,6 @@
 import { DEFAULT_FOODS } from '../data/foods';
-import type { AppState, MealEntry, MealType } from '../types';
+import { DEFAULT_EQUIPMENT } from '../data/equipment';
+import type { AppState, EquipmentId, MealEntry, MealType, Recipe } from '../types';
 import { DEFAULT_APPEARANCE } from './appearance';
 
 const STORAGE_KEY = 'bon-appetit-v1';
@@ -25,6 +26,18 @@ const DEFAULT_AVAILABLE = [
 ];
 
 const VALID_MEALS: MealType[] = ['desayuno', 'comida', 'merienda', 'cena'];
+const VALID_EQUIPMENT = new Set<EquipmentId>([
+  'horno',
+  'microondas',
+  'airfryer',
+  'freidora',
+  'vitro',
+  'sarten',
+  'olla',
+  'plancha',
+  'batidora',
+  'tostadora',
+]);
 
 function migrateMealEntries(entries: MealEntry[] | undefined): MealEntry[] {
   if (!entries) return [];
@@ -34,23 +47,28 @@ function migrateMealEntries(entries: MealEntry[] | undefined): MealEntry[] {
   }));
 }
 
+function migrateEquipment(ids: unknown): EquipmentId[] {
+  if (!Array.isArray(ids)) return [...DEFAULT_EQUIPMENT];
+  return ids.filter((id): id is EquipmentId => VALID_EQUIPMENT.has(id as EquipmentId));
+}
+
+function migrateCustomRecipes(raw: unknown): Recipe[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.filter((r) => r && typeof r === 'object' && typeof (r as Recipe).id === 'string') as Recipe[];
+}
+
 /**
- * Carga estado desde localStorage con migración compatible v1 → v1.1.
- * Conserva alimentos, favoritos, historial y valoraciones existentes.
+ * Carga estado con migración compatible (v1 → 1.1 → 1.1.1).
+ * Conserva cocina, favoritos, historial, valoraciones y apariencia.
  */
 export function loadState(): AppState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      return getDefaultState();
-    }
-    const parsed = JSON.parse(raw) as Partial<AppState> & {
-      availableFoodIds?: string[];
-    };
+    if (!raw) return getDefaultState();
+    const parsed = JSON.parse(raw) as Partial<AppState>;
 
     return {
       availableFoodIds: parsed.availableFoodIds ?? [...DEFAULT_AVAILABLE],
-      // Nuevos en 1.1: si no existe, lista vacía (todos los defaults visibles)
       hiddenFoodIds: Array.isArray(parsed.hiddenFoodIds) ? parsed.hiddenFoodIds : [],
       customFoods: parsed.customFoods ?? [],
       favoriteRecipeIds: parsed.favoriteRecipeIds ?? [],
@@ -60,6 +78,8 @@ export function loadState(): AppState {
         theme: parsed.appearance?.theme ?? DEFAULT_APPEARANCE.theme,
         accent: parsed.appearance?.accent ?? DEFAULT_APPEARANCE.accent,
       },
+      equipmentIds: migrateEquipment(parsed.equipmentIds),
+      customRecipes: migrateCustomRecipes(parsed.customRecipes),
     };
   } catch {
     return getDefaultState();
@@ -79,10 +99,11 @@ export function getDefaultState(): AppState {
     mealEntries: [],
     recipeFeelings: {},
     appearance: { ...DEFAULT_APPEARANCE },
+    equipmentIds: [...DEFAULT_EQUIPMENT],
+    customRecipes: [],
   };
 }
 
-/** Solo vacía la biblioteca de cocina; conserva historial, favoritos, etc. */
 export function emptyKitchenLibrary(prev: AppState): AppState {
   return {
     ...prev,
@@ -92,7 +113,6 @@ export function emptyKitchenLibrary(prev: AppState): AppState {
   };
 }
 
-/** Restaura la biblioteca predeterminada sin tocar historial/favoritos. */
 export function restoreKitchenLibrary(prev: AppState): AppState {
   return {
     ...prev,
@@ -100,8 +120,4 @@ export function restoreKitchenLibrary(prev: AppState): AppState {
     customFoods: [],
     hiddenFoodIds: [],
   };
-}
-
-export function getDefaultAvailableIds(): string[] {
-  return [...DEFAULT_AVAILABLE];
 }

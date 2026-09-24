@@ -2,13 +2,15 @@ import { Link } from 'react-router-dom';
 import type { RecipeMatch } from '../types';
 import { FodmapBadge } from './FodmapBadge';
 import { useApp } from '../context/AppContext';
+import { equipmentLabel } from '../data/equipment';
 
 interface Props {
   match: RecipeMatch;
 }
 
 export function RecipeCard({ match }: Props) {
-  const { recipe, missing, hasAll } = match;
+  const { recipe, missing, hasAll, equipmentOk, missingEquipment, selectedMethod } =
+    match;
   const { isFavorite, toggleFavorite, state } = useApp();
   const feeling = state.recipeFeelings[recipe.id];
 
@@ -32,11 +34,20 @@ export function RecipeCard({ match }: Props) {
         </button>
       </div>
       <div className="recipe-card__body">
-        <h3 className="recipe-card__title">{recipe.name}</h3>
+        <h3 className="recipe-card__title">
+          {recipe.name}
+          {recipe.custom ? <span className="badge-custom">Mía</span> : null}
+        </h3>
         <div className="recipe-card__meta">
           <span>{recipe.timeMinutes} min</span>
           <span>·</span>
           <span className="capitalize">{recipe.difficulty}</span>
+          {selectedMethod && selectedMethod.id !== 'default' && selectedMethod.id !== 'manual' && (
+            <>
+              <span>·</span>
+              <span>{selectedMethod.label}</span>
+            </>
+          )}
           {feeling && (
             <>
               <span>·</span>
@@ -50,9 +61,16 @@ export function RecipeCard({ match }: Props) {
           {hasAll ? (
             <span className="ok">✓ Tienes todo</span>
           ) : (
-            <span className="missing">Te falta: {missing.join(', ')}</span>
+            <span className="missing">
+              Te falta: {missing.join(', ')}
+            </span>
           )}
         </p>
+        {!equipmentOk && missingEquipment.length > 0 && (
+          <p className="missing small">
+            Necesitas: {missingEquipment.map(equipmentLabel).join(', ')}
+          </p>
+        )}
         <FodmapBadge level={recipe.fodmap.level} compact />
         <Link to={`/receta/${recipe.id}`} className="btn btn--primary btn--block">
           Ver receta

@@ -56,6 +56,16 @@ export const DEFAULT_FOODS: FoodItem[] = [
   { id: 'maiz', name: 'Maíz', zone: 'despensa', category: 'conservas' },
   { id: 'aceitunas', name: 'Aceitunas', zone: 'despensa', category: 'conservas' },
 
+  // Productos preparados (no se descomponen en ingredientes)
+  { id: 'croquetas-jamon', name: 'Croquetas de jamón', zone: 'congelador', category: 'preparados' },
+  { id: 'patatas-fritas-congeladas', name: 'Patatas fritas congeladas', zone: 'congelador', category: 'preparados' },
+  { id: 'nuggets', name: 'Nuggets de pollo', zone: 'congelador', category: 'preparados' },
+  { id: 'pizza-congelada', name: 'Pizza congelada', zone: 'congelador', category: 'preparados' },
+  { id: 'lasana-preparada', name: 'Lasaña preparada', zone: 'congelador', category: 'preparados' },
+  { id: 'empanadillas', name: 'Empanadillas', zone: 'congelador', category: 'preparados' },
+  { id: 'hot-dog', name: 'Salchichas / frankfurts', zone: 'nevera', category: 'preparados' },
+  { id: 'hummus', name: 'Hummus', zone: 'nevera', category: 'preparados' },
+
   // Despensa - Otros
   { id: 'aceite', name: 'Aceite de oliva', zone: 'despensa', category: 'otros' },
   { id: 'sal', name: 'Sal', zone: 'despensa', category: 'otros' },
@@ -76,6 +86,7 @@ export const CATEGORY_LABELS: Record<FoodItem['category'], string> = {
   lacteos: 'Lácteos',
   cereales: 'Cereales / carbohidratos',
   conservas: 'Conservas',
+  preparados: 'Productos preparados',
   otros: 'Otros',
 };
 
