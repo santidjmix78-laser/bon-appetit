@@ -9,6 +9,7 @@ import {
 } from 'react';
 import type {
   AppState,
+  AppearancePrefs,
   Feeling,
   FoodCategory,
   FoodItem,
@@ -16,14 +17,24 @@ import type {
   MealType,
   StorageZone,
 } from '../types';
-import { getDefaultState, loadState, saveState } from '../utils/storage';
+import { applyAppearance } from '../utils/appearance';
 import { nowTime, slugify, todayISO } from '../utils/helpers';
+import {
+  emptyKitchenLibrary,
+  getDefaultState,
+  loadState,
+  restoreKitchenLibrary,
+  saveState,
+} from '../utils/storage';
 
 interface AppContextValue {
   state: AppState;
   toggleFood: (foodId: string) => void;
   isAvailable: (foodId: string) => boolean;
+  removeFromLibrary: (foodId: string) => void;
   addCustomFood: (name: string, zone: StorageZone, category: FoodCategory) => void;
+  clearKitchenLibrary: () => void;
+  restoreDefaultKitchen: () => void;
   toggleFavorite: (recipeId: string) => void;
   isFavorite: (recipeId: string) => boolean;
   addMealEntry: (partial: {
@@ -34,6 +45,7 @@ interface AppContextValue {
     date?: string;
   }) => MealEntry;
   setFeeling: (recipeId: string, feeling: Feeling, mealEntryId?: string) => void;
+  setAppearance: (partial: Partial<AppearancePrefs>) => void;
   clearAllData: () => void;
   todayMeals: MealEntry[];
 }
@@ -46,6 +58,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     saveState(state);
   }, [state]);
+
+  useEffect(() => {
+    applyAppearance(state.appearance);
+  }, [state.appearance]);
+
+  useEffect(() => {
+    if (state.appearance.theme !== 'system') return;
+    const mq = window.matchMedia('(prefers-color-scheme: light)');
+    const onChange = () => applyAppearance(state.appearance);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, [state.appearance]);
 
   const toggleFood = useCallback((foodId: string) => {
     setState((prev) => {
@@ -63,6 +87,24 @@ export function AppProvider({ children }: { children: ReactNode }) {
     (foodId: string) => state.availableFoodIds.includes(foodId),
     [state.availableFoodIds],
   );
+
+  const removeFromLibrary = useCallback((foodId: string) => {
+    setState((prev) => {
+      const isCustom = prev.customFoods.some((f) => f.id === foodId);
+      return {
+        ...prev,
+        availableFoodIds: prev.availableFoodIds.filter((id) => id !== foodId),
+        customFoods: isCustom
+          ? prev.customFoods.filter((f) => f.id !== foodId)
+          : prev.customFoods,
+        hiddenFoodIds: isCustom
+          ? prev.hiddenFoodIds
+          : prev.hiddenFoodIds.includes(foodId)
+            ? prev.hiddenFoodIds
+            : [...prev.hiddenFoodIds, foodId],
+      };
+    });
+  }, []);
 
   const addCustomFood = useCallback(
     (name: string, zone: StorageZone, category: FoodCategory) => {
@@ -84,6 +126,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
     },
     [],
   );
+
+  const clearKitchenLibrary = useCallback(() => {
+    setState((prev) => emptyKitchenLibrary(prev));
+  }, []);
+
+  const restoreDefaultKitchen = useCallback(() => {
+    setState((prev) => restoreKitchenLibrary(prev));
+  }, []);
 
   const toggleFavorite = useCallback((recipeId: string) => {
     setState((prev) => {
@@ -146,6 +196,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     [],
   );
 
+  const setAppearance = useCallback((partial: Partial<AppearancePrefs>) => {
+    setState((prev) => ({
+      ...prev,
+      appearance: { ...prev.appearance, ...partial },
+    }));
+  }, []);
+
   const clearAllData = useCallback(() => {
     setState(getDefaultState());
   }, []);
@@ -160,11 +217,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
       state,
       toggleFood,
       isAvailable,
+      removeFromLibrary,
       addCustomFood,
+      clearKitchenLibrary,
+      restoreDefaultKitchen,
       toggleFavorite,
       isFavorite,
       addMealEntry,
       setFeeling,
+      setAppearance,
       clearAllData,
       todayMeals,
     }),
@@ -172,11 +233,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
       state,
       toggleFood,
       isAvailable,
+      removeFromLibrary,
       addCustomFood,
+      clearKitchenLibrary,
+      restoreDefaultKitchen,
       toggleFavorite,
       isFavorite,
       addMealEntry,
       setFeeling,
+      setAppearance,
       clearAllData,
       todayMeals,
     ],

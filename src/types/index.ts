@@ -13,11 +13,21 @@ export type FodmapLevel = 'low' | 'moderate' | 'high';
 
 export type Difficulty = 'fácil' | 'media';
 
-export type MealType = 'comida' | 'merienda' | 'cena';
+export type MealType = 'desayuno' | 'comida' | 'merienda' | 'cena';
 
 export type Feeling = 'good' | 'ok' | 'bad';
 
 export type TimeOption = 10 | 15 | 20 | 30 | 999;
+
+export type ThemePreference = 'dark' | 'light' | 'system';
+
+export type AccentColor =
+  | 'lime'
+  | 'blue'
+  | 'purple'
+  | 'orange'
+  | 'pink'
+  | 'turquoise';
 
 export interface FoodItem {
   id: string;
@@ -40,6 +50,8 @@ export interface Recipe {
   difficulty: Difficulty;
   ingredients: RecipeIngredient[];
   steps: string[];
+  /** Tipos de comida para los que encaja esta receta. */
+  mealTypes: MealType[];
   /** Orientación FODMAP demostrativa; editable en el futuro. */
   fodmap: {
     level: FodmapLevel;
@@ -61,12 +73,20 @@ export interface MealEntry {
   createdAt: string;
 }
 
+export interface AppearancePrefs {
+  theme: ThemePreference;
+  accent: AccentColor;
+}
+
 export interface AppState {
   availableFoodIds: string[];
+  /** Alimentos de la biblioteca por defecto ocultados por el usuario. */
+  hiddenFoodIds: string[];
   customFoods: FoodItem[];
   favoriteRecipeIds: string[];
   mealEntries: MealEntry[];
   recipeFeelings: Record<string, Feeling>;
+  appearance: AppearancePrefs;
 }
 
 export interface RecipeMatch {

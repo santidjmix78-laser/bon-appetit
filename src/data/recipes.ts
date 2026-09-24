@@ -10,6 +10,7 @@ export const RECIPES: Recipe[] = [
     name: 'Pollo con arroz y calabacín',
     timeMinutes: 20,
     difficulty: 'fácil',
+    mealTypes: ['comida', 'cena'],
     imageHue: 95,
     fodmap: {
       level: 'low',
@@ -36,6 +37,7 @@ export const RECIPES: Recipe[] = [
     name: 'Tortilla de patata sencilla',
     timeMinutes: 25,
     difficulty: 'fácil',
+    mealTypes: ['comida', 'cena'],
     imageHue: 45,
     fodmap: {
       level: 'moderate',
@@ -62,6 +64,7 @@ export const RECIPES: Recipe[] = [
     name: 'Pasta con atún y tomate',
     timeMinutes: 15,
     difficulty: 'fácil',
+    mealTypes: ['comida', 'cena'],
     imageHue: 15,
     fodmap: {
       level: 'moderate',
@@ -88,6 +91,7 @@ export const RECIPES: Recipe[] = [
     name: 'Huevos revueltos con jamón',
     timeMinutes: 10,
     difficulty: 'fácil',
+    mealTypes: ['desayuno', 'comida', 'cena'],
     imageHue: 35,
     fodmap: {
       level: 'low',
@@ -114,6 +118,7 @@ export const RECIPES: Recipe[] = [
     name: 'Salmón a la plancha con verduras',
     timeMinutes: 20,
     difficulty: 'fácil',
+    mealTypes: ['comida', 'cena'],
     imageHue: 200,
     fodmap: {
       level: 'low',
@@ -141,6 +146,7 @@ export const RECIPES: Recipe[] = [
     name: 'Wrap de pavo y queso',
     timeMinutes: 10,
     difficulty: 'fácil',
+    mealTypes: ['comida', 'merienda', 'cena'],
     imageHue: 160,
     fodmap: {
       level: 'moderate',
@@ -167,6 +173,7 @@ export const RECIPES: Recipe[] = [
     name: 'Arroz salteado con verduras y huevo',
     timeMinutes: 20,
     difficulty: 'fácil',
+    mealTypes: ['comida', 'cena'],
     imageHue: 70,
     fodmap: {
       level: 'moderate',
@@ -194,6 +201,7 @@ export const RECIPES: Recipe[] = [
     name: 'Ensalada rápida de atún',
     timeMinutes: 10,
     difficulty: 'fácil',
+    mealTypes: ['comida', 'merienda', 'cena'],
     imageHue: 130,
     fodmap: {
       level: 'low',
@@ -222,6 +230,7 @@ export const RECIPES: Recipe[] = [
     name: 'Patatas a la sartén con huevo',
     timeMinutes: 20,
     difficulty: 'fácil',
+    mealTypes: ['comida', 'cena'],
     imageHue: 50,
     fodmap: {
       level: 'low',
@@ -247,6 +256,7 @@ export const RECIPES: Recipe[] = [
     name: 'Pollo a la plancha con ensalada',
     timeMinutes: 20,
     difficulty: 'fácil',
+    mealTypes: ['comida', 'cena'],
     imageHue: 110,
     fodmap: {
       level: 'low',
@@ -274,6 +284,7 @@ export const RECIPES: Recipe[] = [
     name: 'Cuscús con verduras salteadas',
     timeMinutes: 15,
     difficulty: 'fácil',
+    mealTypes: ['comida', 'cena'],
     imageHue: 40,
     fodmap: {
       level: 'moderate',
@@ -300,6 +311,7 @@ export const RECIPES: Recipe[] = [
     name: 'Tostada con huevo y tomate',
     timeMinutes: 10,
     difficulty: 'fácil',
+    mealTypes: ['desayuno', 'merienda'],
     imageHue: 25,
     fodmap: {
       level: 'moderate',
@@ -326,6 +338,7 @@ export const RECIPES: Recipe[] = [
     name: 'Guisantes salteados con jamón',
     timeMinutes: 12,
     difficulty: 'fácil',
+    mealTypes: ['comida', 'cena'],
     imageHue: 100,
     fodmap: {
       level: 'moderate',
@@ -352,6 +365,7 @@ export const RECIPES: Recipe[] = [
     name: 'Bowl de yogur, plátano y avena',
     timeMinutes: 5,
     difficulty: 'fácil',
+    mealTypes: ['desayuno', 'merienda'],
     imageHue: 320,
     fodmap: {
       level: 'moderate',
@@ -376,6 +390,7 @@ export const RECIPES: Recipe[] = [
     name: 'Pasta con queso y espinacas',
     timeMinutes: 15,
     difficulty: 'fácil',
+    mealTypes: ['comida', 'cena'],
     imageHue: 85,
     fodmap: {
       level: 'moderate',

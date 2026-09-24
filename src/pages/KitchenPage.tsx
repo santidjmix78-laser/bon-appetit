@@ -17,14 +17,26 @@ const CATEGORIES: FoodCategory[] = [
 ];
 
 export function KitchenPage() {
-  const { state, toggleFood, isAvailable, addCustomFood } = useApp();
+  const {
+    state,
+    toggleFood,
+    isAvailable,
+    addCustomFood,
+    removeFromLibrary,
+    clearKitchenLibrary,
+    restoreDefaultKitchen,
+  } = useApp();
   const [showAdd, setShowAdd] = useState(false);
   const [name, setName] = useState('');
   const [zone, setZone] = useState<StorageZone>('nevera');
   const [category, setCategory] = useState<FoodCategory>('otros');
 
-  const foods = useMemo(() => getAllFoods(state.customFoods), [state.customFoods]);
+  const foods = useMemo(
+    () => getAllFoods(state.customFoods, state.hiddenFoodIds),
+    [state.customFoods, state.hiddenFoodIds],
+  );
   const availableCount = state.availableFoodIds.length;
+  const libraryCount = foods.length;
 
   function handleAdd() {
     if (!name.trim()) return;
@@ -33,12 +45,45 @@ export function KitchenPage() {
     setShowAdd(false);
   }
 
+  function handleNewList() {
+    if (
+      !window.confirm(
+        '¿Quieres empezar una nueva lista?\nSe eliminarán los alimentos de Mi cocina, pero no tu historial, favoritos ni otros datos.',
+      )
+    ) {
+      return;
+    }
+    clearKitchenLibrary();
+  }
+
+  function handleRestore() {
+    if (
+      !window.confirm(
+        '¿Restaurar la lista inicial de Bon Appetit?\nSe recuperará la biblioteca predeterminada. No se borrarán historial, favoritos ni valoraciones.',
+      )
+    ) {
+      return;
+    }
+    restoreDefaultKitchen();
+  }
+
+  function handleRemove(foodId: string, foodName: string) {
+    if (
+      !window.confirm(
+        `¿Eliminar «${foodName}» de tu biblioteca?\nDejará de aparecer en Mi cocina. Puedes volver a añadirlo más tarde.`,
+      )
+    ) {
+      return;
+    }
+    removeFromLibrary(foodId);
+  }
+
   return (
     <div className="page">
       <header className="page-header">
         <h1>Mi cocina</h1>
         <p className="subtitle">
-          Marca lo que tienes. {availableCount} alimentos disponibles.
+          Toca para marcar disponible. {availableCount} disponibles · {libraryCount} en biblioteca.
         </p>
       </header>
 
@@ -46,34 +91,55 @@ export function KitchenPage() {
         + Añadir alimento
       </button>
 
-      {ZONES.map((z) => {
-        const zoneFoods = foods.filter((f) => f.zone === z);
-        if (zoneFoods.length === 0) return null;
-        return (
-          <section key={z} className="zone-section">
-            <h2 className="zone-title">{ZONE_LABELS[z]}</h2>
-            {CATEGORIES.map((cat) => {
-              const items = zoneFoods.filter((f) => f.category === cat);
-              if (items.length === 0) return null;
-              return (
-                <div key={cat} className="category-block">
-                  <h3 className="category-title">{CATEGORY_LABELS[cat]}</h3>
-                  <div className="chip-grid">
-                    {items.map((food) => (
-                      <FoodChip
-                        key={food.id}
-                        label={food.name}
-                        selected={isAvailable(food.id)}
-                        onClick={() => toggleFood(food.id)}
-                      />
-                    ))}
+      <div className="kitchen-toolbar">
+        <button type="button" className="btn btn--ghost btn--sm" onClick={handleNewList}>
+          Nueva lista
+        </button>
+        <button type="button" className="btn btn--ghost btn--sm" onClick={handleRestore}>
+          Restaurar lista inicial
+        </button>
+      </div>
+
+      <p className="muted small kitchen-legend">
+        Acento = lo tienes ahora · Gris = en tu lista, pero no disponible · × = quitar de la biblioteca
+      </p>
+
+      {libraryCount === 0 ? (
+        <div className="empty-state card">
+          <p>Tu biblioteca está vacía.</p>
+          <p className="muted">Añade alimentos con «+ Añadir alimento» o restaura la lista inicial.</p>
+        </div>
+      ) : (
+        ZONES.map((z) => {
+          const zoneFoods = foods.filter((f) => f.zone === z);
+          if (zoneFoods.length === 0) return null;
+          return (
+            <section key={z} className="zone-section">
+              <h2 className="zone-title">{ZONE_LABELS[z]}</h2>
+              {CATEGORIES.map((cat) => {
+                const items = zoneFoods.filter((f) => f.category === cat);
+                if (items.length === 0) return null;
+                return (
+                  <div key={cat} className="category-block">
+                    <h3 className="category-title">{CATEGORY_LABELS[cat]}</h3>
+                    <div className="chip-grid">
+                      {items.map((food) => (
+                        <FoodChip
+                          key={food.id}
+                          label={food.name}
+                          selected={isAvailable(food.id)}
+                          onClick={() => toggleFood(food.id)}
+                          onRemove={() => handleRemove(food.id, food.name)}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </section>
-        );
-      })}
+                );
+              })}
+            </section>
+          );
+        })
+      )}
 
       {showAdd && (
         <div className="modal-backdrop" role="dialog" aria-modal="true">

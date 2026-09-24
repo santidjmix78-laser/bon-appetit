@@ -5,11 +5,11 @@ import type { MealType } from '../types';
 import {
   getCurrentWeekDates,
   isWeekend,
+  mealTypeLabel,
   WEEKDAY_LABELS,
 } from '../utils/helpers';
 
-const WEEKDAY_MEALS: MealType[] = ['comida', 'merienda', 'cena'];
-const WEEKEND_MEALS: MealType[] = ['comida', 'merienda', 'cena'];
+const ALL_MEALS: MealType[] = ['desayuno', 'comida', 'merienda', 'cena'];
 
 export function WeekPage() {
   const { state } = useApp();
@@ -20,14 +20,13 @@ export function WeekPage() {
       <header className="page-header">
         <h1>Mi semana</h1>
         <p className="subtitle">
-          Historial de lo que has registrado. Entre semana la comida suele ser fuera / trabajo.
+          Historial de lo que has registrado: desayuno, comida, merienda y cena.
         </p>
       </header>
 
       <div className="week-list">
         {dates.map((date, idx) => {
           const weekend = isWeekend(date);
-          const meals = weekend ? WEEKEND_MEALS : WEEKDAY_MEALS;
           const entries = state.mealEntries.filter((e) => e.date === date);
 
           return (
@@ -37,15 +36,15 @@ export function WeekPage() {
                 <span className="week-day__date">{formatDate(date)}</span>
               </h2>
               <ul className="week-meals">
-                {meals.map((meal) => {
+                {ALL_MEALS.map((meal) => {
                   const found = entries.filter((e) => e.mealType === meal);
                   return (
                     <li key={meal}>
-                      <span className="meal-label capitalize">{meal}</span>
+                      <span className="meal-label">{mealTypeLabel(meal)}</span>
                       {found.length === 0 ? (
                         <span className="meal-empty">
                           {meal === 'comida' && !weekend
-                            ? 'Normalmente fuera / trabajo'
+                            ? 'Sin registrar (a menudo fuera / trabajo)'
                             : 'Sin registrar'}
                         </span>
                       ) : (

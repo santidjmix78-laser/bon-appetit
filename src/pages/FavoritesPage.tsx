@@ -35,7 +35,7 @@ export function FavoritesPage() {
         <div className="empty-state card">
           <p>Aún no tienes favoritos.</p>
           <p className="muted">Marca el corazón en cualquier receta para guardarla aquí.</p>
-          <Link to="/recomendar?modo=cena" className="btn btn--primary btn--block">
+          <Link to="/recomendar?modo=recomendar" className="btn btn--primary btn--block">
             Explorar recetas
           </Link>
         </div>

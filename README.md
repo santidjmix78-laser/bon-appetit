@@ -2,6 +2,8 @@
 
 Asistente personal mobile-first para decidir qué comer según tu cocina, el tiempo disponible, lo que ya has comido y tus preferencias. Orientación FODMAP informativa (semáforo), sin diagnóstico ni prohibiciones.
 
+**Versión:** ver `src/config/app.ts` (`APP_VERSION`).
+
 ## Stack
 
 - React + Vite + TypeScript

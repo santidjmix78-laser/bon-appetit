@@ -5,6 +5,7 @@ import { useApp } from '../context/AppContext';
 import { getRecipeById } from '../data/recipes';
 import { getFoodName } from '../utils/helpers';
 import type { Feeling } from '../types';
+import { getSelectedMealType } from '../utils/mealSession';
 
 export function CookModePage() {
   const { id } = useParams();
@@ -35,7 +36,7 @@ export function CookModePage() {
 
     const entry = addMealEntry({
       text: recipe!.name,
-      mealType: 'cena',
+      mealType: getSelectedMealType(),
       recipeId: recipe!.id,
       mainIngredients: mains,
     });

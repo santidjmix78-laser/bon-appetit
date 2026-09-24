@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { greeting } from '../utils/helpers';
+import { greeting, MEAL_TYPE_OPTIONS, mealTypeLabel } from '../utils/helpers';
 import type { MealType } from '../types';
 
 export function HomePage() {
@@ -10,7 +10,7 @@ export function HomePage() {
   const [showTodayPrompt, setShowTodayPrompt] = useState(false);
   const [todayText, setTodayText] = useState('');
   const [mealType, setMealType] = useState<MealType>('comida');
-  const [pendingAction, setPendingAction] = useState<'cena' | 'planificar' | null>(null);
+  const [pendingAction, setPendingAction] = useState<'recomendar' | 'planificar' | null>(null);
 
   const hasLoggedToday = todayMeals.length > 0;
   const isWeekday = (() => {
@@ -18,13 +18,13 @@ export function HomePage() {
     return d >= 1 && d <= 5;
   })();
 
-  function startRecommend(mode: 'cena' | 'cocinar' | 'planificar') {
-    if (mode === 'cena' && isWeekday && !hasLoggedToday) {
-      setPendingAction('cena');
+  function startRecommend(mode: 'recomendar' | 'cocinar' | 'planificar') {
+    if (mode === 'recomendar' && isWeekday && !hasLoggedToday) {
+      setPendingAction('recomendar');
       setShowTodayPrompt(true);
       return;
     }
-    if (mode === 'planificar') {
+    if (mode === 'planificar' && isWeekday && !hasLoggedToday) {
       setPendingAction('planificar');
       setShowTodayPrompt(true);
       return;
@@ -38,14 +38,14 @@ export function HomePage() {
     }
     setShowTodayPrompt(false);
     setTodayText('');
-    const modo = pendingAction === 'planificar' ? 'planificar' : 'cena';
+    const modo = pendingAction === 'planificar' ? 'planificar' : 'recomendar';
     setPendingAction(null);
     navigate(`/recomendar?modo=${modo}`);
   }
 
   function skipAndContinue() {
     setShowTodayPrompt(false);
-    const modo = pendingAction === 'planificar' ? 'planificar' : 'cena';
+    const modo = pendingAction === 'planificar' ? 'planificar' : 'recomendar';
     setPendingAction(null);
     navigate(`/recomendar?modo=${modo}`);
   }
@@ -64,7 +64,7 @@ export function HomePage() {
           <ul>
             {todayMeals.map((m) => (
               <li key={m.id}>
-                <strong className="capitalize">{m.mealType}:</strong> {m.text}
+                <strong>{mealTypeLabel(m.mealType)}:</strong> {m.text}
               </li>
             ))}
           </ul>
@@ -72,8 +72,12 @@ export function HomePage() {
       )}
 
       <section className="action-grid">
-        <button type="button" className="action-card action-card--primary" onClick={() => startRecommend('cena')}>
-          <span className="action-card__title">Recomiéndame una cena</span>
+        <button
+          type="button"
+          className="action-card action-card--primary"
+          onClick={() => startRecommend('recomendar')}
+        >
+          <span className="action-card__title">Recomiéndame qué comer</span>
           <span className="action-card__desc">Según lo que tienes y el tiempo</span>
         </button>
         <button type="button" className="action-card" onClick={() => startRecommend('cocinar')}>
@@ -82,7 +86,7 @@ export function HomePage() {
         </button>
         <button type="button" className="action-card" onClick={() => startRecommend('planificar')}>
           <span className="action-card__title">Planificar</span>
-          <span className="action-card__desc">Elige tiempo y mira opciones</span>
+          <span className="action-card__desc">Elige tipo, tiempo y mira opciones</span>
         </button>
         <button
           type="button"
@@ -93,7 +97,7 @@ export function HomePage() {
           }}
         >
           <span className="action-card__title">Registrar lo que he comido</span>
-          <span className="action-card__desc">Anota comida, merienda o cena</span>
+          <span className="action-card__desc">Desayuno, comida, merienda o cena</span>
         </button>
       </section>
 
@@ -114,14 +118,14 @@ export function HomePage() {
               Escribe libremente, por ejemplo: «Bocadillo de pavo y queso y una Coca-Cola»
             </p>
             <div className="meal-type-row">
-              {(['comida', 'merienda', 'cena'] as MealType[]).map((t) => (
+              {MEAL_TYPE_OPTIONS.map((t) => (
                 <button
-                  key={t}
+                  key={t.id}
                   type="button"
-                  className={`chip${mealType === t ? ' chip--selected' : ''}`}
-                  onClick={() => setMealType(t)}
+                  className={`chip${mealType === t.id ? ' chip--selected' : ''}`}
+                  onClick={() => setMealType(t.id)}
                 >
-                  {t.charAt(0).toUpperCase() + t.slice(1)}
+                  {t.emoji} {t.label}
                 </button>
               ))}
             </div>
@@ -136,7 +140,12 @@ export function HomePage() {
             <div className="modal__actions">
               {pendingAction ? (
                 <>
-                  <button type="button" className="btn btn--primary btn--block" onClick={saveTodayAndContinue} disabled={!todayText.trim()}>
+                  <button
+                    type="button"
+                    className="btn btn--primary btn--block"
+                    onClick={saveTodayAndContinue}
+                    disabled={!todayText.trim()}
+                  >
                     Guardar y continuar
                   </button>
                   <button type="button" className="btn btn--ghost btn--block" onClick={skipAndContinue}>
@@ -158,7 +167,11 @@ export function HomePage() {
                   >
                     Guardar
                   </button>
-                  <button type="button" className="btn btn--ghost btn--block" onClick={() => setShowTodayPrompt(false)}>
+                  <button
+                    type="button"
+                    className="btn btn--ghost btn--block"
+                    onClick={() => setShowTodayPrompt(false)}
+                  >
                     Cancelar
                   </button>
                 </>

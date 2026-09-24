@@ -1,13 +1,20 @@
 import { ALWAYS_AVAILABLE, DEFAULT_FOODS } from '../data/foods';
 import { RECIPES } from '../data/recipes';
-import type { FoodItem, RecipeMatch, TimeOption } from '../types';
+import type { FoodItem, MealType, RecipeMatch, TimeOption } from '../types';
 
-export function getAllFoods(customFoods: FoodItem[]): FoodItem[] {
-  return [...DEFAULT_FOODS, ...customFoods];
+export function getAllFoods(
+  customFoods: FoodItem[],
+  hiddenFoodIds: string[] = [],
+): FoodItem[] {
+  const hidden = new Set(hiddenFoodIds);
+  return [
+    ...DEFAULT_FOODS.filter((f) => !hidden.has(f.id)),
+    ...customFoods,
+  ];
 }
 
 export function getFoodName(foodId: string, customFoods: FoodItem[]): string {
-  const food = getAllFoods(customFoods).find((f) => f.id === foodId);
+  const food = [...DEFAULT_FOODS, ...customFoods].find((f) => f.id === foodId);
   return food?.name ?? foodId;
 }
 
@@ -22,11 +29,13 @@ export function matchRecipes(
   availableFoodIds: string[],
   customFoods: FoodItem[],
   maxMinutes: TimeOption,
+  mealType?: MealType | null,
 ): RecipeMatch[] {
   const matches: RecipeMatch[] = [];
 
   for (const recipe of RECIPES) {
     if (recipe.timeMinutes > maxMinutes) continue;
+    if (mealType && !recipe.mealTypes.includes(mealType)) continue;
 
     const required = recipe.ingredients.filter((i) => !i.optional);
     const available: string[] = [];
@@ -41,7 +50,6 @@ export function matchRecipes(
       }
     }
 
-    // Include optional that are available for display
     for (const ing of recipe.ingredients.filter((i) => i.optional)) {
       if (isFoodAvailable(ing.foodId, availableFoodIds)) {
         available.push(getFoodName(ing.foodId, customFoods));
@@ -56,7 +64,6 @@ export function matchRecipes(
     });
   }
 
-  // Prefer recipes with fewer missing ingredients, then shorter time
   matches.sort((a, b) => {
     if (a.missing.length !== b.missing.length) {
       return a.missing.length - b.missing.length;
@@ -64,7 +71,6 @@ export function matchRecipes(
     return a.recipe.timeMinutes - b.recipe.timeMinutes;
   });
 
-  // Prefer showing those with 0-2 missing; take top 3-5
   const filtered = matches.filter((m) => m.missing.length <= 2);
   const pool = filtered.length >= 3 ? filtered : matches;
   return pool.slice(0, 5);
@@ -100,10 +106,9 @@ export function slugify(text: string): string {
     .slice(0, 40);
 }
 
-/** Monday-start week dates as YYYY-MM-DD */
 export function getCurrentWeekDates(): string[] {
   const now = new Date();
-  const day = now.getDay(); // 0 Sun .. 6 Sat
+  const day = now.getDay();
   const mondayOffset = day === 0 ? -6 : 1 - day;
   const monday = new Date(now);
   monday.setDate(now.getDate() + mondayOffset);
@@ -135,4 +140,19 @@ export function isWeekend(dateISO: string): boolean {
   const d = new Date(dateISO + 'T12:00:00');
   const day = d.getDay();
   return day === 0 || day === 6;
+}
+
+export const MEAL_TYPE_OPTIONS: {
+  id: MealType;
+  label: string;
+  emoji: string;
+}[] = [
+  { id: 'desayuno', label: 'Desayuno', emoji: '🌅' },
+  { id: 'comida', label: 'Comida', emoji: '🍽️' },
+  { id: 'merienda', label: 'Merienda', emoji: '🍎' },
+  { id: 'cena', label: 'Cena', emoji: '🌙' },
+];
+
+export function mealTypeLabel(type: MealType): string {
+  return MEAL_TYPE_OPTIONS.find((m) => m.id === type)?.label ?? type;
 }
