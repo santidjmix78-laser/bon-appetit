@@ -96,10 +96,25 @@ export function buildMatch(
   };
 }
 
-function sortMatches(a: RecipeMatch, b: RecipeMatch): number {
+function sortMatches(
+  a: RecipeMatch,
+  b: RecipeMatch,
+  likedFoodIds: string[] = [],
+): number {
+  const likedSet = new Set(likedFoodIds);
+  const likedA =
+    a.likedOverlap ??
+    a.recipe.ingredients.filter((i) => !i.optional && likedSet.has(i.foodId))
+      .length;
+  const likedB =
+    b.likedOverlap ??
+    b.recipe.ingredients.filter((i) => !i.optional && likedSet.has(i.foodId))
+      .length;
+
   if (a.missing.length !== b.missing.length) {
     return a.missing.length - b.missing.length;
   }
+  if (likedB !== likedA) return likedB - likedA;
   if (b.mainAvailableCount !== a.mainAvailableCount) {
     return b.mainAvailableCount - a.mainAvailableCount;
   }
@@ -109,7 +124,9 @@ function sortMatches(a: RecipeMatch, b: RecipeMatch): number {
 /**
  * Motor de recomendaciones.
  * - strict ("Cocinar con lo que tengo"): exige relación real con lo disponible.
- * - flexible ("Recomiéndame qué comer"): prioriza completas, luego 1, luego pocas faltas.
+ * - flexible ("Planificar"): prioriza completas, luego 1, luego pocas faltas.
+ * Preferencias: "liked" prioriza; "avoided" excluye de recomendaciones automáticas.
+ * Nunca usa liked como disponibilidad.
  */
 export function recommendRecipes(options: {
   recipes: Recipe[];
@@ -119,6 +136,8 @@ export function recommendRecipes(options: {
   maxMinutes: TimeOption;
   mealType?: MealType | null;
   mode: RecommendMode;
+  likedFoodIds?: string[];
+  avoidedFoodIds?: string[];
 }): RecommendResult {
   const {
     recipes,
@@ -128,13 +147,21 @@ export function recommendRecipes(options: {
     maxMinutes,
     mealType,
     mode,
+    likedFoodIds = [],
+    avoidedFoodIds = [],
   } = options;
 
+  const avoided = new Set(avoidedFoodIds);
+  const liked = new Set(likedFoodIds);
   const candidates: RecipeMatch[] = [];
 
   for (const recipe of recipes) {
     if (recipe.timeMinutes > maxMinutes) continue;
     if (mealType && !recipe.mealTypes.includes(mealType)) continue;
+
+    const required = recipe.ingredients.filter((i) => !i.optional);
+    // Prefiero evitar: no usar normalmente en recomendaciones automáticas
+    if (required.some((ing) => avoided.has(ing.foodId))) continue;
 
     const match = buildMatch(
       recipe,
@@ -142,6 +169,7 @@ export function recommendRecipes(options: {
       customFoods,
       equipmentIds,
     );
+    match.likedOverlap = required.filter((ing) => liked.has(ing.foodId)).length;
 
     // Sin ningún ingrediente principal disponible → no recomendar
     if (match.mainAvailableCount === 0) continue;
@@ -149,11 +177,9 @@ export function recommendRecipes(options: {
     candidates.push(match);
   }
 
-  candidates.sort(sortMatches);
+  candidates.sort((a, b) => sortMatches(a, b, likedFoodIds));
 
-  const ready = candidates.filter(
-    (m) => m.hasAll && m.equipmentOk,
-  );
+  const ready = candidates.filter((m) => m.hasAll && m.equipmentOk);
 
   const needOne = candidates.filter(
     (m) =>
@@ -162,7 +188,6 @@ export function recommendRecipes(options: {
       (mode === 'flexible' || m.equipmentOk || m.missingEquipment.length > 0),
   );
 
-  // En strict, "con 1 más" solo si el equipamiento permite cocinarla
   const needOneStrict = needOne.filter((m) => m.equipmentOk);
   const needOneFlex = needOne;
 
@@ -184,7 +209,6 @@ export function recommendRecipes(options: {
     };
   }
 
-  // Flexible: completar hasta ~5-8 mostrando capas
   const flexReady = ready.slice(0, 5);
   const flexOne = needOneFlex
     .filter((m) => !flexReady.some((r) => r.recipe.id === m.recipe.id))

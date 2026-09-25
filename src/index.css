@@ -928,3 +928,147 @@ ul {
   gap: 0.5rem;
   margin: 0.75rem 0;
 }
+
+.action-card--secondary {
+  min-height: 64px;
+  padding: 0.85rem 1rem;
+  background: transparent;
+  border-style: dashed;
+  opacity: 0.92;
+}
+
+.action-card--secondary .action-card__title {
+  font-size: 1rem;
+}
+
+.zone-accordion {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.zone-accordion__header {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.95rem 1rem;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  min-height: 56px;
+}
+
+.zone-accordion__chevron {
+  color: var(--accent);
+  font-size: 1.1rem;
+  width: 1.25rem;
+}
+
+.zone-accordion__title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.zone-accordion__count {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.zone-accordion__body {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.kitchen-search {
+  margin-bottom: 0.75rem;
+}
+
+.search-result-list {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.search-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.search-result-item p {
+  margin: 0.15rem 0 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.stepper__btn {
+  width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 1.25rem;
+}
+
+.stepper__value {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  min-width: 2rem;
+  text-align: center;
+}
+
+.pref-block {
+  margin-top: 1rem;
+}
+
+.pref-block .input {
+  margin-top: 0.55rem;
+}
+
+.pref-suggestions {
+  margin-top: 0.5rem;
+}
+
+.chef-coming {
+  text-align: center;
+  padding: 1.5rem 1.2rem;
+}
+
+.chef-coming__eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.8rem;
+}
+
+.chef-coming .btn {
+  margin-top: 0.65rem;
+}

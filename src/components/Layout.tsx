@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { BottomNav } from './BottomNav';
 
-const HIDE_NAV = ['/recomendar', '/cocinar'];
+const HIDE_NAV = ['/recomendar', '/cocinar', '/modo-chef'];
 
 export function Layout() {
   const { pathname } = useLocation();

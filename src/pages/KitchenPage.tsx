@@ -2,8 +2,8 @@ import { useMemo, useState } from 'react';
 import { FoodChip } from '../components/FoodChip';
 import { useApp } from '../context/AppContext';
 import { CATEGORY_LABELS, ZONE_LABELS } from '../data/foods';
-import type { FoodCategory, StorageZone } from '../types';
-import { getAllFoods } from '../utils/helpers';
+import type { FoodCategory, FoodItem, StorageZone } from '../types';
+import { getAllFoods, normalizeSearch } from '../utils/helpers';
 
 const ZONES: StorageZone[] = ['nevera', 'congelador', 'despensa'];
 const CATEGORIES: FoodCategory[] = [
@@ -31,6 +31,8 @@ export function KitchenPage() {
   const [name, setName] = useState('');
   const [zone, setZone] = useState<StorageZone>('nevera');
   const [category, setCategory] = useState<FoodCategory>('otros');
+  const [openZone, setOpenZone] = useState<StorageZone | null>('nevera');
+  const [query, setQuery] = useState('');
 
   const foods = useMemo(
     () => getAllFoods(state.customFoods, state.hiddenFoodIds),
@@ -38,6 +40,26 @@ export function KitchenPage() {
   );
   const availableCount = state.availableFoodIds.length;
   const libraryCount = foods.length;
+
+  const searchResults = useMemo(() => {
+    const q = normalizeSearch(query);
+    if (!q) return [] as FoodItem[];
+    return foods.filter((f) => normalizeSearch(f.name).includes(q));
+  }, [foods, query]);
+
+  const zoneAvailableCounts = useMemo(() => {
+    const counts: Record<StorageZone, number> = {
+      nevera: 0,
+      congelador: 0,
+      despensa: 0,
+    };
+    for (const food of foods) {
+      if (state.availableFoodIds.includes(food.id)) {
+        counts[food.zone] += 1;
+      }
+    }
+    return counts;
+  }, [foods, state.availableFoodIds]);
 
   function handleAdd() {
     if (!name.trim()) return;
@@ -79,6 +101,12 @@ export function KitchenPage() {
     removeFromLibrary(foodId);
   }
 
+  function toggleZone(z: StorageZone) {
+    setOpenZone((prev) => (prev === z ? null : z));
+  }
+
+  const isSearching = normalizeSearch(query).length > 0;
+
   return (
     <div className="page">
       <header className="page-header">
@@ -87,6 +115,18 @@ export function KitchenPage() {
           Toca para marcar disponible. {availableCount} disponibles · {libraryCount} en biblioteca.
         </p>
       </header>
+
+      <label className="field kitchen-search">
+        <span className="sr-only">Buscar alimento</span>
+        <input
+          className="input"
+          type="search"
+          placeholder="Buscar alimento..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          autoComplete="off"
+        />
+      </label>
 
       <button type="button" className="btn btn--primary btn--block" onClick={() => setShowAdd(true)}>
         + Añadir alimento
@@ -110,33 +150,87 @@ export function KitchenPage() {
           <p>Tu biblioteca está vacía.</p>
           <p className="muted">Añade alimentos con «+ Añadir alimento» o restaura la lista inicial.</p>
         </div>
+      ) : isSearching ? (
+        <section className="card search-results">
+          <h2>
+            Resultados
+            {searchResults.length > 0 ? ` (${searchResults.length})` : ''}
+          </h2>
+          {searchResults.length === 0 ? (
+            <p className="muted">No hay alimentos que coincidan con «{query.trim()}».</p>
+          ) : (
+            <ul className="search-result-list">
+              {searchResults.map((food) => {
+                const available = isAvailable(food.id);
+                return (
+                  <li key={food.id} className="search-result-item">
+                    <div>
+                      <strong>{food.name}</strong>
+                      <p className="muted small">
+                        {ZONE_LABELS[food.zone]} · {CATEGORY_LABELS[food.category]}
+                      </p>
+                      <p className={available ? 'ok small' : 'muted small'}>
+                        {available ? 'Disponible' : 'No disponible'}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      className={`chip${available ? ' chip--selected' : ''}`}
+                      onClick={() => toggleFood(food.id)}
+                    >
+                      {available ? 'Quitar' : 'Activar'}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </section>
       ) : (
         ZONES.map((z) => {
           const zoneFoods = foods.filter((f) => f.zone === z);
           if (zoneFoods.length === 0) return null;
+          const isOpen = openZone === z;
           return (
-            <section key={z} className="zone-section">
-              <h2 className="zone-title">{ZONE_LABELS[z]}</h2>
-              {CATEGORIES.map((cat) => {
-                const items = zoneFoods.filter((f) => f.category === cat);
-                if (items.length === 0) return null;
-                return (
-                  <div key={cat} className="category-block">
-                    <h3 className="category-title">{CATEGORY_LABELS[cat]}</h3>
-                    <div className="chip-grid">
-                      {items.map((food) => (
-                        <FoodChip
-                          key={food.id}
-                          label={food.name}
-                          selected={isAvailable(food.id)}
-                          onClick={() => toggleFood(food.id)}
-                          onRemove={() => handleRemove(food.id, food.name)}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
+            <section key={z} className={`zone-accordion${isOpen ? ' zone-accordion--open' : ''}`}>
+              <button
+                type="button"
+                className="zone-accordion__header"
+                onClick={() => toggleZone(z)}
+                aria-expanded={isOpen}
+              >
+                <span className="zone-accordion__chevron" aria-hidden>
+                  {isOpen ? '⌄' : '▸'}
+                </span>
+                <span className="zone-accordion__title">{ZONE_LABELS[z]}</span>
+                <span className="zone-accordion__count">
+                  {zoneAvailableCounts[z]} disponibles
+                </span>
+              </button>
+              {isOpen && (
+                <div className="zone-accordion__body">
+                  {CATEGORIES.map((cat) => {
+                    const items = zoneFoods.filter((f) => f.category === cat);
+                    if (items.length === 0) return null;
+                    return (
+                      <div key={cat} className="category-block">
+                        <h3 className="category-title">{CATEGORY_LABELS[cat]}</h3>
+                        <div className="chip-grid">
+                          {items.map((food) => (
+                            <FoodChip
+                              key={food.id}
+                              label={food.name}
+                              selected={isAvailable(food.id)}
+                              onClick={() => toggleFood(food.id)}
+                              onRemove={() => handleRemove(food.id, food.name)}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </section>
           );
         })

@@ -12,7 +12,14 @@ export type FoodCategory =
 
 export type FodmapLevel = 'low' | 'moderate' | 'high';
 
+/** Dificultad objetiva aproximada de la receta (no confundir con cookingLevel). */
 export type Difficulty = 'fácil' | 'media';
+
+/**
+ * Nivel de explicación que necesita el usuario.
+ * No se usa para filtrar recetas; prepara instrucciones adaptadas en el futuro.
+ */
+export type CookingLevel = 'beginner' | 'intermediate' | 'advanced';
 
 export type MealType = 'desayuno' | 'comida' | 'merienda' | 'cena';
 
@@ -55,8 +62,15 @@ export interface FoodItem {
 
 export interface RecipeIngredient {
   foodId: string;
+  /** Texto de cantidad mostrado (compatible con recetas actuales). */
   quantity: string;
   optional?: boolean;
+  /**
+   * Cantidad numérica por 1 ración/persona (opcional).
+   * Preparado para escalar a N comensales sin reescribir ya todas las recetas.
+   */
+  amountPerServing?: number;
+  unit?: string;
 }
 
 /** Un método de cocción (principal o alternativo). */
@@ -74,13 +88,8 @@ export interface Recipe {
   timeMinutes: number;
   difficulty: Difficulty;
   ingredients: RecipeIngredient[];
-  /**
-   * Pasos por defecto si no hay methods o ninguno es compatible.
-   * Preferir methods cuando existan alternativas.
-   */
   steps: string[];
   mealTypes: MealType[];
-  /** Métodos de cocción (el primero compatible con el equipamiento del usuario se usa). */
   methods?: CookingMethod[];
   fodmap: {
     level: FodmapLevel;
@@ -88,8 +97,9 @@ export interface Recipe {
   };
   tags?: string[];
   imageHue?: number;
-  /** Receta creada por el usuario. */
   custom?: boolean;
+  /** Raciones de referencia de la receta (por defecto 1). */
+  baseServings?: number;
 }
 
 export interface MealEntry {
@@ -109,6 +119,13 @@ export interface AppearancePrefs {
   accent: AccentColor;
 }
 
+export interface FoodPreferences {
+  /** Priorizar en recomendaciones (no implica disponibilidad). */
+  likedFoodIds: string[];
+  /** Evitar normalmente en recomendaciones automáticas. */
+  avoidedFoodIds: string[];
+}
+
 export interface AppState {
   availableFoodIds: string[];
   hiddenFoodIds: string[];
@@ -117,10 +134,14 @@ export interface AppState {
   mealEntries: MealEntry[];
   recipeFeelings: Record<string, Feeling>;
   appearance: AppearancePrefs;
-  /** Equipamiento disponible en casa. */
   equipmentIds: EquipmentId[];
-  /** Recetas creadas por el usuario. */
   customRecipes: Recipe[];
+  /** Preferencias alimentarias (independientes de Mi cocina). */
+  foodPreferences: FoodPreferences;
+  /** Comensales habituales (mín. 1). */
+  defaultServings: number;
+  /** Nivel de detalle de instrucciones del usuario. */
+  cookingLevel: CookingLevel;
 }
 
 export interface RecipeMatch {
@@ -128,13 +149,11 @@ export interface RecipeMatch {
   available: string[];
   missing: string[];
   hasAll: boolean;
-  /** Nº de ingredientes principales (no condimento) que el usuario tiene. */
   mainAvailableCount: number;
-  /** Método de cocción seleccionado según equipamiento. */
   selectedMethod: CookingMethod | null;
-  /** Si falta equipamiento obligatorio (ningún método compatible). */
   missingEquipment: EquipmentId[];
   equipmentOk: boolean;
+  likedOverlap?: number;
 }
 
 export interface RecommendResult {

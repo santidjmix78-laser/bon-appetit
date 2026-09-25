@@ -10,6 +10,7 @@ import {
 import type {
   AppState,
   AppearancePrefs,
+  CookingLevel,
   EquipmentId,
   Feeling,
   FoodCategory,
@@ -51,6 +52,12 @@ interface AppContextValue {
   toggleEquipment: (id: EquipmentId) => void;
   saveCustomRecipe: (recipe: Recipe) => void;
   deleteCustomRecipe: (id: string) => void;
+  addLikedFood: (foodId: string) => void;
+  removeLikedFood: (foodId: string) => void;
+  addAvoidedFood: (foodId: string) => void;
+  removeAvoidedFood: (foodId: string) => void;
+  setDefaultServings: (n: number) => void;
+  setCookingLevel: (level: CookingLevel) => void;
   clearAllData: () => void;
   todayMeals: MealEntry[];
 }
@@ -240,6 +247,65 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }));
   }, []);
 
+  const addLikedFood = useCallback((foodId: string) => {
+    setState((prev) => {
+      if (prev.foodPreferences.likedFoodIds.includes(foodId)) return prev;
+      return {
+        ...prev,
+        foodPreferences: {
+          likedFoodIds: [...prev.foodPreferences.likedFoodIds, foodId],
+          avoidedFoodIds: prev.foodPreferences.avoidedFoodIds.filter(
+            (id) => id !== foodId,
+          ),
+        },
+      };
+    });
+  }, []);
+
+  const removeLikedFood = useCallback((foodId: string) => {
+    setState((prev) => ({
+      ...prev,
+      foodPreferences: {
+        ...prev.foodPreferences,
+        likedFoodIds: prev.foodPreferences.likedFoodIds.filter((id) => id !== foodId),
+      },
+    }));
+  }, []);
+
+  const addAvoidedFood = useCallback((foodId: string) => {
+    setState((prev) => {
+      if (prev.foodPreferences.avoidedFoodIds.includes(foodId)) return prev;
+      return {
+        ...prev,
+        foodPreferences: {
+          likedFoodIds: prev.foodPreferences.likedFoodIds.filter((id) => id !== foodId),
+          avoidedFoodIds: [...prev.foodPreferences.avoidedFoodIds, foodId],
+        },
+      };
+    });
+  }, []);
+
+  const removeAvoidedFood = useCallback((foodId: string) => {
+    setState((prev) => ({
+      ...prev,
+      foodPreferences: {
+        ...prev.foodPreferences,
+        avoidedFoodIds: prev.foodPreferences.avoidedFoodIds.filter(
+          (id) => id !== foodId,
+        ),
+      },
+    }));
+  }, []);
+
+  const setDefaultServings = useCallback((n: number) => {
+    const value = Math.max(1, Math.min(20, Math.floor(n) || 1));
+    setState((prev) => ({ ...prev, defaultServings: value }));
+  }, []);
+
+  const setCookingLevel = useCallback((level: CookingLevel) => {
+    setState((prev) => ({ ...prev, cookingLevel: level }));
+  }, []);
+
   const clearAllData = useCallback(() => {
     setState(getDefaultState());
   }, []);
@@ -266,6 +332,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       toggleEquipment,
       saveCustomRecipe,
       deleteCustomRecipe,
+      addLikedFood,
+      removeLikedFood,
+      addAvoidedFood,
+      removeAvoidedFood,
+      setDefaultServings,
+      setCookingLevel,
       clearAllData,
       todayMeals,
     }),
@@ -285,6 +357,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       toggleEquipment,
       saveCustomRecipe,
       deleteCustomRecipe,
+      addLikedFood,
+      removeLikedFood,
+      addAvoidedFood,
+      removeAvoidedFood,
+      setDefaultServings,
+      setCookingLevel,
       clearAllData,
       todayMeals,
     ],

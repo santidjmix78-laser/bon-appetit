@@ -1,6 +1,14 @@
 import { DEFAULT_FOODS } from '../data/foods';
 import { DEFAULT_EQUIPMENT } from '../data/equipment';
-import type { AppState, EquipmentId, MealEntry, MealType, Recipe } from '../types';
+import type {
+  AppState,
+  CookingLevel,
+  EquipmentId,
+  FoodPreferences,
+  MealEntry,
+  MealType,
+  Recipe,
+} from '../types';
 import { DEFAULT_APPEARANCE } from './appearance';
 
 const STORAGE_KEY = 'bon-appetit-v1';
@@ -38,6 +46,16 @@ const VALID_EQUIPMENT = new Set<EquipmentId>([
   'batidora',
   'tostadora',
 ]);
+const VALID_COOKING_LEVELS = new Set<CookingLevel>([
+  'beginner',
+  'intermediate',
+  'advanced',
+]);
+
+export const DEFAULT_FOOD_PREFERENCES: FoodPreferences = {
+  likedFoodIds: [],
+  avoidedFoodIds: [],
+};
 
 function migrateMealEntries(entries: MealEntry[] | undefined): MealEntry[] {
   if (!entries) return [];
@@ -54,12 +72,49 @@ function migrateEquipment(ids: unknown): EquipmentId[] {
 
 function migrateCustomRecipes(raw: unknown): Recipe[] {
   if (!Array.isArray(raw)) return [];
-  return raw.filter((r) => r && typeof r === 'object' && typeof (r as Recipe).id === 'string') as Recipe[];
+  return raw.filter(
+    (r) => r && typeof r === 'object' && typeof (r as Recipe).id === 'string',
+  ) as Recipe[];
+}
+
+function migrateStringIdList(raw: unknown): string[] {
+  if (!Array.isArray(raw)) return [];
+  const unique = new Set<string>();
+  for (const id of raw) {
+    if (typeof id === 'string' && id.trim()) unique.add(id);
+  }
+  return [...unique];
+}
+
+function migrateFoodPreferences(raw: unknown): FoodPreferences {
+  if (!raw || typeof raw !== 'object') return { ...DEFAULT_FOOD_PREFERENCES, likedFoodIds: [], avoidedFoodIds: [] };
+  const pref = raw as Partial<FoodPreferences>;
+  const liked = migrateStringIdList(pref.likedFoodIds);
+  const avoided = migrateStringIdList(pref.avoidedFoodIds);
+  // Evitar que un mismo alimento esté en ambas listas: prioriza "evitar"
+  const avoidedSet = new Set(avoided);
+  return {
+    likedFoodIds: liked.filter((id) => !avoidedSet.has(id)),
+    avoidedFoodIds: avoided,
+  };
+}
+
+function migrateServings(raw: unknown): number {
+  const n = typeof raw === 'number' ? raw : Number(raw);
+  if (!Number.isFinite(n) || n < 1) return 1;
+  return Math.min(20, Math.floor(n));
+}
+
+function migrateCookingLevel(raw: unknown): CookingLevel {
+  if (typeof raw === 'string' && VALID_COOKING_LEVELS.has(raw as CookingLevel)) {
+    return raw as CookingLevel;
+  }
+  return 'beginner';
 }
 
 /**
- * Carga estado con migración compatible (v1 → 1.1 → 1.1.1).
- * Conserva cocina, favoritos, historial, valoraciones y apariencia.
+ * Carga estado con migración compatible (v1 → … → 1.2.0).
+ * Conserva cocina, favoritos, historial, valoraciones, apariencia y equipamiento.
  */
 export function loadState(): AppState {
   try {
@@ -80,6 +135,9 @@ export function loadState(): AppState {
       },
       equipmentIds: migrateEquipment(parsed.equipmentIds),
       customRecipes: migrateCustomRecipes(parsed.customRecipes),
+      foodPreferences: migrateFoodPreferences(parsed.foodPreferences),
+      defaultServings: migrateServings(parsed.defaultServings),
+      cookingLevel: migrateCookingLevel(parsed.cookingLevel),
     };
   } catch {
     return getDefaultState();
@@ -101,6 +159,12 @@ export function getDefaultState(): AppState {
     appearance: { ...DEFAULT_APPEARANCE },
     equipmentIds: [...DEFAULT_EQUIPMENT],
     customRecipes: [],
+    foodPreferences: {
+      likedFoodIds: [],
+      avoidedFoodIds: [],
+    },
+    defaultServings: 1,
+    cookingLevel: 'beginner',
   };
 }
 

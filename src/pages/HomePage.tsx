@@ -7,48 +7,9 @@ import type { MealType } from '../types';
 export function HomePage() {
   const navigate = useNavigate();
   const { todayMeals, addMealEntry } = useApp();
-  const [showTodayPrompt, setShowTodayPrompt] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
   const [todayText, setTodayText] = useState('');
   const [mealType, setMealType] = useState<MealType>('comida');
-  const [pendingAction, setPendingAction] = useState<'recomendar' | 'planificar' | null>(null);
-
-  const hasLoggedToday = todayMeals.length > 0;
-  const isWeekday = (() => {
-    const d = new Date().getDay();
-    return d >= 1 && d <= 5;
-  })();
-
-  function startRecommend(mode: 'recomendar' | 'cocinar' | 'planificar') {
-    if (mode === 'recomendar' && isWeekday && !hasLoggedToday) {
-      setPendingAction('recomendar');
-      setShowTodayPrompt(true);
-      return;
-    }
-    if (mode === 'planificar' && isWeekday && !hasLoggedToday) {
-      setPendingAction('planificar');
-      setShowTodayPrompt(true);
-      return;
-    }
-    navigate(`/recomendar?modo=${mode}`);
-  }
-
-  function saveTodayAndContinue() {
-    if (todayText.trim()) {
-      addMealEntry({ text: todayText, mealType });
-    }
-    setShowTodayPrompt(false);
-    setTodayText('');
-    const modo = pendingAction === 'planificar' ? 'planificar' : 'recomendar';
-    setPendingAction(null);
-    navigate(`/recomendar?modo=${modo}`);
-  }
-
-  function skipAndContinue() {
-    setShowTodayPrompt(false);
-    const modo = pendingAction === 'planificar' ? 'planificar' : 'recomendar';
-    setPendingAction(null);
-    navigate(`/recomendar?modo=${modo}`);
-  }
 
   return (
     <div className="page page--home">
@@ -75,48 +36,58 @@ export function HomePage() {
         <button
           type="button"
           className="action-card action-card--primary"
-          onClick={() => startRecommend('recomendar')}
+          onClick={() => navigate('/recomendar?modo=cocinar')}
         >
-          <span className="action-card__title">Recomiéndame qué comer</span>
-          <span className="action-card__desc">Según lo que tienes y el tiempo</span>
-        </button>
-        <button type="button" className="action-card" onClick={() => startRecommend('cocinar')}>
           <span className="action-card__title">Cocinar con lo que tengo</span>
-          <span className="action-card__desc">Cruza tu cocina con recetas</span>
+          <span className="action-card__desc">
+            Recetas con tus alimentos disponibles ahora
+          </span>
         </button>
-        <button type="button" className="action-card" onClick={() => startRecommend('planificar')}>
-          <span className="action-card__title">Planificar</span>
-          <span className="action-card__desc">Elige tipo, tiempo y mira opciones</span>
-        </button>
+
         <button
           type="button"
           className="action-card"
-          onClick={() => {
-            setPendingAction(null);
-            setShowTodayPrompt(true);
-          }}
+          onClick={() => navigate('/modo-chef')}
         >
-          <span className="action-card__title">Registrar lo que he comido</span>
-          <span className="action-card__desc">Desayuno, comida, merienda o cena</span>
+          <span className="action-card__title">Modo Chef</span>
+          <span className="action-card__desc">Descubre platos y cocina paso a paso</span>
+        </button>
+
+        <button
+          type="button"
+          className="action-card"
+          onClick={() => navigate('/recomendar?modo=planificar')}
+        >
+          <span className="action-card__title">Planificar</span>
+          <span className="action-card__desc">Elige tipo, tiempo y mira opciones</span>
+        </button>
+
+        <button
+          type="button"
+          className="action-card action-card--secondary"
+          onClick={() => setShowRegister(true)}
+        >
+          <span className="action-card__title">+ Registrar lo que he comido</span>
+          <span className="action-card__desc">Anota desayuno, comida, merienda o cena</span>
         </button>
       </section>
 
       <div className="quick-links">
         <Link to="/cocina" className="text-link">
-          Ir a Mi cocina →
+          Mi cocina →
         </Link>
         <Link to="/mis-recetas" className="text-link">
           Mis recetas →
         </Link>
         <Link to="/semana" className="text-link">
-          Ver mi semana →
+          Mi semana →
         </Link>
       </div>
 
-      {showTodayPrompt && (
-        <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="today-q">
+      {showRegister && (
+        <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="register-q">
           <div className="modal">
-            <h2 id="today-q">¿Qué has comido hoy?</h2>
+            <h2 id="register-q">Registrar lo que he comido</h2>
             <p className="modal__hint">
               Escribe libremente, por ejemplo: «Bocadillo de pavo y queso y una Coca-Cola»
             </p>
@@ -141,44 +112,26 @@ export function HomePage() {
               autoFocus
             />
             <div className="modal__actions">
-              {pendingAction ? (
-                <>
-                  <button
-                    type="button"
-                    className="btn btn--primary btn--block"
-                    onClick={saveTodayAndContinue}
-                    disabled={!todayText.trim()}
-                  >
-                    Guardar y continuar
-                  </button>
-                  <button type="button" className="btn btn--ghost btn--block" onClick={skipAndContinue}>
-                    Continuar sin registrar
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    type="button"
-                    className="btn btn--primary btn--block"
-                    onClick={() => {
-                      if (!todayText.trim()) return;
-                      addMealEntry({ text: todayText, mealType });
-                      setTodayText('');
-                      setShowTodayPrompt(false);
-                    }}
-                    disabled={!todayText.trim()}
-                  >
-                    Guardar
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn--ghost btn--block"
-                    onClick={() => setShowTodayPrompt(false)}
-                  >
-                    Cancelar
-                  </button>
-                </>
-              )}
+              <button
+                type="button"
+                className="btn btn--primary btn--block"
+                onClick={() => {
+                  if (!todayText.trim()) return;
+                  addMealEntry({ text: todayText, mealType });
+                  setTodayText('');
+                  setShowRegister(false);
+                }}
+                disabled={!todayText.trim()}
+              >
+                Guardar
+              </button>
+              <button
+                type="button"
+                className="btn btn--ghost btn--block"
+                onClick={() => setShowRegister(false)}
+              >
+                Cancelar
+              </button>
             </div>
           </div>
         </div>

@@ -18,10 +18,10 @@ export function RecommendPage() {
   const [time, setTime] = useState<TimeOption | null>(null);
 
   const titles: Record<string, string> = {
-    recomendar: 'Recomiéndame qué comer',
-    cena: 'Recomiéndame qué comer',
     cocinar: 'Cocinar con lo que tengo',
     planificar: 'Planificar',
+    recomendar: 'Planificar',
+    cena: 'Cocinar con lo que tengo',
   };
 
   function selectMealType(v: MealType) {
@@ -40,6 +40,8 @@ export function RecommendPage() {
       maxMinutes: time,
       mealType,
       mode: isStrict ? 'strict' : 'flexible',
+      likedFoodIds: state.foodPreferences.likedFoodIds,
+      avoidedFoodIds: state.foodPreferences.avoidedFoodIds,
     });
   }, [
     time,
@@ -48,6 +50,8 @@ export function RecommendPage() {
     state.customFoods,
     state.customRecipes,
     state.equipmentIds,
+    state.foodPreferences.likedFoodIds,
+    state.foodPreferences.avoidedFoodIds,
     isStrict,
   ]);
 

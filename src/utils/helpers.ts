@@ -1,6 +1,6 @@
 import { DEFAULT_FOODS } from '../data/foods';
 import { RECIPES } from '../data/recipes';
-import type { FoodItem, MealType, Recipe } from '../types';
+import type { CookingLevel, FoodItem, MealType, Recipe } from '../types';
 
 export function getAllFoods(
   customFoods: FoodItem[],
@@ -107,3 +107,21 @@ export const MEAL_TYPE_OPTIONS: {
 export function mealTypeLabel(type: MealType): string {
   return MEAL_TYPE_OPTIONS.find((m) => m.id === type)?.label ?? type;
 }
+
+/** Normaliza texto para búsqueda (minúsculas + sin acentos). */
+export function normalizeSearch(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim();
+}
+
+export const COOKING_LEVEL_OPTIONS: {
+  id: CookingLevel;
+  label: string;
+}[] = [
+  { id: 'beginner', label: 'Principiante' },
+  { id: 'intermediate', label: 'Intermedio' },
+  { id: 'advanced', label: 'Avanzado' },
+];
