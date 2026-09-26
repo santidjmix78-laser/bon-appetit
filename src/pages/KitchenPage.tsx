@@ -185,6 +185,14 @@ export function KitchenPage() {
               })}
             </ul>
           )}
+          <button
+            type="button"
+            className="btn btn--ghost btn--block"
+            style={{ marginTop: '1rem' }}
+            onClick={() => setQuery('')}
+          >
+            ← Volver a Mi cocina
+          </button>
         </section>
       ) : (
         ZONES.map((z) => {

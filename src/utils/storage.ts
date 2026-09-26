@@ -55,6 +55,7 @@ const VALID_COOKING_LEVELS = new Set<CookingLevel>([
 export const DEFAULT_FOOD_PREFERENCES: FoodPreferences = {
   likedFoodIds: [],
   avoidedFoodIds: [],
+  labels: {},
 };
 
 function migrateMealEntries(entries: MealEntry[] | undefined): MealEntry[] {
@@ -87,15 +88,26 @@ function migrateStringIdList(raw: unknown): string[] {
 }
 
 function migrateFoodPreferences(raw: unknown): FoodPreferences {
-  if (!raw || typeof raw !== 'object') return { ...DEFAULT_FOOD_PREFERENCES, likedFoodIds: [], avoidedFoodIds: [] };
+  if (!raw || typeof raw !== 'object') {
+    return { likedFoodIds: [], avoidedFoodIds: [], labels: {} };
+  }
   const pref = raw as Partial<FoodPreferences>;
   const liked = migrateStringIdList(pref.likedFoodIds);
   const avoided = migrateStringIdList(pref.avoidedFoodIds);
-  // Evitar que un mismo alimento esté en ambas listas: prioriza "evitar"
   const avoidedSet = new Set(avoided);
+  const labels =
+    pref.labels && typeof pref.labels === 'object' && !Array.isArray(pref.labels)
+      ? Object.fromEntries(
+          Object.entries(pref.labels as Record<string, unknown>).filter(
+            (entry): entry is [string, string] =>
+              typeof entry[0] === 'string' && typeof entry[1] === 'string',
+          ),
+        )
+      : {};
   return {
     likedFoodIds: liked.filter((id) => !avoidedSet.has(id)),
     avoidedFoodIds: avoided,
+    labels,
   };
 }
 
@@ -113,7 +125,7 @@ function migrateCookingLevel(raw: unknown): CookingLevel {
 }
 
 /**
- * Carga estado con migración compatible (v1 → … → 1.2.0).
+ * Carga estado con migración compatible (v1 → … → 1.2.1).
  * Conserva cocina, favoritos, historial, valoraciones, apariencia y equipamiento.
  */
 export function loadState(): AppState {
@@ -162,6 +174,7 @@ export function getDefaultState(): AppState {
     foodPreferences: {
       likedFoodIds: [],
       avoidedFoodIds: [],
+      labels: {},
     },
     defaultServings: 1,
     cookingLevel: 'beginner',

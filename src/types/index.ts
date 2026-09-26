@@ -120,10 +120,12 @@ export interface AppearancePrefs {
 }
 
 export interface FoodPreferences {
-  /** Priorizar en recomendaciones (no implica disponibilidad). */
+  /** Priorizar en recomendaciones (no implica disponibilidad). IDs de catálogo o claves pref:… */
   likedFoodIds: string[];
-  /** Evitar normalmente en recomendaciones automáticas. */
+  /** Evitar normalmente en recomendaciones automáticas. IDs de catálogo o claves pref:… */
   avoidedFoodIds: string[];
+  /** Etiquetas para preferencias libres (claves pref:…). No forman parte de Mi cocina. */
+  labels: Record<string, string>;
 }
 
 export interface AppState {

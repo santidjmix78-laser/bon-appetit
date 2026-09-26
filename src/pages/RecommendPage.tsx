@@ -42,6 +42,7 @@ export function RecommendPage() {
       mode: isStrict ? 'strict' : 'flexible',
       likedFoodIds: state.foodPreferences.likedFoodIds,
       avoidedFoodIds: state.foodPreferences.avoidedFoodIds,
+      preferenceLabels: state.foodPreferences.labels ?? {},
     });
   }, [
     time,
@@ -52,6 +53,7 @@ export function RecommendPage() {
     state.equipmentIds,
     state.foodPreferences.likedFoodIds,
     state.foodPreferences.avoidedFoodIds,
+    state.foodPreferences.labels,
     isStrict,
   ]);
 

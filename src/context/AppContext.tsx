@@ -21,7 +21,7 @@ import type {
   StorageZone,
 } from '../types';
 import { applyAppearance } from '../utils/appearance';
-import { nowTime, slugify, todayISO } from '../utils/helpers';
+import { nowTime, resolvePreferenceEntry, slugify, todayISO, normalizeSearch, preferenceDisplayName } from '../utils/helpers';
 import {
   emptyKitchenLibrary,
   getDefaultState,
@@ -52,9 +52,9 @@ interface AppContextValue {
   toggleEquipment: (id: EquipmentId) => void;
   saveCustomRecipe: (recipe: Recipe) => void;
   deleteCustomRecipe: (id: string) => void;
-  addLikedFood: (foodId: string) => void;
+  addLikedFood: (name: string) => void;
   removeLikedFood: (foodId: string) => void;
-  addAvoidedFood: (foodId: string) => void;
+  addAvoidedFood: (name: string) => void;
   removeAvoidedFood: (foodId: string) => void;
   setDefaultServings: (n: number) => void;
   setCookingLevel: (level: CookingLevel) => void;
@@ -247,54 +247,123 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }));
   }, []);
 
-  const addLikedFood = useCallback((foodId: string) => {
+  const addLikedFood = useCallback((name: string) => {
     setState((prev) => {
-      if (prev.foodPreferences.likedFoodIds.includes(foodId)) return prev;
+      const entry = resolvePreferenceEntry(name, prev.customFoods);
+      if (!entry.key) return prev;
+
+      const alreadyLiked = prev.foodPreferences.likedFoodIds.some((key) => {
+        if (key === entry.key) return true;
+        const existingLabel = preferenceDisplayName(
+          key,
+          prev.foodPreferences.labels,
+          prev.customFoods,
+        );
+        return normalizeSearch(existingLabel) === normalizeSearch(entry.label);
+      });
+      if (alreadyLiked) return prev;
+
+      const labels = { ...prev.foodPreferences.labels };
+      if (entry.key.startsWith('pref:')) {
+        labels[entry.key] = entry.label;
+      }
+
       return {
         ...prev,
         foodPreferences: {
-          likedFoodIds: [...prev.foodPreferences.likedFoodIds, foodId],
-          avoidedFoodIds: prev.foodPreferences.avoidedFoodIds.filter(
-            (id) => id !== foodId,
-          ),
+          likedFoodIds: [...prev.foodPreferences.likedFoodIds, entry.key],
+          avoidedFoodIds: prev.foodPreferences.avoidedFoodIds.filter((id) => {
+            if (id === entry.key) return false;
+            const lab = preferenceDisplayName(
+              id,
+              prev.foodPreferences.labels,
+              prev.customFoods,
+            );
+            return normalizeSearch(lab) !== normalizeSearch(entry.label);
+          }),
+          labels,
         },
       };
     });
   }, []);
 
   const removeLikedFood = useCallback((foodId: string) => {
-    setState((prev) => ({
-      ...prev,
-      foodPreferences: {
-        ...prev.foodPreferences,
-        likedFoodIds: prev.foodPreferences.likedFoodIds.filter((id) => id !== foodId),
-      },
-    }));
-  }, []);
-
-  const addAvoidedFood = useCallback((foodId: string) => {
     setState((prev) => {
-      if (prev.foodPreferences.avoidedFoodIds.includes(foodId)) return prev;
+      const labels = { ...prev.foodPreferences.labels };
+      if (foodId.startsWith('pref:')) delete labels[foodId];
       return {
         ...prev,
         foodPreferences: {
-          likedFoodIds: prev.foodPreferences.likedFoodIds.filter((id) => id !== foodId),
-          avoidedFoodIds: [...prev.foodPreferences.avoidedFoodIds, foodId],
+          ...prev.foodPreferences,
+          likedFoodIds: prev.foodPreferences.likedFoodIds.filter(
+            (id) => id !== foodId,
+          ),
+          labels,
+        },
+      };
+    });
+  }, []);
+
+  const addAvoidedFood = useCallback((name: string) => {
+    setState((prev) => {
+      const entry = resolvePreferenceEntry(name, prev.customFoods);
+      if (!entry.key) return prev;
+
+      const alreadyAvoided = prev.foodPreferences.avoidedFoodIds.some((key) => {
+        if (key === entry.key) return true;
+        const existingLabel = preferenceDisplayName(
+          key,
+          prev.foodPreferences.labels,
+          prev.customFoods,
+        );
+        return normalizeSearch(existingLabel) === normalizeSearch(entry.label);
+      });
+      if (alreadyAvoided) return prev;
+
+      const labels = { ...prev.foodPreferences.labels };
+      if (entry.key.startsWith('pref:')) {
+        labels[entry.key] = entry.label;
+      }
+
+      return {
+        ...prev,
+        foodPreferences: {
+          likedFoodIds: prev.foodPreferences.likedFoodIds.filter((id) => {
+            const lab = preferenceDisplayName(
+              id,
+              prev.foodPreferences.labels,
+              prev.customFoods,
+            );
+            return (
+              id !== entry.key &&
+              normalizeSearch(lab) !== normalizeSearch(entry.label)
+            );
+          }),
+          avoidedFoodIds: [
+            ...prev.foodPreferences.avoidedFoodIds.filter((id) => id !== entry.key),
+            entry.key,
+          ],
+          labels,
         },
       };
     });
   }, []);
 
   const removeAvoidedFood = useCallback((foodId: string) => {
-    setState((prev) => ({
-      ...prev,
-      foodPreferences: {
-        ...prev.foodPreferences,
-        avoidedFoodIds: prev.foodPreferences.avoidedFoodIds.filter(
-          (id) => id !== foodId,
-        ),
-      },
-    }));
+    setState((prev) => {
+      const labels = { ...prev.foodPreferences.labels };
+      if (foodId.startsWith('pref:')) delete labels[foodId];
+      return {
+        ...prev,
+        foodPreferences: {
+          ...prev.foodPreferences,
+          avoidedFoodIds: prev.foodPreferences.avoidedFoodIds.filter(
+            (id) => id !== foodId,
+          ),
+          labels,
+        },
+      };
+    });
   }, []);
 
   const setDefaultServings = useCallback((n: number) => {

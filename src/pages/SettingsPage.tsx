@@ -9,9 +9,11 @@ import {
 } from '../utils/appearance';
 import {
   COOKING_LEVEL_OPTIONS,
-  getAllFoods,
-  getFoodName,
+  displayFoodLabel,
+  getPreferenceFoodCatalog,
   normalizeSearch,
+  preferenceDisplayName,
+  resolvePreferenceEntry,
 } from '../utils/helpers';
 import type { AccentColor, CookingLevel, FoodItem, ThemePreference } from '../types';
 
@@ -30,8 +32,8 @@ export function SettingsPage() {
   } = useApp();
 
   const foods = useMemo(
-    () => getAllFoods(state.customFoods, state.hiddenFoodIds),
-    [state.customFoods, state.hiddenFoodIds],
+    () => getPreferenceFoodCatalog(state.customFoods),
+    [state.customFoods],
   );
 
   function handleReset() {
@@ -62,6 +64,7 @@ export function SettingsPage() {
           title="❤️ Me gusta especialmente"
           foodIds={state.foodPreferences.likedFoodIds}
           foods={foods}
+          labels={state.foodPreferences.labels ?? {}}
           customFoods={state.customFoods}
           onAdd={addLikedFood}
           onRemove={removeLikedFood}
@@ -75,6 +78,7 @@ export function SettingsPage() {
           title="🚫 Prefiero evitar"
           foodIds={state.foodPreferences.avoidedFoodIds}
           foods={foods}
+          labels={state.foodPreferences.labels ?? {}}
           customFoods={state.customFoods}
           onAdd={addAvoidedFood}
           onRemove={removeAvoidedFood}
@@ -238,6 +242,7 @@ function PreferenceList({
   title,
   foodIds,
   foods,
+  labels,
   customFoods,
   onAdd,
   onRemove,
@@ -246,13 +251,13 @@ function PreferenceList({
   title: string;
   foodIds: string[];
   foods: FoodItem[];
+  labels: Record<string, string>;
   customFoods: FoodItem[];
-  onAdd: (id: string) => void;
+  onAdd: (name: string) => void;
   onRemove: (id: string) => void;
   excludeIds: string[];
 }) {
   const [query, setQuery] = useState('');
-  const excludeKey = excludeIds.join(',');
 
   const suggestions = useMemo(() => {
     const q = normalizeSearch(query);
@@ -261,9 +266,31 @@ function PreferenceList({
     return foods
       .filter((f) => !exclude.has(f.id) && normalizeSearch(f.name).includes(q))
       .slice(0, 8);
-    // excludeIds captured via excludeKey for stable identity
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- excludeKey tracks excludeIds
-  }, [foods, query, excludeKey, excludeIds]);
+  }, [foods, query, excludeIds]);
+
+  const freeAdd = useMemo(() => {
+    const trimmed = query.trim();
+    if (!trimmed) return null;
+    const entry = resolvePreferenceEntry(trimmed, customFoods);
+    if (!entry.key) return null;
+
+    const already = excludeIds.some((key) => {
+      if (key === entry.key) return true;
+      return (
+        normalizeSearch(preferenceDisplayName(key, labels, customFoods)) ===
+        normalizeSearch(entry.label)
+      );
+    });
+    if (already) return null;
+
+    // Si hay sugerencia exacta de catálogo, no hace falta botón libre aparte
+    const exactCatalog = foods.some(
+      (f) => normalizeSearch(f.name) === normalizeSearch(entry.label),
+    );
+    if (exactCatalog) return null;
+
+    return displayFoodLabel(trimmed);
+  }, [query, customFoods, excludeIds, labels, foods]);
 
   return (
     <div className="pref-block">
@@ -280,7 +307,7 @@ function PreferenceList({
               onClick={() => onRemove(id)}
               title="Quitar"
             >
-              {getFoodName(id, customFoods)} ×
+              {preferenceDisplayName(id, labels, customFoods)} ×
             </button>
           ))
         )}
@@ -292,7 +319,7 @@ function PreferenceList({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      {suggestions.length > 0 && (
+      {(suggestions.length > 0 || freeAdd) && (
         <div className="chip-grid pref-suggestions">
           {suggestions.map((f) => (
             <button
@@ -300,13 +327,25 @@ function PreferenceList({
               type="button"
               className="chip"
               onClick={() => {
-                onAdd(f.id);
+                onAdd(f.name);
                 setQuery('');
               }}
             >
               + {f.name}
             </button>
           ))}
+          {freeAdd && (
+            <button
+              type="button"
+              className="chip"
+              onClick={() => {
+                onAdd(freeAdd);
+                setQuery('');
+              }}
+            >
+              + Añadir «{freeAdd}»
+            </button>
+          )}
         </div>
       )}
     </div>

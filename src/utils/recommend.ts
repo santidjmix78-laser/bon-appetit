@@ -10,7 +10,7 @@ import type {
   RecommendResult,
   TimeOption,
 } from '../types';
-import { getFoodName } from './helpers';
+import { getFoodName, countLikedOverlap, recipeUsesAvoidedFood } from './helpers';
 
 function isCondiment(foodId: string): boolean {
   return ALWAYS_AVAILABLE.has(foodId);
@@ -138,6 +138,7 @@ export function recommendRecipes(options: {
   mode: RecommendMode;
   likedFoodIds?: string[];
   avoidedFoodIds?: string[];
+  preferenceLabels?: Record<string, string>;
 }): RecommendResult {
   const {
     recipes,
@@ -149,19 +150,26 @@ export function recommendRecipes(options: {
     mode,
     likedFoodIds = [],
     avoidedFoodIds = [],
+    preferenceLabels = {},
   } = options;
 
-  const avoided = new Set(avoidedFoodIds);
-  const liked = new Set(likedFoodIds);
   const candidates: RecipeMatch[] = [];
 
   for (const recipe of recipes) {
     if (recipe.timeMinutes > maxMinutes) continue;
     if (mealType && !recipe.mealTypes.includes(mealType)) continue;
 
-    const required = recipe.ingredients.filter((i) => !i.optional);
-    // Prefiero evitar: no usar normalmente en recomendaciones automáticas
-    if (required.some((ing) => avoided.has(ing.foodId))) continue;
+    // Prefiero evitar (por id o nombre libre) — distinto de "ingrediente que falta"
+    if (
+      recipeUsesAvoidedFood(
+        recipe,
+        avoidedFoodIds,
+        preferenceLabels,
+        customFoods,
+      )
+    ) {
+      continue;
+    }
 
     const match = buildMatch(
       recipe,
@@ -169,7 +177,16 @@ export function recommendRecipes(options: {
       customFoods,
       equipmentIds,
     );
-    match.likedOverlap = required.filter((ing) => liked.has(ing.foodId)).length;
+
+    // Equipamiento = restricción dura (no se muestra como "te falta")
+    if (!match.equipmentOk) continue;
+
+    match.likedOverlap = countLikedOverlap(
+      recipe,
+      likedFoodIds,
+      preferenceLabels,
+      customFoods,
+    );
 
     // Sin ningún ingrediente principal disponible → no recomendar
     if (match.mainAvailableCount === 0) continue;
@@ -179,38 +196,27 @@ export function recommendRecipes(options: {
 
   candidates.sort((a, b) => sortMatches(a, b, likedFoodIds));
 
-  const ready = candidates.filter((m) => m.hasAll && m.equipmentOk);
+  const ready = candidates.filter((m) => m.hasAll);
 
   const needOne = candidates.filter(
-    (m) =>
-      m.missing.length === 1 &&
-      m.mainAvailableCount >= 1 &&
-      (mode === 'flexible' || m.equipmentOk || m.missingEquipment.length > 0),
+    (m) => m.missing.length === 1 && m.mainAvailableCount >= 1,
   );
 
-  const needOneStrict = needOne.filter((m) => m.equipmentOk);
-  const needOneFlex = needOne;
-
   const needTwo = candidates.filter(
-    (m) =>
-      m.missing.length === 2 &&
-      m.mainAvailableCount >= 1 &&
-      m.equipmentOk,
+    (m) => m.missing.length === 2 && m.mainAvailableCount >= 1,
   );
 
   if (mode === 'strict') {
     return {
       ready: ready.slice(0, 8),
-      needOne: ready.length >= 3 ? [] : needOneStrict.slice(0, 5),
+      needOne: ready.length >= 3 ? [] : needOne.slice(0, 5),
       needTwo:
-        ready.length + needOneStrict.length >= 3
-          ? []
-          : needTwo.slice(0, 3),
+        ready.length + needOne.length >= 3 ? [] : needTwo.slice(0, 3),
     };
   }
 
   const flexReady = ready.slice(0, 5);
-  const flexOne = needOneFlex
+  const flexOne = needOne
     .filter((m) => !flexReady.some((r) => r.recipe.id === m.recipe.id))
     .slice(0, flexReady.length >= 3 ? 3 : 5);
   const flexTwo =

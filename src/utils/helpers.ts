@@ -114,7 +114,121 @@ export function normalizeSearch(text: string): string {
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
-    .trim();
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
+/** Etiqueta visual limpia para preferencias libres. */
+export function displayFoodLabel(name: string): string {
+  const trimmed = name.trim().replace(/\s+/g, ' ');
+  if (!trimmed) return trimmed;
+  return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+}
+
+export function freePreferenceKey(name: string): string {
+  return `pref:${normalizeSearch(name)}`;
+}
+
+export function isFreePreferenceKey(key: string): boolean {
+  return key.startsWith('pref:');
+}
+
+/** Catálogo completo para preferencias (incluye ocultos de Mi cocina). */
+export function getPreferenceFoodCatalog(customFoods: FoodItem[]): FoodItem[] {
+  return [...DEFAULT_FOODS, ...customFoods];
+}
+
+/**
+ * Resuelve un nombre a foodId de catálogo o clave libre pref:…
+ * No modifica Mi cocina.
+ */
+export function resolvePreferenceEntry(
+  name: string,
+  customFoods: FoodItem[],
+): { key: string; label: string; foodId?: string } {
+  const label = displayFoodLabel(name);
+  const norm = normalizeSearch(name);
+  if (!norm) return { key: '', label: '' };
+
+  const catalog = getPreferenceFoodCatalog(customFoods);
+  const found = catalog.find((f) => normalizeSearch(f.name) === norm);
+  if (found) {
+    return { key: found.id, label: found.name, foodId: found.id };
+  }
+  return { key: freePreferenceKey(name), label };
+}
+
+export function preferenceDisplayName(
+  key: string,
+  labels: Record<string, string>,
+  customFoods: FoodItem[],
+): string {
+  if (labels[key]) return labels[key];
+  if (isFreePreferenceKey(key)) {
+    return displayFoodLabel(key.slice(5).replace(/-/g, ' '));
+  }
+  return getFoodName(key, customFoods);
+}
+
+/** ¿La receta usa un alimento evitado? (por id o por nombre normalizado). */
+export function recipeUsesAvoidedFood(
+  recipe: Recipe,
+  avoidedKeys: string[],
+  labels: Record<string, string>,
+  customFoods: FoodItem[],
+): boolean {
+  const required = recipe.ingredients.filter((i) => !i.optional);
+  const avoided = new Set(avoidedKeys);
+  const avoidedNorms = new Set<string>();
+
+  for (const key of avoidedKeys) {
+    if (isFreePreferenceKey(key)) {
+      avoidedNorms.add(key.slice(5));
+    }
+    const label = labels[key];
+    if (label) avoidedNorms.add(normalizeSearch(label));
+    if (!isFreePreferenceKey(key)) {
+      avoidedNorms.add(normalizeSearch(getFoodName(key, customFoods)));
+    }
+  }
+
+  for (const ing of required) {
+    if (avoided.has(ing.foodId)) return true;
+    const ingNorm = normalizeSearch(getFoodName(ing.foodId, customFoods));
+    if (avoidedNorms.has(ingNorm)) return true;
+  }
+  return false;
+}
+
+export function countLikedOverlap(
+  recipe: Recipe,
+  likedKeys: string[],
+  labels: Record<string, string>,
+  customFoods: FoodItem[],
+): number {
+  const required = recipe.ingredients.filter((i) => !i.optional);
+  const liked = new Set(likedKeys);
+  const likedNorms = new Set<string>();
+  for (const key of likedKeys) {
+    if (isFreePreferenceKey(key)) likedNorms.add(key.slice(5));
+    const label = labels[key];
+    if (label) likedNorms.add(normalizeSearch(label));
+    if (!isFreePreferenceKey(key)) {
+      likedNorms.add(normalizeSearch(getFoodName(key, customFoods)));
+    }
+  }
+
+  let n = 0;
+  for (const ing of required) {
+    if (liked.has(ing.foodId)) {
+      n += 1;
+      continue;
+    }
+    if (likedNorms.has(normalizeSearch(getFoodName(ing.foodId, customFoods)))) {
+      n += 1;
+    }
+  }
+  return n;
 }
 
 export const COOKING_LEVEL_OPTIONS: {
