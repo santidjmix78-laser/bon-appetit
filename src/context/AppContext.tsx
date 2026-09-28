@@ -11,6 +11,7 @@ import type {
   AppState,
   AppearancePrefs,
   CookingLevel,
+  CookStepTweak,
   EquipmentId,
   Feeling,
   FoodCategory,
@@ -19,7 +20,9 @@ import type {
   MealType,
   Recipe,
   StorageZone,
+  StovePowerPrefs,
 } from '../types';
+import { recipeStepKey } from '../utils/cookAssist';
 import { applyAppearance } from '../utils/appearance';
 import { nowTime, resolvePreferenceEntry, slugify, todayISO, normalizeSearch, preferenceDisplayName } from '../utils/helpers';
 import {
@@ -58,6 +61,19 @@ interface AppContextValue {
   removeAvoidedFood: (foodId: string) => void;
   setDefaultServings: (n: number) => void;
   setCookingLevel: (level: CookingLevel) => void;
+  setStovePower: (prefs: StovePowerPrefs | null) => void;
+  saveCookTweak: (
+    scope: 'recipe' | 'similar',
+    key: string,
+    tweak: CookStepTweak,
+  ) => void;
+  clearCookTweak: (scope: 'recipe' | 'similar', key: string) => void;
+  getCookTweak: (
+    recipeId: string,
+    methodId: string,
+    stepId: string,
+    similarKey?: string,
+  ) => CookStepTweak | null;
   clearAllData: () => void;
   todayMeals: MealEntry[];
 }
@@ -375,6 +391,57 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setState((prev) => ({ ...prev, cookingLevel: level }));
   }, []);
 
+  const setStovePower = useCallback((prefs: StovePowerPrefs | null) => {
+    setState((prev) => ({ ...prev, stovePower: prefs }));
+  }, []);
+
+  const saveCookTweak = useCallback(
+    (scope: 'recipe' | 'similar', key: string, tweak: CookStepTweak) => {
+      setState((prev) => {
+        const cookTweaks = {
+          byRecipeStep: { ...prev.cookTweaks.byRecipeStep },
+          bySimilar: { ...prev.cookTweaks.bySimilar },
+        };
+        if (scope === 'recipe') cookTweaks.byRecipeStep[key] = tweak;
+        else cookTweaks.bySimilar[key] = tweak;
+        return { ...prev, cookTweaks };
+      });
+    },
+    [],
+  );
+
+  const clearCookTweak = useCallback(
+    (scope: 'recipe' | 'similar', key: string) => {
+      setState((prev) => {
+        const cookTweaks = {
+          byRecipeStep: { ...prev.cookTweaks.byRecipeStep },
+          bySimilar: { ...prev.cookTweaks.bySimilar },
+        };
+        if (scope === 'recipe') delete cookTweaks.byRecipeStep[key];
+        else delete cookTweaks.bySimilar[key];
+        return { ...prev, cookTweaks };
+      });
+    },
+    [],
+  );
+
+  const getCookTweak = useCallback(
+    (
+      recipeId: string,
+      methodId: string,
+      stepId: string,
+      similarKey?: string,
+    ): CookStepTweak | null => {
+      const stepKey = recipeStepKey(recipeId, methodId, stepId);
+      return (
+        state.cookTweaks.byRecipeStep[stepKey] ??
+        (similarKey ? state.cookTweaks.bySimilar[similarKey] : null) ??
+        null
+      );
+    },
+    [state.cookTweaks],
+  );
+
   const clearAllData = useCallback(() => {
     setState(getDefaultState());
   }, []);
@@ -407,6 +474,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       removeAvoidedFood,
       setDefaultServings,
       setCookingLevel,
+      setStovePower,
+      saveCookTweak,
+      clearCookTweak,
+      getCookTweak,
       clearAllData,
       todayMeals,
     }),
@@ -432,6 +503,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       removeAvoidedFood,
       setDefaultServings,
       setCookingLevel,
+      setStovePower,
+      saveCookTweak,
+      clearCookTweak,
+      getCookTweak,
       clearAllData,
       todayMeals,
     ],

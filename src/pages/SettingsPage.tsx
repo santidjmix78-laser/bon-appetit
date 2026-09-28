@@ -29,6 +29,7 @@ export function SettingsPage() {
     removeAvoidedFood,
     setDefaultServings,
     setCookingLevel,
+    setStovePower,
   } = useApp();
 
   const foods = useMemo(
@@ -191,6 +192,61 @@ export function SettingsPage() {
       </section>
 
       <section className="card">
+        <h2>Mi placa (opcional)</h2>
+        <p className="muted">
+          Si marcas los niveles de tu vitro/inducción, Pepper puede orientar a
+          principiantes con una equivalencia aproximada (nunca exacta).
+        </p>
+        <label className="chip chip--lg" style={{ display: 'inline-flex', gap: '0.5rem' }}>
+          <input
+            type="checkbox"
+            checked={state.stovePower != null}
+            onChange={(e) => {
+              if (e.target.checked) setStovePower({ min: 1, max: 14 });
+              else setStovePower(null);
+            }}
+          />
+          Mi placa tiene niveles de potencia
+        </label>
+        {state.stovePower && (
+          <div className="stove-power-row">
+            <label className="field">
+              <span>Mínimo</span>
+              <input
+                className="input"
+                type="number"
+                min={0}
+                max={state.stovePower.max - 1}
+                value={state.stovePower.min}
+                onChange={(e) =>
+                  setStovePower({
+                    min: Number(e.target.value),
+                    max: state.stovePower!.max,
+                  })
+                }
+              />
+            </label>
+            <label className="field">
+              <span>Máximo</span>
+              <input
+                className="input"
+                type="number"
+                min={state.stovePower.min + 1}
+                max={99}
+                value={state.stovePower.max}
+                onChange={(e) =>
+                  setStovePower({
+                    min: state.stovePower!.min,
+                    max: Number(e.target.value),
+                  })
+                }
+              />
+            </label>
+          </div>
+        )}
+      </section>
+
+      <section className="card">
         <h2>Mis recetas</h2>
         <p className="muted">Crea, edita y usa tus propias recetas en las recomendaciones.</p>
         <Link to="/mis-recetas" className="btn btn--primary btn--block">
@@ -218,8 +274,8 @@ export function SettingsPage() {
       <section className="card">
         <h2>Sobre FODMAP</h2>
         <p className="muted">
-          La orientación FODMAP es informativa y de demostración. No diagnostica ni prohíbe alimentos.
-          Tu valoración personal («¿Cómo te ha sentado?») convive con ella.
+          La orientación FODMAP es informativa. No diagnostica ni prohíbe alimentos.
+          Puede depender de la cantidad y tolerancia personal.
         </p>
       </section>
 

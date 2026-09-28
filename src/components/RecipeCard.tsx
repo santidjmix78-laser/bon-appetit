@@ -3,6 +3,7 @@ import type { RecipeMatch } from '../types';
 import { FodmapBadge } from './FodmapBadge';
 import { useApp } from '../context/AppContext';
 import { equipmentLabel } from '../data/equipment';
+import { displayDifficulty } from '../utils/cookAssist';
 
 interface Props {
   match: RecipeMatch;
@@ -15,39 +16,36 @@ export function RecipeCard({ match }: Props) {
   const feeling = state.recipeFeelings[recipe.id];
 
   return (
-    <article className="recipe-card">
-      <div
-        className="recipe-card__photo"
-        style={{
-          background: `linear-gradient(145deg, hsl(${recipe.imageHue ?? 90} 40% 28%), hsl(${(recipe.imageHue ?? 90) + 40} 35% 18%))`,
-        }}
-        aria-hidden
-      >
-        <span className="recipe-card__photo-label">{recipe.name.charAt(0)}</span>
-        <button
-          type="button"
-          className={`fav-btn${isFavorite(recipe.id) ? ' fav-btn--on' : ''}`}
-          onClick={() => toggleFavorite(recipe.id)}
-          aria-label={isFavorite(recipe.id) ? 'Quitar de favoritos' : 'Añadir a favoritos'}
-        >
-          {isFavorite(recipe.id) ? '♥' : '♡'}
-        </button>
-      </div>
+    <article className="recipe-card recipe-card--compact">
       <div className="recipe-card__body">
-        <h3 className="recipe-card__title">
-          {recipe.name}
-          {recipe.custom ? <span className="badge-custom">Mía</span> : null}
-        </h3>
+        <div className="recipe-card__top">
+          <h3 className="recipe-card__title">
+            {recipe.name}
+            {recipe.custom ? <span className="badge-custom">Mía</span> : null}
+          </h3>
+          <button
+            type="button"
+            className={`fav-btn fav-btn--inline${isFavorite(recipe.id) ? ' fav-btn--on' : ''}`}
+            onClick={() => toggleFavorite(recipe.id)}
+            aria-label={
+              isFavorite(recipe.id) ? 'Quitar de favoritos' : 'Añadir a favoritos'
+            }
+          >
+            {isFavorite(recipe.id) ? '♥' : '♡'}
+          </button>
+        </div>
         <div className="recipe-card__meta">
           <span>{recipe.timeMinutes} min</span>
           <span>·</span>
-          <span className="capitalize">{recipe.difficulty}</span>
-          {selectedMethod && selectedMethod.id !== 'default' && selectedMethod.id !== 'manual' && (
-            <>
-              <span>·</span>
-              <span>{selectedMethod.label}</span>
-            </>
-          )}
+          <span>{displayDifficulty(recipe.difficulty)}</span>
+          {selectedMethod &&
+            selectedMethod.id !== 'default' &&
+            selectedMethod.id !== 'manual' && (
+              <>
+                <span>·</span>
+                <span>{selectedMethod.label}</span>
+              </>
+            )}
           {feeling && (
             <>
               <span>·</span>
@@ -61,9 +59,7 @@ export function RecipeCard({ match }: Props) {
           {hasAll ? (
             <span className="ok">✓ Tienes todo</span>
           ) : (
-            <span className="missing">
-              Te falta: {missing.join(', ')}
-            </span>
+            <span className="missing">Te falta: {missing.join(', ')}</span>
           )}
         </p>
         {!equipmentOk && missingEquipment.length > 0 && (

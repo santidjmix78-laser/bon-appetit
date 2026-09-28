@@ -64,6 +64,7 @@ export const DEFAULT_FOODS: FoodItem[] = [
   { id: 'lasana-preparada', name: 'Lasaña preparada', zone: 'congelador', category: 'preparados' },
   { id: 'empanadillas', name: 'Empanadillas', zone: 'congelador', category: 'preparados' },
   { id: 'hot-dog', name: 'Salchichas / frankfurts', zone: 'nevera', category: 'preparados' },
+  { id: 'lentejas', name: 'Lentejas (conserva)', zone: 'despensa', category: 'conservas' },
   { id: 'hummus', name: 'Hummus', zone: 'nevera', category: 'preparados' },
 
   // Despensa - Otros

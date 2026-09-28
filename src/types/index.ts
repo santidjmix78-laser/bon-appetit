@@ -12,12 +12,23 @@ export type FoodCategory =
 
 export type FodmapLevel = 'low' | 'moderate' | 'high';
 
-/** Dificultad objetiva aproximada de la receta (no confundir con cookingLevel). */
-export type Difficulty = 'fácil' | 'media';
+/** Dificultad objetiva del plato (no confundir con cookingLevel). */
+export type Difficulty = 'fácil' | 'media' | 'avanzada';
+
+/**
+ * Rol del plato en recomendaciones Pepper.
+ * Independiente de mealTypes.
+ */
+export type DishRole =
+  | 'platoPrincipal'
+  | 'guarnicion'
+  | 'entrante'
+  | 'desayuno'
+  | 'snack';
 
 /**
  * Nivel de explicación que necesita el usuario.
- * No se usa para filtrar recetas; prepara instrucciones adaptadas en el futuro.
+ * No filtra recetas; solo adapta la profundidad de las instrucciones.
  */
 export type CookingLevel = 'beginner' | 'intermediate' | 'advanced';
 
@@ -77,10 +88,16 @@ export interface RecipeIngredient {
 export interface CookingMethod {
   id: string;
   label: string;
-  /** Equipamiento necesario para este método (todos). */
+  /** Equipamiento necesario para este método (todos = AND). Métodos distintos = OR. */
   equipmentIds: EquipmentId[];
-  steps: string[];
+  timeMinutes?: number;
+  temperature?: string;
+  temperatureC?: number;
+  /** Pasos como texto plano o estructurados (v1.3). */
+  steps: string[] | import('./recipe').RecipeStep[];
 }
+
+export type PepperTag = 'rapido' | 'especial' | 'completo' | 'ligero' | 'comfort';
 
 export interface Recipe {
   id: string;
@@ -96,10 +113,34 @@ export interface Recipe {
     note?: string;
   };
   tags?: string[];
+  pepperTags?: PepperTag[];
+  /** Rol para recomendaciones Pepper (plato principal vs guarnición…). */
+  dishRole?: DishRole;
+  /** URL futura de foto del plato. Si falta, no se reserva espacio vacío. */
+  imageUrl?: string;
   imageHue?: number;
   custom?: boolean;
   /** Raciones de referencia de la receta (por defecto 1). */
   baseServings?: number;
+}
+
+/** Ajuste personal de tiempo/temperatura para un paso concreto. */
+export interface CookStepTweak {
+  seconds?: number;
+  temperatureC?: number;
+}
+
+export interface CookTweaks {
+  /** Clave: recipeId::methodId::stepId */
+  byRecipeStep: Record<string, CookStepTweak>;
+  /** Clave semántica: p.ej. patatas_gajo+airfryer+190C */
+  bySimilar: Record<string, CookStepTweak>;
+}
+
+/** Niveles numéricos opcionales de la placa (vitro/inducción). */
+export interface StovePowerPrefs {
+  min: number;
+  max: number;
 }
 
 export interface MealEntry {
@@ -120,11 +161,8 @@ export interface AppearancePrefs {
 }
 
 export interface FoodPreferences {
-  /** Priorizar en recomendaciones (no implica disponibilidad). IDs de catálogo o claves pref:… */
   likedFoodIds: string[];
-  /** Evitar normalmente en recomendaciones automáticas. IDs de catálogo o claves pref:… */
   avoidedFoodIds: string[];
-  /** Etiquetas para preferencias libres (claves pref:…). No forman parte de Mi cocina. */
   labels: Record<string, string>;
 }
 
@@ -138,12 +176,11 @@ export interface AppState {
   appearance: AppearancePrefs;
   equipmentIds: EquipmentId[];
   customRecipes: Recipe[];
-  /** Preferencias alimentarias (independientes de Mi cocina). */
   foodPreferences: FoodPreferences;
-  /** Comensales habituales (mín. 1). */
   defaultServings: number;
-  /** Nivel de detalle de instrucciones del usuario. */
   cookingLevel: CookingLevel;
+  cookTweaks: CookTweaks;
+  stovePower: StovePowerPrefs | null;
 }
 
 export interface RecipeMatch {

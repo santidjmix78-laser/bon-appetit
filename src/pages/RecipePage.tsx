@@ -1,35 +1,63 @@
 import { useMemo, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { FeelingPicker } from '../components/FeelingPicker';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { FodmapBadge } from '../components/FodmapBadge';
 import { useApp } from '../context/AppContext';
 import { equipmentLabel } from '../data/equipment';
-import type { Feeling } from '../types';
+import { displayDifficulty } from '../utils/cookAssist';
 import { getFoodName, getRecipeById } from '../utils/helpers';
-import { isFoodAvailable, resolveRecipeSteps } from '../utils/recommend';
+import {
+  compatibleMethods,
+  formatScaledQuantity,
+  scaleAmount,
+} from '../utils/recipeModel';
+import { isFoodAvailable, pickCookingMethod } from '../utils/recommend';
 
 export function RecipePage() {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const fromChef = searchParams.get('from') === 'chef';
   const navigate = useNavigate();
-  const { state, isFavorite, toggleFavorite, setFeeling, deleteCustomRecipe } = useApp();
+  const { state, isFavorite, toggleFavorite, deleteCustomRecipe } = useApp();
   const recipe = id ? getRecipeById(id, state.customRecipes) : undefined;
-  const [showFeeling, setShowFeeling] = useState(false);
+  const [servings, setServings] = useState(() =>
+    Math.max(1, state.defaultServings || 1),
+  );
 
-  const resolved = useMemo(() => {
-    if (!recipe) return null;
-    return resolveRecipeSteps(recipe, state.equipmentIds);
+  const methodsOk = useMemo(() => {
+    if (!recipe) return [];
+    return compatibleMethods(recipe, state.equipmentIds);
   }, [recipe, state.equipmentIds]);
+
+  const [methodId, setMethodId] = useState<string | null>(null);
+
+  const selectedMethod = useMemo(() => {
+    if (!recipe) return null;
+    if (methodId) {
+      return methodsOk.find((m) => m.id === methodId) ?? methodsOk[0] ?? null;
+    }
+    return (
+      pickCookingMethod(recipe, state.equipmentIds).method ??
+      methodsOk[0] ??
+      null
+    );
+  }, [recipe, methodId, methodsOk, state.equipmentIds]);
 
   const ingredientRows = useMemo(() => {
     if (!recipe) return [];
-    return recipe.ingredients.map((ing) => ({
-      ...ing,
-      name: getFoodName(ing.foodId, state.customFoods),
-      available: isFoodAvailable(ing.foodId, state.availableFoodIds),
-    }));
-  }, [recipe, state.availableFoodIds, state.customFoods]);
+    const base = recipe.baseServings ?? 1;
+    return recipe.ingredients.map((ing) => {
+      const scaled = scaleAmount(ing.amountPerServing, base, servings);
+      const qty = formatScaledQuantity(scaled, ing.unit, ing.quantity);
+      return {
+        ...ing,
+        name: getFoodName(ing.foodId, state.customFoods),
+        available: isFoodAvailable(ing.foodId, state.availableFoodIds),
+        displayQty: qty,
+      };
+    });
+  }, [recipe, servings, state.availableFoodIds, state.customFoods]);
 
-  if (!recipe || !resolved) {
+  if (!recipe) {
     return (
       <div className="page">
         <p>Receta no encontrada.</p>
@@ -38,19 +66,21 @@ export function RecipePage() {
     );
   }
 
-  const feeling = state.recipeFeelings[recipe.id];
-  const canCook = resolved.missingEquipment.length === 0;
-
-  function onFeeling(f: Feeling) {
-    setFeeling(recipe!.id, f);
-    setShowFeeling(true);
-  }
+  const canCook = Boolean(selectedMethod);
+  const cookParams = new URLSearchParams();
+  if (selectedMethod) cookParams.set('method', selectedMethod.id);
+  cookParams.set('servings', String(servings));
+  const cookHref = `/receta/${recipe.id}/cocinar?${cookParams.toString()}`;
 
   function handleDelete() {
     if (!recipe?.custom) return;
     if (!window.confirm(`¿Eliminar la receta «${recipe.name}»?`)) return;
     deleteCustomRecipe(recipe.id);
     navigate('/mis-recetas');
+  }
+
+  function changeServings(delta: number) {
+    setServings((s) => Math.max(1, Math.min(12, s + delta)));
   }
 
   return (
@@ -71,80 +101,141 @@ export function RecipePage() {
           </button>
         </div>
         <div className="recipe-card__meta">
-          <span>{recipe.timeMinutes} min</span>
+          <span>
+            {selectedMethod?.timeMinutes ?? recipe.timeMinutes} min
+          </span>
           <span>·</span>
-          <span className="capitalize">{recipe.difficulty}</span>
-          {resolved.methodLabel && (
+          <span>{displayDifficulty(recipe.difficulty)}</span>
+          {selectedMethod && selectedMethod.id !== 'default' && (
             <>
               <span>·</span>
-              <span>{resolved.methodLabel}</span>
+              <span>{selectedMethod.label}</span>
             </>
           )}
         </div>
       </header>
 
-      <div
-        className="recipe-hero"
-        style={{
-          background: `linear-gradient(145deg, hsl(${recipe.imageHue ?? 90} 40% 28%), hsl(${(recipe.imageHue ?? 90) + 40} 35% 18%))`,
-        }}
-      />
+      {recipe.imageUrl ? (
+        <img
+          src={recipe.imageUrl}
+          alt=""
+          className="recipe-hero-img"
+        />
+      ) : null}
 
       <FodmapBadge level={recipe.fodmap.level} />
-      {recipe.fodmap.note && <p className="muted">{recipe.fodmap.note}</p>}
+
+      <section className="card servings-card">
+        <h2>¿Para cuántos cocinamos?</h2>
+        <div className="stepper">
+          <button
+            type="button"
+            className="stepper__btn"
+            onClick={() => changeServings(-1)}
+            aria-label="Menos comensales"
+          >
+            −
+          </button>
+          <span className="stepper__value">{servings}</span>
+          <button
+            type="button"
+            className="stepper__btn"
+            onClick={() => changeServings(1)}
+            aria-label="Más comensales"
+          >
+            +
+          </button>
+        </div>
+      </section>
+
+      {methodsOk.length > 1 && (
+        <section className="card">
+          <h2>Método</h2>
+          <label className="field-label" htmlFor="method-select">
+            Compatible con tu equipamiento
+          </label>
+          <select
+            id="method-select"
+            className="input"
+            value={selectedMethod?.id ?? ''}
+            onChange={(e) => setMethodId(e.target.value)}
+          >
+            {methodsOk.map((m) => (
+              <option key={m.id} value={m.id}>
+                {m.label}
+                {m.temperature ? ` · ${m.temperature}` : ''}
+                {m.timeMinutes ? ` · ${m.timeMinutes} min` : ''}
+              </option>
+            ))}
+          </select>
+        </section>
+      )}
 
       {!canCook && (
         <p className="card missing">
-          Necesitas:{' '}
-          {resolved.missingEquipment.map(equipmentLabel).join(', ')}. Puedes ver la receta, pero
-          no entrará en «Puedes hacer ahora» hasta que marques ese equipamiento en Ajustes.
+          Necesitas equipamiento que no tienes marcado. Revisa Ajustes →
+          Equipamiento.
+          {recipe.methods && recipe.methods.length > 0 && (
+            <>
+              {' '}
+              Métodos posibles:{' '}
+              {recipe.methods
+                .map(
+                  (m) =>
+                    `${m.label} (${m.equipmentIds.map(equipmentLabel).join(', ') || 'ninguno'})`,
+                )
+                .join('; ')}
+              .
+            </>
+          )}
         </p>
-      )}
-
-      {recipe.methods && recipe.methods.length > 1 && (
-        <section className="card">
-          <h2>Métodos posibles</h2>
-          <ul className="method-list">
-            {recipe.methods.map((method) => {
-              const ok = method.equipmentIds.every((e) =>
-                state.equipmentIds.includes(e),
-              );
-              return (
-                <li key={method.id} className={ok ? 'ok' : 'muted'}>
-                  {ok ? '✓' : '○'} {method.label}
-                  {method.equipmentIds.length > 0 && (
-                    <span className="muted">
-                      {' '}
-                      ({method.equipmentIds.map(equipmentLabel).join(', ')})
-                    </span>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </section>
       )}
 
       <section className="card">
         <h2>Ingredientes</h2>
         <ul className="ingredient-list">
           {ingredientRows.map((ing) => (
-            <li key={ing.foodId + ing.quantity} className={ing.available ? '' : 'is-missing'}>
+            <li
+              key={ing.foodId + ing.quantity}
+              className={ing.available ? '' : 'is-missing'}
+            >
               <span>
-                {ing.available ? '✓' : '○'} {ing.name}
-                {ing.optional ? ' (opcional)' : ''}
+                {ing.available ? (
+                  <>
+                    ✓ Tienes {ing.name}
+                    {ing.optional ? ' (opcional)' : ''} — necesitarás{' '}
+                    {ing.displayQty}
+                  </>
+                ) : (
+                  <>
+                    🛒 No tienes {ing.name}
+                    {ing.optional ? ' (opcional)' : ''} — necesitarás{' '}
+                    {ing.displayQty}
+                  </>
+                )}
               </span>
-              <span className="qty">{ing.quantity}</span>
             </li>
           ))}
         </ul>
+        <p className="muted small">
+          Mi cocina indica presencia, no cantidades exactas en casa.
+        </p>
       </section>
 
       {canCook ? (
-        <Link to={`/receta/${recipe.id}/cocinar`} className="btn btn--primary btn--block btn--xl">
-          Modo cocinar
-          {resolved.methodLabel ? ` · ${resolved.methodLabel}` : ''}
-        </Link>
+        <>
+          <Link to={cookHref} className="btn btn--primary btn--block btn--xl">
+            Empezar a cocinar con Pepper
+            {selectedMethod && selectedMethod.id !== 'default'
+              ? ` · ${selectedMethod.label}`
+              : ''}
+          </Link>
+          {fromChef && (
+            <p className="muted center pepper-cook-hint">
+              ¡Buena elección! Vamos a cocinar.
+            </p>
+          )}
+        </>
       ) : (
         <button type="button" className="btn btn--ghost btn--block btn--xl" disabled>
           Falta equipamiento
@@ -153,23 +244,21 @@ export function RecipePage() {
 
       {recipe.custom && (
         <div className="custom-recipe-actions">
-          <Link to={`/mis-recetas/editar/${recipe.id}`} className="btn btn--ghost btn--block">
+          <Link
+            to={`/mis-recetas/editar/${recipe.id}`}
+            className="btn btn--ghost btn--block"
+          >
             Editar receta
           </Link>
-          <button type="button" className="btn btn--danger btn--block" onClick={handleDelete}>
+          <button
+            type="button"
+            className="btn btn--danger btn--block"
+            onClick={handleDelete}
+          >
             Eliminar receta
           </button>
         </div>
       )}
-
-      <section className="card">
-        <FeelingPicker value={feeling} onChange={onFeeling} />
-        {showFeeling && feeling && (
-          <p className="ok muted">
-            Valoración guardada. Se tendrá en cuenta junto a la orientación FODMAP.
-          </p>
-        )}
-      </section>
     </div>
   );
 }

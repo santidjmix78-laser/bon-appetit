@@ -174,6 +174,7 @@ export function RecipeFormPage() {
         >
           <option value="fácil">Fácil</option>
           <option value="media">Media</option>
+          <option value="avanzada">Avanzada</option>
         </select>
       </label>
 

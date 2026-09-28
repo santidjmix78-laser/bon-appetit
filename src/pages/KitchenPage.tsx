@@ -31,7 +31,7 @@ export function KitchenPage() {
   const [name, setName] = useState('');
   const [zone, setZone] = useState<StorageZone>('nevera');
   const [category, setCategory] = useState<FoodCategory>('otros');
-  const [openZone, setOpenZone] = useState<StorageZone | null>('nevera');
+  const [openZone, setOpenZone] = useState<StorageZone | null>(null);
   const [query, setQuery] = useState('');
 
   const foods = useMemo(

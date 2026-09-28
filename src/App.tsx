@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { AppProvider } from './context/AppContext';
+import { TimerProvider } from './context/TimerContext';
 import { ChefModePage } from './pages/ChefModePage';
 import { CookModePage } from './pages/CookModePage';
 import { FavoritesPage } from './pages/FavoritesPage';
@@ -16,25 +17,27 @@ import { WeekPage } from './pages/WeekPage';
 export default function App() {
   return (
     <AppProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="cocina" element={<KitchenPage />} />
-            <Route path="semana" element={<WeekPage />} />
-            <Route path="favoritos" element={<FavoritesPage />} />
-            <Route path="mis-recetas" element={<MyRecipesPage />} />
-            <Route path="mis-recetas/nueva" element={<RecipeFormPage />} />
-            <Route path="mis-recetas/editar/:id" element={<RecipeFormPage />} />
-            <Route path="ajustes" element={<SettingsPage />} />
-            <Route path="recomendar" element={<RecommendPage />} />
-            <Route path="modo-chef" element={<ChefModePage />} />
-            <Route path="receta/:id" element={<RecipePage />} />
-            <Route path="receta/:id/cocinar" element={<CookModePage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <TimerProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path="cocina" element={<KitchenPage />} />
+              <Route path="semana" element={<WeekPage />} />
+              <Route path="favoritos" element={<FavoritesPage />} />
+              <Route path="mis-recetas" element={<MyRecipesPage />} />
+              <Route path="mis-recetas/nueva" element={<RecipeFormPage />} />
+              <Route path="mis-recetas/editar/:id" element={<RecipeFormPage />} />
+              <Route path="ajustes" element={<SettingsPage />} />
+              <Route path="recomendar" element={<RecommendPage />} />
+              <Route path="modo-chef" element={<ChefModePage />} />
+              <Route path="receta/:id" element={<RecipePage />} />
+              <Route path="receta/:id/cocinar" element={<CookModePage />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </TimerProvider>
     </AppProvider>
   );
 }

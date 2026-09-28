@@ -11,6 +11,7 @@ import type {
   TimeOption,
 } from '../types';
 import { getFoodName, countLikedOverlap, recipeUsesAvoidedFood } from './helpers';
+import { getMethodSteps, getStepsForLevel } from './recipeModel';
 
 function isCondiment(foodId: string): boolean {
   return ALWAYS_AVAILABLE.has(foodId);
@@ -240,18 +241,28 @@ export function recommendRecipes(options: {
 export function resolveRecipeSteps(
   recipe: Recipe,
   equipmentIds: EquipmentId[],
-): { steps: string[]; methodLabel: string | null; missingEquipment: EquipmentId[] } {
+  cookingLevel: import('../types').CookingLevel = 'intermediate',
+): {
+  steps: string[];
+  methodLabel: string | null;
+  missingEquipment: EquipmentId[];
+  method: CookingMethod | null;
+} {
   const { method, missingEquipment } = pickCookingMethod(recipe, equipmentIds);
   if (method) {
+    const structured = getMethodSteps(method, recipe);
+    const resolved = getStepsForLevel(structured, cookingLevel);
     return {
-      steps: method.steps.length ? method.steps : recipe.steps,
+      steps: resolved.map((s) => s.resolvedText),
       methodLabel: method.id === 'default' ? null : method.label,
       missingEquipment: [],
+      method,
     };
   }
   return {
     steps: recipe.steps,
     methodLabel: null,
     missingEquipment,
+    method: null,
   };
 }

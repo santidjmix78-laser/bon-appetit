@@ -1072,3 +1072,442 @@ ul {
 .chef-coming .btn {
   margin-top: 0.65rem;
 }
+
+/* ——— Modo Chef / Pepper (v1.3) ——— */
+.pepper-welcome {
+  text-align: center;
+  padding: 0.5rem 0 1.5rem;
+}
+
+.pepper-welcome__img {
+  width: min(160px, 42vw);
+  height: auto;
+  margin: 0 auto 0.75rem;
+  display: block;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.25));
+}
+
+.pepper-welcome__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 5vw, 1.85rem);
+  margin: 0 0 0.35rem;
+}
+
+.pepper-welcome__msg {
+  color: var(--text-muted);
+  margin: 0 0 1.25rem;
+  font-size: 1.05rem;
+}
+
+.pepper-options {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.pepper-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.95rem 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.12s ease;
+}
+
+.pepper-option:active {
+  transform: scale(0.98);
+}
+
+.pepper-option:hover {
+  border-color: var(--accent);
+}
+
+.pepper-option__emoji {
+  font-size: 1.35rem;
+  width: 1.75rem;
+  text-align: center;
+}
+
+.pepper-results-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pepper-results-head__img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.pepper-badge {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.pepper-badge--choice {
+  color: var(--text-muted);
+}
+
+.pepper-card .recipe-card__ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.pepper-search-wrap {
+  margin-top: 1.35rem;
+  text-align: left;
+}
+
+.pepper-search-wrap--results {
+  margin: 0 0 0.85rem;
+}
+
+.pepper-search__label {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-bottom: 0.45rem;
+  color: var(--text);
+}
+
+.pepper-search__row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  position: relative;
+}
+
+.pepper-search__input {
+  flex: 1;
+  min-height: 48px;
+  padding: 0.75rem 2.5rem 0.75rem 0.9rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 1.05rem;
+  width: 100%;
+}
+
+.pepper-search__input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.pepper-search__clear {
+  position: absolute;
+  right: 0.35rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.pepper-search__clear:hover {
+  color: var(--text);
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+}
+
+.pepper-search__all {
+  display: inline-block;
+  margin-top: 0.65rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+}
+
+.pepper-filters {
+  margin-top: 0.75rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.pepper-filters__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.pepper-chip {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pepper-chip.is-active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 18%, var(--bg-card));
+  color: var(--text);
+}
+
+.pepper-result-count {
+  margin: 0 0 0.65rem;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.pepper-empty__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.pepper-card__warns {
+  margin: 0.35rem 0 0.45rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.pepper-card__warn {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--text-muted);
+}
+
+.pepper-cook-hint {
+  margin-top: 0.5rem;
+}
+
+.pepper-done-img {
+  margin: 0 auto;
+  display: block;
+  width: 96px;
+  height: auto;
+}
+
+.servings-card .stepper {
+  margin-top: 0.5rem;
+}
+
+.step-timer {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: calc(var(--radius) - 4px);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+}
+
+.step-timer--active {
+  border-color: var(--accent);
+}
+
+.step-timer__label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.step-timer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.btn--sm {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.85rem;
+  min-height: 2.25rem;
+}
+
+.term-hints {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.term-hint__btn {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.term-hint__def {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.cook-step {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+.recipe-card--compact .recipe-card__body {
+  padding-top: 0.85rem;
+}
+
+.recipe-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.recipe-hero-img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin-bottom: 0.75rem;
+}
+
+.cook-level-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.35rem 0 0.25rem;
+}
+
+.cook-level-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.input--inline {
+  width: auto;
+  min-width: 9rem;
+  padding: 0.35rem 0.55rem;
+  font-size: 0.9rem;
+}
+
+.active-timers {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.active-timers__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  padding: 0.45rem 0.55rem 0.45rem 0.7rem;
+  border-radius: calc(var(--radius) - 4px);
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.active-timers__item.is-paused {
+  opacity: 0.75;
+}
+
+.active-timers__item.is-done {
+  border-color: var(--ok, #3d9a5f);
+  color: var(--ok, #3d9a5f);
+}
+
+.active-timers__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.active-timers__close {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 0.35rem;
+}
+
+.active-timers__close:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.active-timers--compact .active-timers__item {
+  font-size: 0.82rem;
+  padding: 0.35rem 0.45rem 0.35rem 0.55rem;
+}
+
+.step-timer__tweak {
+  font-weight: 500;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.step-timer__temp {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+  font-weight: 600;
+}
+
+.step-timer__reset {
+  display: inline-block;
+  margin-top: 0.45rem;
+  font-size: 0.85rem;
+}
+
+.cook-save-prompt__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+}
+
+.stove-power-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}

@@ -1,5 +1,6 @@
 import { DEFAULT_FOODS } from '../data/foods';
 import { RECIPES } from '../data/recipes';
+import { applyRecipeOverrides } from '../data/recipeOverrides';
 import type { CookingLevel, FoodItem, MealType, Recipe } from '../types';
 
 export function getAllFoods(
@@ -17,7 +18,7 @@ export function getFoodName(foodId: string, customFoods: FoodItem[]): string {
 
 /** Biblioteca builtin + recetas personalizadas del usuario. */
 export function getAllRecipes(customRecipes: Recipe[] = []): Recipe[] {
-  return [...RECIPES, ...customRecipes];
+  return [...RECIPES.map(applyRecipeOverrides), ...customRecipes];
 }
 
 export function getRecipeById(
