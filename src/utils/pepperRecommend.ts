@@ -42,16 +42,19 @@ function scoreRecipe(
 
   score += (match.likedOverlap ?? 0) * 12;
 
-  if (match.hasAll) score += 8;
-  else score += Math.max(0, 5 - match.missing.length);
+  // Prioridad fuerte: tener TODOS los ingredientes (sin anular relevancia del modo).
+  if (match.hasAll) score += 28;
+  else score += Math.max(0, 6 - match.missing.length * 3);
 
   if (recent.has(r.id)) score -= 25;
 
-  // Guarniciones / snacks no compiten como plato principal
+  // Platos completos vs guarniciones/acompañamientos
   if (mode === 'cook' || mode === 'special') {
-    if (role === 'platoPrincipal') score += 16;
-    else if (role === 'guarnicion' || role === 'snack') score -= 35;
-    else if (role === 'entrante') score -= 10;
+    if (role === 'platoPrincipal') score += 22;
+    else if (role === 'guarnicion') score -= 55;
+    else if (role === 'snack') score -= 40;
+    else if (role === 'entrante') score -= 14;
+    else if (role === 'desayuno') score -= 8;
   }
 
   switch (mode) {
@@ -62,6 +65,9 @@ function scoreRecipe(
       else score -= 15;
       if (hasTag(r, 'rapido')) score += 10;
       if (role === 'desayuno' || role === 'snack') score += 4;
+      // Guarnición sola no debe liderar "algo rápido" si hay platos
+      if (role === 'guarnicion') score -= 30;
+      if (role === 'platoPrincipal') score += 8;
       break;
     case 'special':
       if (hasTag(r, 'especial')) score += 18;
@@ -73,18 +79,21 @@ function scoreRecipe(
     case 'surprise':
       if (recent.has(r.id)) score -= 40;
       score -= (match.likedOverlap ?? 0) * 3;
-      score += Math.random() * 15;
+      // Variedad SOLO dentro del mismo grupo hasAll (ver sort más abajo).
+      score += Math.random() * 8;
       if (hasTag(r, 'ligero') || hasTag(r, 'completo')) score += 4;
-      if (role === 'guarnicion') score -= 20;
+      if (role === 'guarnicion') score -= 35;
+      if (role === 'platoPrincipal') score += 6;
       break;
     case 'cook':
     default:
-      if (hasTag(r, 'completo')) score += 8;
+      if (hasTag(r, 'completo')) score += 12;
       if (r.timeMinutes >= 15 && r.timeMinutes <= 40) score += 6;
       break;
   }
 
-  score += Math.random() * 3;
+  // Jitter mínimo: nunca debe superar el hueco entre "tengo todo" y el resto.
+  score += Math.random() * 2;
   return score;
 }
 
@@ -149,7 +158,14 @@ export function recommendWithPepper(
     scored.push({ match, score });
   }
 
-  scored.sort((a, b) => b.score - a.score);
+  // GRUPO A (hasAll) siempre antes que GRUPO B (faltan ingredientes).
+  // La randomización solo reordena dentro de cada grupo.
+  scored.sort((a, b) => {
+    if (a.match.hasAll !== b.match.hasAll) {
+      return a.match.hasAll ? -1 : 1;
+    }
+    return b.score - a.score;
+  });
   return scored.slice(0, limit).map((s) => s.match);
 }
 
@@ -162,13 +178,13 @@ export function pepperModeMeta(mode: PepperMode): {
     case 'quick':
       return {
         title: 'Algo rápido',
-        message: '¡Perfecto! Tengo algunas ideas rápidas para ti.',
+        message: 'Ideas cortas para comer pronto.',
         pepperSrc: '/assets/pepper/pepper-quick.png',
       };
     case 'special':
       return {
         title: 'Algo especial',
-        message: 'Hoy vamos a preparar algo especial.',
+        message: 'Hoy vamos a preparar algo diferente.',
         pepperSrc: '/assets/pepper/pepper-easy.png',
       };
     case 'surprise':
@@ -181,7 +197,7 @@ export function pepperModeMeta(mode: PepperMode): {
     default:
       return {
         title: 'Quiero cocinar',
-        message: '¡Buena elección! Tengo varias ideas para cocinar.',
+        message: 'Platos completos para ponerte manos a la obra.',
         pepperSrc: '/assets/pepper/pepper-medium.png',
       };
   }

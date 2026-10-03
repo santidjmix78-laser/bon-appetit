@@ -1,7 +1,12 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { greeting, MEAL_TYPE_OPTIONS, mealTypeLabel } from '../utils/helpers';
+import {
+  greeting,
+  MEAL_TYPE_OPTIONS,
+  mealTypeLabel,
+  todayISO,
+} from '../utils/helpers';
 import type { MealType } from '../types';
 
 export function HomePage() {
@@ -10,6 +15,7 @@ export function HomePage() {
   const [showRegister, setShowRegister] = useState(false);
   const [todayText, setTodayText] = useState('');
   const [mealType, setMealType] = useState<MealType>('comida');
+  const [entryDate, setEntryDate] = useState(() => todayISO());
 
   return (
     <div className="page page--home">
@@ -68,21 +74,11 @@ export function HomePage() {
           onClick={() => setShowRegister(true)}
         >
           <span className="action-card__title">+ Registrar lo que he comido</span>
-          <span className="action-card__desc">Anota desayuno, comida, merienda o cena</span>
+          <span className="action-card__desc">
+            Anota desayuno, almuerzo, comida, merienda o cena
+          </span>
         </button>
       </section>
-
-      <div className="quick-links">
-        <Link to="/cocina" className="text-link">
-          Mi cocina →
-        </Link>
-        <Link to="/mis-recetas" className="text-link">
-          Mis recetas →
-        </Link>
-        <Link to="/semana" className="text-link">
-          Mi semana →
-        </Link>
-      </div>
 
       {showRegister && (
         <div className="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="register-q">
@@ -91,6 +87,20 @@ export function HomePage() {
             <p className="modal__hint">
               Escribe libremente, por ejemplo: «Bocadillo de pavo y queso y una Coca-Cola»
             </p>
+            <label className="field-label" htmlFor="home-entry-date">
+              Fecha
+            </label>
+            <input
+              id="home-entry-date"
+              className="input"
+              type="date"
+              max={todayISO()}
+              value={entryDate}
+              onChange={(e) => {
+                const v = e.target.value;
+                if (v && v <= todayISO()) setEntryDate(v);
+              }}
+            />
             <div className="meal-type-row">
               {MEAL_TYPE_OPTIONS.map((t) => (
                 <button
@@ -117,8 +127,13 @@ export function HomePage() {
                 className="btn btn--primary btn--block"
                 onClick={() => {
                   if (!todayText.trim()) return;
-                  addMealEntry({ text: todayText, mealType });
+                  addMealEntry({
+                    text: todayText,
+                    mealType,
+                    date: entryDate || todayISO(),
+                  });
                   setTodayText('');
+                  setEntryDate(todayISO());
                   setShowRegister(false);
                 }}
                 disabled={!todayText.trim()}

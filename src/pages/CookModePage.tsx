@@ -167,15 +167,20 @@ export function CookModePage() {
   }
 
   function tryAdvance() {
-    if (
+    const timeChanged =
       current?.timerSeconds != null &&
       effectiveSeconds > 0 &&
-      effectiveSeconds !== recommendedSeconds
-    ) {
+      effectiveSeconds !== recommendedSeconds;
+    const tempChanged =
+      recommendedTemp != null &&
+      effectiveTemp != null &&
+      effectiveTemp !== recommendedTemp;
+
+    if (timeChanged || tempChanged) {
       setSavePrompt({
         stepKey,
-        similarKey: current.similarKey,
-        usedSeconds: effectiveSeconds,
+        similarKey: current?.similarKey,
+        usedSeconds: effectiveSeconds || recommendedSeconds,
         recommendedSeconds,
         usedTemp: effectiveTemp ?? undefined,
         recommendedTemp: recommendedTemp,
@@ -186,19 +191,65 @@ export function CookModePage() {
     else setStep((s) => s + 1);
   }
 
-  function dismissSave(choice: 'once' | 'recipe' | 'similar') {
+  function dismissSave(choice: 'once' | 'recipe' | 'similar' | 'discard') {
     if (!savePrompt) return;
-    const tweak = {
-      seconds: savePrompt.usedSeconds,
-      ...(savePrompt.usedTemp != null
-        ? { temperatureC: savePrompt.usedTemp }
-        : {}),
-    };
-    if (choice === 'recipe') {
+
+    if (choice === 'discard') {
+      // Descartar aprendizaje: quitar overrides previos de este paso/similar
+      // y no persistir el valor modificado. La sesión actual ya usó el valor;
+      // al salir, la recomendación original vuelve a ser la referencia.
+      clearCookTweak('recipe', savePrompt.stepKey);
+      if (savePrompt.similarKey) {
+        clearCookTweak('similar', savePrompt.similarKey);
+      }
+      setSessionSeconds((prev) => {
+        const next = { ...prev };
+        delete next[savePrompt.stepKey];
+        return next;
+      });
+      setSessionTemp((prev) => {
+        const next = { ...prev };
+        delete next[savePrompt.stepKey];
+        return next;
+      });
+      setSavePrompt(null);
+      if (isLast) finish();
+      else setStep((s) => s + 1);
+      return;
+    }
+
+    const tweak: { seconds?: number; temperatureC?: number } = {};
+    if (
+      savePrompt.usedSeconds > 0 &&
+      savePrompt.usedSeconds !== savePrompt.recommendedSeconds
+    ) {
+      tweak.seconds = savePrompt.usedSeconds;
+    }
+    if (
+      savePrompt.usedTemp != null &&
+      savePrompt.recommendedTemp != null &&
+      savePrompt.usedTemp !== savePrompt.recommendedTemp
+    ) {
+      tweak.temperatureC = savePrompt.usedTemp;
+    }
+    // Conservar el otro valor ya guardado si solo cambia uno
+    if (tweak.seconds == null && saved?.seconds != null) {
+      tweak.seconds = saved.seconds;
+    }
+    if (tweak.temperatureC == null && saved?.temperatureC != null) {
+      tweak.temperatureC = saved.temperatureC;
+    }
+
+    if (choice === 'recipe' && (tweak.seconds != null || tweak.temperatureC != null)) {
       saveCookTweak('recipe', savePrompt.stepKey, tweak);
-    } else if (choice === 'similar' && savePrompt.similarKey) {
+    } else if (
+      choice === 'similar' &&
+      savePrompt.similarKey &&
+      (tweak.seconds != null || tweak.temperatureC != null)
+    ) {
       saveCookTweak('similar', savePrompt.similarKey, tweak);
     }
+    // 'once': no persiste; el valor de sesión ya está aplicado
     setSavePrompt(null);
     if (isLast) finish();
     else setStep((s) => s + 1);
@@ -236,7 +287,11 @@ export function CookModePage() {
 
   const hasOverride =
     (saved?.seconds != null && saved.seconds !== recommendedSeconds) ||
-    sessionSeconds[stepKey] != null;
+    (saved?.temperatureC != null &&
+      recommendedTemp != null &&
+      saved.temperatureC !== recommendedTemp) ||
+    sessionSeconds[stepKey] != null ||
+    sessionTemp[stepKey] != null;
 
   return (
     <div className="page page--cook">
@@ -289,9 +344,27 @@ export function CookModePage() {
       {savePrompt && (
         <div className="card cook-save-prompt">
           <p>
-            Has usado {Math.round(savePrompt.usedSeconds / 60)} min en lugar de{' '}
-            {Math.round(savePrompt.recommendedSeconds / 60)} min. ¿Quieres que
-            lo recuerde?
+            {(() => {
+              const timeChanged =
+                savePrompt.usedSeconds > 0 &&
+                savePrompt.usedSeconds !== savePrompt.recommendedSeconds;
+              const tempChanged =
+                savePrompt.usedTemp != null &&
+                savePrompt.recommendedTemp != null &&
+                savePrompt.usedTemp !== savePrompt.recommendedTemp;
+              const parts: string[] = [];
+              if (timeChanged) {
+                parts.push(
+                  `${Math.round(savePrompt.usedSeconds / 60)} min en lugar de ${Math.round(savePrompt.recommendedSeconds / 60)} min`,
+                );
+              }
+              if (tempChanged) {
+                parts.push(
+                  `${savePrompt.usedTemp} °C en lugar de ${savePrompt.recommendedTemp} °C`,
+                );
+              }
+              return `Has usado ${parts.join(' y ')}. ¿Quieres que Pepper recuerde este ajuste?`;
+            })()}
           </p>
           <div className="cook-save-prompt__actions">
             <button
@@ -317,6 +390,13 @@ export function CookModePage() {
                 Preparaciones similares
               </button>
             )}
+            <button
+              type="button"
+              className="btn btn--ghost btn--sm"
+              onClick={() => dismissSave('discard')}
+            >
+              No guardar
+            </button>
           </div>
         </div>
       )}

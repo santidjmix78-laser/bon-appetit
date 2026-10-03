@@ -2,17 +2,34 @@ import type { CookingLevel, CookingMethod, Recipe } from '../types';
 import type { CookingMethodV2, RecipeStep, RecipeV2 } from '../types/recipe';
 import { CULINARY_TERMS } from '../data/culinaryTerms';
 
+function nonEmpty(s: string | undefined): string | undefined {
+  const t = (s || '').trim();
+  return t.length ? t : undefined;
+}
+
+/**
+ * Resuelve el texto del nivel pedido.
+ *
+ * Orden: nivel pedido → intermediate → beginner → advanced.
+ * Esto SOLO aplica si el campo del nivel está vacío en el MISMO paso.
+ * Los pasos partidos por `levels: ['beginner']` / `levels: ['intermediate','advanced']`
+ * no se mezclan aquí: `getStepsForLevel` filtra antes por `levels`.
+ *
+ * Importante: si un paso compartido deja `advanced: ''` y tiene beginner,
+ * el usuario avanzado verá el texto de principiante (fallback). Por eso los
+ * pasos compartidos deben tener los tres niveles rellenados con prosa propia.
+ */
 function resolveStepText(
   text: string | Partial<Record<CookingLevel, string>>,
   level: CookingLevel,
 ): string {
   if (typeof text === 'string') return text;
+  const direct = nonEmpty(text[level]);
+  if (direct) return direct;
   return (
-    text[level] ||
-    text.intermediate ||
-    text.beginner ||
-    text.advanced ||
-    Object.values(text).find(Boolean) ||
+    nonEmpty(text.intermediate) ||
+    nonEmpty(text.beginner) ||
+    nonEmpty(text.advanced) ||
     ''
   );
 }

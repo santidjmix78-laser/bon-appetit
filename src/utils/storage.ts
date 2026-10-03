@@ -36,7 +36,13 @@ const DEFAULT_AVAILABLE = [
   'lechuga',
 ];
 
-const VALID_MEALS: MealType[] = ['desayuno', 'comida', 'merienda', 'cena'];
+const VALID_MEALS: MealType[] = [
+  'desayuno',
+  'almuerzo',
+  'comida',
+  'merienda',
+  'cena',
+];
 const VALID_EQUIPMENT = new Set<EquipmentId>([
   'horno',
   'microondas',

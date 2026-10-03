@@ -59,6 +59,67 @@ const FLUFF_APPEND = [
 const TOO_SHORT =
   /^(Huevos|Patatas|Cocinar|Servir|Prep\.?|Micro\.?|Mezclar\.?|Tostar\.?|Montar\.?|Emplata\.?|Integrar\.?|Sirve\.?)\.?$/i;
 
+/** Verbos culinarios conjugados/infinitivos frecuentes (heurística anti-telegrama). */
+const VERB_RE =
+  /\b(corta|cortar|pela|pelar|lava|lavar|seca|secar|añade|añadir|incorpora|calienta|calentar|cocina|cocinar|cuece|freír|fríe|sofre|sofríe|saltea|saltear|pocha|pochar|confita|confitar|mezcla|mezclar|bate|batir|vierte|tapa|tapar|destapa|remueve|remover|gira|girar|voltea|voltear|agita|sirve|servir|coloca|colocar|extiende|precalienta|precalentar|programa|hornea|asa|unta|sazona|sazonar|comprueba|deja|reposa|escurr|pincha|abre|monta|aliña|hidrata|hierve|lleva|baja|sube|aparta|retira|integra|prueba|saca|dispone|distribuye|reparte|cuaja|dobla|enrolla|tuesta|trocea|trocear|lamina|laminar|da la vuelta|casca|escurre|mengü|sella|sellar)\w*\b/i;
+
+function isTelegramHeuristic(text) {
+  const t = (text || '').trim();
+  if (!t) return true;
+  if (wordCount(t) <= 6) return true;
+  if (/;/.test(t) && !VERB_RE.test(t)) return true;
+  if (!VERB_RE.test(t) && wordCount(t) <= 14) return true;
+  // "Salmón en plato, sazonado, tapado."
+  if (
+    /^[A-ZÁÉÍÓÚÑ][\wáéíóúñÁÉÍÓÚÑ\s\-–~°/]+,\s*[\wáéíóúñ\s]+,\s*[\wáéíóúñ\s]+\.?$/i.test(
+      t,
+    ) &&
+    !VERB_RE.test(t)
+  ) {
+    return true;
+  }
+  if (
+    /^(Pollo|Huevos|Patatas|Arroz|Pasta|Salmón|Salmon|Cebolla|Ternera|Coordina|AF)\b/i.test(
+      t,
+    ) &&
+    wordCount(t) <= 10 &&
+    !VERB_RE.test(t)
+  ) {
+    return true;
+  }
+  return false;
+}
+
+function methodKindForValidate(method) {
+  const id = (method.id || '').toLowerCase();
+  const label = (method.label || '').toLowerCase();
+  const eq = (method.equipmentIds || []).join(' ').toLowerCase();
+  const blob = `${id} ${label} ${eq}`;
+  const hasAir = /air|airfryer/.test(blob);
+  const hasHorno = /horno/.test(blob);
+  const hasMicro = /micro/.test(blob);
+  const hasSarten = /sarten|sartén|plancha/.test(blob);
+  const hasOlla = /olla/.test(blob);
+  if ((hasAir || hasHorno || hasMicro) && (hasSarten || hasOlla)) return 'combo';
+  if (hasAir) return 'air';
+  if (hasHorno) return 'horno';
+  if (hasMicro) return 'micro';
+  return 'other';
+}
+
+function methodTextMismatch(text, kind) {
+  const t = (text || '').toLowerCase();
+  if (kind === 'air' || kind === 'horno' || kind === 'micro') {
+    if (/sartén|sarten|fuego medio|fuego alto|fuego bajo/.test(t)) {
+      if (/air fryer|airfryer|cesta|horno|microondas|bandeja/.test(t)) {
+        return false;
+      }
+      return true;
+    }
+  }
+  return false;
+}
+
 const PROTEIN_FOODS = new Set([
   'pollo',
   'pavo',
@@ -228,6 +289,7 @@ for (const r of catalog) {
     const mctx = `${rctx} método "${method.id}"`;
     const steps = method.steps || [];
     if (!steps.length) errors.push(`${mctx}: sin pasos`);
+    const kind = methodKindForValidate(method);
 
     const phaseKeys = new Set();
     for (const step of steps) {
@@ -243,6 +305,30 @@ for (const r of catalog) {
         step.id,
       );
 
+      // Idénticos I/A o A===B cuando hay texto largo de principiante (sospechoso)
+      if (
+        !skipStrictLevels &&
+        texts.intermediate &&
+        texts.advanced &&
+        texts.intermediate.trim() === texts.advanced.trim() &&
+        wordCount(texts.beginner || '') > 25
+      ) {
+        warnings.push(
+          `${sctx}: Intermedio y Avanzado idénticos con Principiante largo`,
+        );
+      }
+      if (
+        !skipStrictLevels &&
+        texts.beginner &&
+        texts.advanced &&
+        texts.beginner.trim() === texts.advanced.trim() &&
+        wordCount(texts.beginner) > 25
+      ) {
+        errors.push(
+          `${sctx}: Avanzado idéntico a Principiante (posible fallback incorrecto)`,
+        );
+      }
+
       for (const [level, text] of Object.entries(texts)) {
         if (!text) {
           if (!skipStrictLevels && level !== 'beginner') {
@@ -256,6 +342,27 @@ for (const r of catalog) {
           errors.push(`${sctx} (${level}): instrucción demasiado corta «${text.trim()}»`);
         } else if (!skipStrictLevels && wordCount(text) <= 5 && level === 'intermediate') {
           warnings.push(`${sctx} (${level}): texto muy corto «${text.trim()}»`);
+        }
+
+        // Anti-telegrama. Los pasos de servicio cortos con verbo "sirve" son OK.
+        const isServeStep =
+          /^(serve|finish|top)$/i.test(step.id) ||
+          /^sirve\b/i.test(text.trim());
+        if (
+          !skipStrictLevels &&
+          (level === 'intermediate' || level === 'advanced') &&
+          isTelegramHeuristic(text) &&
+          !(isServeStep && VERB_RE.test(text) && wordCount(text) <= 12)
+        ) {
+          errors.push(
+            `${sctx} (${level}): estilo telegrama «${text.trim().slice(0, 80)}»`,
+          );
+        }
+
+        if (methodTextMismatch(text, kind)) {
+          errors.push(
+            `${sctx} (${level}): texto de sartén/fuego incompatible con método ${kind}`,
+          );
         }
 
         if (

@@ -51,10 +51,9 @@ export const RECIPE_CATALOG: Recipe[] = [
       "cena"
     ],
     "steps": [
-      "Gajos de patata aceite+sal; capa única en Air Fryer.",
-      "Air Fryer 190 °C ~18 min, agitar a mitad.",
-      "Sella el pollo en sartén medio-alto; cocinado por dentro.",
-      "Sirve el pollo en caliente junto a las patatas recién salidas del Air Fryer; deben llegar a la mesa a la vez."
+      "Patatas en Air Fryer.",
+      "Coordinar pollo en sartén.",
+      "Servir juntos."
     ],
     "methods": [
       {
@@ -68,50 +67,49 @@ export const RECIPE_CATALOG: Recipe[] = [
         "steps": [
           {
             "id": "prep-potatoes",
+            "phaseId": "prep-potatoes",
             "text": {
-              "beginner": "Primero las patatas (tardan más): pela, corta en gajos, seca con papel, mezcla con 1 cucharada de aceite y sal. Extiéndelas en la cesta del Air Fryer sin amontonar.",
-              "intermediate": "Gajos de patata aceite+sal; capa única en Air Fryer.",
-              "advanced": "Patatas gajo → Air Fryer."
-            },
-            "phaseId": "prep-potatoes"
+              "beginner": "Empieza por las patatas (tardan más). Pela {qty:patatas}, córtalas en gajos, sécalas con papel y mézclalas con 1 cucharada de aceite y sal. Extiéndelas en la cesta del Air Fryer sin amontonar.",
+              "intermediate": "Prepara los gajos de patata con aceite y sal y colócalos en una sola capa en el Air Fryer.",
+              "advanced": "Prepara los gajos de patata con aceite y sal y dispónlos en una sola capa en el Air Fryer."
+            }
           },
           {
             "id": "airfry-potatoes",
-            "text": {
-              "beginner": "Precalienta el Air Fryer si hace falta y cocina a 190 °C unos 18 min; abre a mitad y agita. Deben quedar doradas por fuera y tiernas por dentro.",
-              "intermediate": "Air Fryer 190 °C ~18 min, agitar a mitad.",
-              "advanced": "190 °C, 18 min."
-            },
+            "phaseId": "airfry-potatoes",
             "timerSeconds": 1080,
             "timerLabel": "Patatas Air Fryer",
             "temperatureC": 190,
             "similarKey": "patatas_gajo+airfryer+190C",
-            "phaseId": "airfry-potatoes",
-            "heatLevel": "medio"
+            "text": {
+              "beginner": "Cocina las patatas a 190 °C unos 18 minutos. A mitad de tiempo, abre y agita la cesta. Están listas cuando estén doradas por fuera y tiernas al pinchar.",
+              "intermediate": "Cocina las patatas en Air Fryer a 190 °C unos 18 minutos, agitando a mitad, hasta doradas y tiernas.",
+              "advanced": "Cocina las patatas en Air Fryer a 190 °C unos 18 minutos, agitando a mitad, hasta doradas y tiernas."
+            }
           },
           {
             "id": "cook-chicken",
-            "text": {
-              "beginner": "Mientras las patatas avanzan (arranca el pollo cuando queden ~10 min de patatas): salpica el pollo. Sartén con 1 cucharada de aceite a fuego medio-alto; cocina 4-5 min por lado hasta que no quede rosado en el centro (corta un trozo para comprobar).",
-              "intermediate": "Sella el pollo en sartén medio-alto; cocinado por dentro.",
-              "advanced": "Pollo sartén; coordina con patatas."
-            },
+            "phaseId": "cook-chicken",
+            "heatLevel": "medio-alto",
             "termIds": [
               "sellar"
             ],
             "timerSeconds": 600,
             "timerLabel": "Pollo en sartén",
-            "phaseId": "cook-chicken",
-            "heatLevel": "medio-alto"
+            "text": {
+              "beginner": "Cuando queden unos 10 minutos de las patatas, seca el pollo y sálalo. Calienta una sartén con 1 cucharada de aceite a fuego medio-alto. Cocina el pollo 4–5 minutos por cada lado sin moverlo al principio (así se dora; a esto se le llama sellar). Comprueba el centro: no debe quedar rosado; los jugos deben salir claros.",
+              "intermediate": "Cuando queden unos 10 minutos de las patatas, cocina el pollo en una sartén a fuego medio-alto, unos 4–5 minutos por cada lado, hasta que esté cocinado por dentro.",
+              "advanced": "Empieza el pollo cuando queden unos 10 minutos de las patatas. Cocínalo a fuego medio-alto, 4–5 minutos por lado, hasta el punto seguro."
+            }
           },
           {
             "id": "serve",
+            "phaseId": "serve",
             "text": {
-              "beginner": "Sirve el pollo en caliente junto a las patatas recién salidas del Air Fryer; deben llegar a la mesa a la vez.",
-              "intermediate": "Sirve el pollo en caliente junto a las patatas recién salidas del Air Fryer; deben llegar a la mesa a la vez.",
-              "advanced": "Sirve el pollo en caliente junto a las patatas recién salidas del Air Fryer; deben llegar a la mesa a la vez."
-            },
-            "phaseId": "serve"
+              "beginner": "Sirve el pollo caliente junto a las patatas recién salidas del Air Fryer; procura que lleguen a la mesa a la vez.",
+              "intermediate": "Sirve el pollo con las patatas en cuanto salgan del Air Fryer.",
+              "advanced": "Sirve el pollo y las patatas juntos, bien calientes."
+            }
           }
         ],
         "temperature": "Air Fryer 190 °C",
@@ -188,8 +186,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Lava el calabacín y córtalo en cubitos de 1 cm. Corta el pollo en dados del tamaño de un bocado. Pon a hervir una olla con agua salada para el arroz.",
-              "intermediate": "Trocea calabacín y pollo; pon agua a hervir.",
-              "advanced": "Prep verdura y pollo; agua a hervir."
+              "intermediate": "Lava el calabacín y córtalo en cubitos de 1 cm. Corta el pollo en dados del tamaño de un bocado. Pon a hervir una olla con agua salada para el arroz.",
+              "advanced": "Lava el calabacín y córtalo en cubitos de 1 cm. Corta el pollo en dados del tamaño de un bocado."
             },
             "phaseId": "prep"
           },
@@ -197,7 +195,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook-rice",
             "text": {
               "beginner": "Cuando hierva, echa {qty:arroz} de arroz y cuece 10-12 min removiendo de vez en cuando hasta tierno. Escurre si queda agua.",
-              "intermediate": "Cuece arroz 10-12 min; escurre.",
+              "intermediate": "Cuando hierva, echa {qty:arroz} de arroz y cuece 10-12 min removiendo de vez en cuando hasta tierno. Escurre si queda agua.",
               "advanced": "Cuando hierva, echa {qty:arroz} de arroz y cuece 10-12 min removiendo de vez en cuando hasta tierno. Escurre si queda agua."
             },
             "timerSeconds": 720,
@@ -208,9 +206,9 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "cook-chicken",
             "text": {
-              "beginner": "En sartén con aceite a fuego medio-alto, cocina el pollo removiendo 6-7 min hasta que no esté rosado por dentro.",
-              "intermediate": "Saltea pollo 6-7 min hasta cocinado.",
-              "advanced": "Saltea pollo 6-7 min hasta cocinado."
+              "beginner": "En sartén con aceite a fuego medio-alto, saltea el pollo removiendo 6-7 min hasta que no esté rosado por dentro.",
+              "intermediate": "En sartén con aceite a fuego medio-alto, saltea el pollo removiendo 6-7 min hasta que no esté rosado por dentro.",
+              "advanced": "Saltea el pollo a fuego medio-alto 6-7 min hasta que no esté rosado por dentro."
             },
             "termIds": [
               "saltear"
@@ -224,8 +222,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "finish",
             "text": {
               "beginner": "Retira el pollo. En la misma sartén, saltea el calabacín 4-5 min. Vuelve el pollo y el arroz, mezcla 1 min y sirve.",
-              "intermediate": "Saltea calabacín; integra pollo y arroz.",
-              "advanced": "Saltea calabacín; integra pollo y arroz."
+              "intermediate": "Retira el pollo. En la misma sartén, saltea el calabacín 4-5 min. Vuelve el pollo y el arroz, mezcla 1 min y sirve.",
+              "advanced": "Retira el pollo. En la misma sartén, saltea el calabacín 4-5 min."
             },
             "termIds": [
               "saltear"
@@ -294,8 +292,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Lava el calabacín y córtalo en rodajas de 1 cm. Sécalo. Aceite y sal a mano.",
-              "intermediate": "Calabacín en rodajas de 1 cm; aceite listo.",
-              "advanced": "Calabacín en rodajas; aceite y sal."
+              "intermediate": "Lava el calabacín y córtalo en rodajas de 1 cm. Sécalo. Aceite y sal a mano.",
+              "advanced": "Lava el calabacín y córtalo en rodajas de 1 cm. Sécalo."
             }
           },
           {
@@ -306,8 +304,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "timerLabel": "Calabacín",
             "text": {
               "beginner": "Calienta plancha o sartén con aceite a fuego medio-alto. Cocina 3–4 min por lado hasta marcas doradas y tierno al pincho. Sala y sirve.",
-              "intermediate": "3–4 min/lado a fuego medio-alto hasta dorar.",
-              "advanced": "3–4 min/lado al punto dorado."
+              "intermediate": "Calienta plancha o sartén con aceite a fuego medio-alto. Cocina 3–4 min por lado hasta marcas doradas y tierno al pincho. Sala y sirve.",
+              "advanced": "Cocina 3–4 min por lado hasta marcas doradas y tierno al pincho. Sala y sirve."
             }
           }
         ]
@@ -325,8 +323,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Lava el calabacín y córtalo en rodajas de 1 cm. Sécalo. Aceite y sal a mano.",
-              "intermediate": "Calabacín en rodajas de 1 cm; aceite listo.",
-              "advanced": "Calabacín en rodajas; aceite y sal."
+              "intermediate": "Lava el calabacín y córtalo en rodajas de 1 cm. Sécalo. Aceite y sal a mano.",
+              "advanced": "Lava el calabacín y córtalo en rodajas de 1 cm. Sécalo."
             }
           },
           {
@@ -337,8 +335,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "timerLabel": "Calabacín",
             "text": {
               "beginner": "Calienta plancha o sartén con aceite a fuego medio-alto. Cocina 3–4 min por lado hasta marcas doradas y tierno al pincho. Sala y sirve.",
-              "intermediate": "3–4 min/lado a fuego medio-alto hasta dorar.",
-              "advanced": "3–4 min/lado al punto dorado."
+              "intermediate": "Calienta plancha o sartén con aceite a fuego medio-alto. Cocina 3–4 min por lado hasta marcas doradas y tierno al pincho. Sala y sirve.",
+              "advanced": "Cocina 3–4 min por lado hasta marcas doradas y tierno al pincho. Sala y sirve."
             }
           }
         ]
@@ -359,8 +357,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "temperatureC": 180,
             "text": {
               "beginner": "Corta rodajas de 1 cm. Mézclalas con aceite y sal. Precalienta Air Fryer a 180 °C. Capa única en la cestilla.",
-              "intermediate": "Rodajas con aceite; capa única; 180 °C.",
-              "advanced": "Rodajas, aceite; capa única a 180 °C."
+              "intermediate": "Corta rodajas de 1 cm. Mézclalas con aceite y sal. Precalienta Air Fryer a 180 °C. Capa única en la cestilla.",
+              "advanced": "Distribuye calabacin en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             }
           },
           {
@@ -431,10 +429,10 @@ export const RECIPE_CATALOG: Recipe[] = [
       "cena"
     ],
     "steps": [
-      "Patata en rodajas finas; cebolla opcional.",
-      "Pochar patata en aceite medio-bajo 10-12 min.",
-      "Huevo batido + patatas; reposar 1 min.",
-      "Cuaja 4-5 min, vuelta, 3-4 min."
+      "Patata en rodajas finas; cebolla en juliana opcional.",
+      "Pochar patata 10–12 min a fuego medio-bajo.",
+      "Mezclar con huevo batido; reposar 1 min.",
+      "Cuajar, girar y terminar."
     ],
     "methods": [
       {
@@ -446,47 +444,73 @@ export const RECIPE_CATALOG: Recipe[] = [
         ],
         "steps": [
           {
-            "id": "prep-potato",
+            "id": "prep-potato-b",
+            "phaseId": "prep-potato",
+            "levels": [
+              "beginner"
+            ],
+            "termIds": [
+              "juliana"
+            ],
             "text": {
-              "beginner": "Pela las patatas y córtalas en rodajas finas (2-3 mm). Si usas cebolla, córtala en juliana fina.",
-              "intermediate": "Patata en rodajas finas; cebolla opcional.",
-              "advanced": "Patata fina; cebolla opc."
-            },
-            "phaseId": "prep-potato"
+              "beginner": "Pela {qty:patatas}. Córtalas en rodajas finas de unos 2–3 mm (como fichas de póker finas). Si usas cebolla: córtala por la mitad, apoya la parte plana en la tabla y haz tiras finas de 2–3 mm. Ese corte se llama juliana.",
+              "intermediate": "",
+              "advanced": ""
+            }
+          },
+          {
+            "id": "prep-potato",
+            "phaseId": "prep-potato",
+            "levels": [
+              "intermediate",
+              "advanced"
+            ],
+            "termIds": [
+              "juliana"
+            ],
+            "text": {
+              "beginner": "",
+              "intermediate": "Pela y corta la patata en rodajas finas (2–3 mm). Si usas cebolla, córtala en juliana fina.",
+              "advanced": "Corta la patata en rodajas finas (2–3 mm) y la cebolla en juliana, si la usas."
+            }
           },
           {
             "id": "fry-potato",
-            "text": {
-              "beginner": "En sartén amplia con aceite a fuego medio-bajo, confita patata (y cebolla) 10-12 min removiendo hasta blandas, no crujientes. Escurre aceite sobrante.",
-              "intermediate": "Pochar patata en aceite medio-bajo 10-12 min.",
-              "advanced": "Pochar patata 10-12 min."
-            },
+            "phaseId": "cook-potato",
             "termIds": [
-              "pochar"
+              "pochar",
+              "confitar"
             ],
+            "heatLevel": "medio-bajo",
             "timerSeconds": 660,
-            "timerLabel": "Patatas confitadas",
-            "phaseId": "fry-potato",
-            "heatLevel": "medio-bajo"
+            "timerLabel": "Patatas",
+            "text": {
+              "beginner": "Usa una sartén amplia. Añade unas 3 cucharadas de aceite y caliéntalo a fuego medio-bajo. Incorpora patata (y cebolla). Remueve cada 2–3 min. Cocina 10–12 min hasta que la patata se deje pinchar fácilmente con un tenedor y esté blanda, no crujiente. Escurre el exceso de aceite dejando solo un velo.",
+              "intermediate": "Pocha/confita la patata en aceite a fuego medio-bajo 10–12 minutos hasta que quede tierna; escurre el exceso de aceite.",
+              "advanced": "Pocha la patata 10–12 minutos a fuego medio-bajo hasta tierna y escurre el aceite sobrante."
+            }
           },
           {
             "id": "mix-egg",
+            "phaseId": "mix-eggs",
+            "termIds": [
+              "reposar"
+            ],
             "text": {
-              "beginner": "Bate los huevos con sal en un bol. Mezcla con las patatas calientes y deja reposar 1 min para que se impregnen.",
-              "intermediate": "Huevo batido + patatas; reposar 1 min.",
-              "advanced": "Huevo batido + patatas; reposar 1 min."
-            },
-            "phaseId": "mix-egg"
+              "beginner": "En un bol, bate {qty:huevos} con una pizca de sal. Añade las patatas calientes (y cebolla). Remueve con cuidado y deja reposar 1 minuto para que el huevo se impregne.",
+              "intermediate": "Bate los huevos con sal, mézclalos con las patatas calientes y deja reposar 1 minuto.",
+              "advanced": "Bate el huevo con sal, integra la patata y reposa 1 minuto."
+            }
           },
           {
             "id": "set-tortilla",
-            "text": {
-              "beginner": "Vierte en sartén antiadherente con un poco de aceite a fuego medio-bajo. Cuaja 4-5 min hasta que bordes estén firmes; da la vuelta con un plato y cocina 3-4 min más. Centro ligeramente jugoso o más cuajado según prefieras.",
-              "intermediate": "Cuaja 4-5 min, vuelta, 3-4 min.",
-              "advanced": "Cuaja 4-5 min, vuelta, 3-4 min."
-            },
             "phaseId": "set-tortilla",
-            "heatLevel": "medio-bajo"
+            "heatLevel": "medio-bajo",
+            "text": {
+              "beginner": "Limpia o usa sartén antiadherente con un hilo de aceite a fuego medio-bajo. Vierte la mezcla. Cuaja 4–5 min hasta que los bordes estén firmes y se despegue. Coloca un plato encima, dale la vuelta de un golpe y cocina 3–4 min más. El centro puede quedar jugoso o más cuajado, como prefieras. Sirve en trozos.",
+              "intermediate": "Cuaja la tortilla 4–5 minutos a fuego medio-bajo, gírala con un plato y termina 3–4 minutos más. Sirve.",
+              "advanced": "Cuaja 4–5 minutos a fuego medio-bajo, gira y termina 3–4 minutos; sirve."
+            }
           }
         ]
       }
@@ -555,8 +579,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep-rice",
             "text": {
               "beginner": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal. Abre la lata de atún y escúrrela en un colador; reserva (no la mezcles hasta que el arroz esté cocido).",
-              "intermediate": "Olla: arroz {qty:arroz}, agua ~2:1, sal. Abre la lata de atún y escúrrela en un colador; reserva (no la mezcles hasta que el arroz esté cocido).",
-              "advanced": "Arroz {qty:arroz} / 160 ml agua."
+              "intermediate": "Pon {qty:arroz} de arroz en una olla con aproximadamente el doble de agua y una pizca de sal. Escurre el atún y resérvalo hasta que el arroz esté cocido.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal."
             },
             "phaseId": "prep-rice",
             "heatLevel": "medio"
@@ -565,8 +589,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook-rice",
             "text": {
               "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
-              "intermediate": "Hierve, tapa, 12 min a fuego bajo; reposa 3 min.",
-              "advanced": "Cuece 12 min tapado; reposar."
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
             },
             "timerSeconds": 720,
             "timerLabel": "Arroz a fuego lento",
@@ -580,8 +604,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "mix-tuna",
             "text": {
               "beginner": "Con la olla apagada y el arroz ya suelto, añade el atún escurrido y un chorrito de aceite. Mezcla con cuidado con tenedor; el atún debe calentarse solo con el calor residual, sin volver a cocinar.",
-              "intermediate": "Incorpora atún escurrido y aceite fuera del fuego.",
-              "advanced": "Incorpora atún escurrido y aceite fuera del fuego."
+              "intermediate": "Incorpora el atún escurrido y un poco de aceite fuera del fuego.",
+              "advanced": "Con la olla apagada, añade el atún escurrido y un chorrito de aceite al arroz."
             },
             "phaseId": "mix-tuna",
             "heatLevel": "medio"
@@ -591,7 +615,61 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Prueba sal y sirve al momento en un plato hondo. Si queda seco, un poco más de aceite.",
               "intermediate": "Prueba sal y sirve al momento en un plato hondo. Si queda seco, un poco más de aceite.",
-              "advanced": "Prueba sal y sirve al momento en un plato hondo. Si queda seco, un poco más de aceite."
+              "advanced": "Prueba sal y sirve al momento en un plato hondo."
+            },
+            "phaseId": "serve"
+          }
+        ]
+      },
+      {
+        "id": "sarten",
+        "label": "Sartén / cazo",
+        "equipmentIds": [
+          "sarten",
+          "vitro"
+        ],
+        "steps": [
+          {
+            "id": "prep-rice",
+            "text": {
+              "beginner": "Mide {qty:arroz} de arroz en un bol. En una sartén honda o cazo amplio vierte 160 ml de agua fría, el arroz y una pizca de sal. Abre la lata de atún y escúrrela en un colador; reserva (no la mezcles hasta que el arroz esté cocido).",
+              "intermediate": "Pon {qty:arroz} de arroz en una sartén honda o cazo con aproximadamente el doble de agua y una pizca de sal. Escurre el atún y resérvalo hasta que el arroz esté cocido.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una sartén honda o cazo amplio vierte 160 ml de agua fría, el arroz y una pizca de sal."
+            },
+            "phaseId": "prep-rice",
+            "heatLevel": "medio"
+          },
+          {
+            "id": "cook-rice",
+            "text": {
+              "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
+            },
+            "timerSeconds": 720,
+            "timerLabel": "Arroz a fuego lento",
+            "termIds": [
+              "reposar"
+            ],
+            "phaseId": "cook-rice",
+            "heatLevel": "bajo"
+          },
+          {
+            "id": "mix-tuna",
+            "text": {
+              "beginner": "Con el fuego apagado y el arroz ya suelto, añade el atún escurrido y un chorrito de aceite. Mezcla con cuidado con tenedor; el atún debe calentarse solo con el calor residual, sin volver a cocinar.",
+              "intermediate": "Incorpora el atún escurrido y un poco de aceite fuera del fuego.",
+              "advanced": "Con el fuego apagado, añade el atún escurrido y un chorrito de aceite al arroz."
+            },
+            "phaseId": "mix-tuna",
+            "heatLevel": "medio"
+          },
+          {
+            "id": "serve",
+            "text": {
+              "beginner": "Prueba sal y sirve al momento en un plato hondo. Si queda seco, un poco más de aceite.",
+              "intermediate": "Prueba sal y sirve al momento en un plato hondo. Si queda seco, un poco más de aceite.",
+              "advanced": "Prueba sal y sirve al momento en un plato hondo."
             },
             "phaseId": "serve"
           }
@@ -662,7 +740,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Tuesta el pan en tostadora o sartén seca hasta crujiente.",
               "intermediate": "Tuesta el pan hasta dorado uniforme y crujiente.",
-              "advanced": "Tuesta el pan hasta dorado uniforme y crujiente."
+              "advanced": "Tuesta el pan en tostadora o sartén seca hasta crujiente."
             },
             "phaseId": "toast",
             "heatLevel": "medio"
@@ -671,8 +749,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "fry-egg",
             "text": {
               "beginner": "Aceite en sartén a fuego medio: casca los huevos y fríe 2-3 min hasta clara cuajada y yema blanda. Salpica sal.",
-              "intermediate": "Fríe huevos 2-3 min.",
-              "advanced": "Aceite en sartén a fuego medio: casca los huevos y fríe 2-3 min hasta clara cuajada y yema blanda. Salpica sal."
+              "intermediate": "Fríe los huevos en aceite a fuego medio 2–3 minutos hasta clara cuajada y yema blanda; sala.",
+              "advanced": "Fríe los huevos 2–3 minutos a fuego medio hasta clara cuajada; sala."
             },
             "timerSeconds": 180,
             "timerLabel": "Huevos",
@@ -755,7 +833,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Sartén antiadherente con aceite a fuego medio-bajo: vierte huevo, empuja bordes y inclina. Cuaja 2 min, pliega en tercios y sirve.",
-              "intermediate": "Tortilla francesa 2 min.",
+              "intermediate": "Sartén antiadherente con aceite a fuego medio-bajo: vierte huevo, empuja bordes y inclina. Cuaja 2 min, pliega en tercios y sirve.",
               "advanced": "Sartén antiadherente con aceite a fuego medio-bajo: vierte huevo, empuja bordes y inclina. Cuaja 2 min, pliega en tercios y sirve."
             },
             "timerSeconds": 120,
@@ -836,8 +914,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "scramble",
             "text": {
               "beginner": "Sartén con aceite a fuego bajo: añade jamón 30 s, vierte huevo y remueve suave 2-3 min hasta cuajado cremoso.",
-              "intermediate": "Revuelve a fuego bajo 2-3 min.",
-              "advanced": "Revuelve a fuego bajo 2-3 min."
+              "intermediate": "Sartén con aceite a fuego bajo: añade jamón 30 s, vierte huevo y remueve suave 2-3 min hasta cuajado cremoso.",
+              "advanced": "Sartén con aceite a fuego bajo: añade jamón 30 s, vierte huevo y remueve suave 2-3 min hasta cuajado cremoso."
             },
             "timerSeconds": 180,
             "timerLabel": "Revuelto",
@@ -909,8 +987,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Ralla o trocea el queso. Bate los huevos con una pizca de sal en un bol.",
-              "intermediate": "Queso rallado; huevos batidos con sal.",
-              "advanced": "Queso y huevos batidos listos."
+              "intermediate": "Ralla o trocea el queso. Bate los huevos con una pizca de sal en un bol.",
+              "advanced": "Ralla o trocea el queso. Bate los huevos con una pizca de sal en un bol."
             }
           },
           {
@@ -922,7 +1000,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Sartén antiadherente con un hilo de aceite a fuego medio. Vierte el huevo. Cuando empiece a cuajar, reparte el queso. Dobla y cocina 1 min más hasta queso fundido. Sirve.",
               "intermediate": "Omelette a fuego medio; queso al cuajar; doblar 1 min.",
-              "advanced": "Omelette con queso; doblar al fundir."
+              "advanced": "Sartén antiadherente con un hilo de aceite a fuego medio. Vierte el huevo."
             }
           }
         ]
@@ -990,7 +1068,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "wilt",
             "text": {
               "beginner": "Saltea espinacas en sartén con un poco de aceite 1-2 min hasta que mengüen. Escurre líquido.",
-              "intermediate": "Saltea espinacas 1-2 min.",
+              "intermediate": "Saltea espinacas en sartén con un poco de aceite 1-2 min hasta que mengüen. Escurre líquido.",
               "advanced": "Saltea espinacas en sartén con un poco de aceite 1-2 min hasta que mengüen. Escurre líquido."
             },
             "termIds": [
@@ -1005,7 +1083,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "omelette",
             "text": {
               "beginner": "Bate huevos, vierte sobre espinacas a fuego medio-bajo, pliega cuando cuaje 3 min.",
-              "intermediate": "Omelette espinacas 3 min.",
+              "intermediate": "Bate huevos, vierte sobre espinacas a fuego medio-bajo, pliega cuando cuaje 3 min.",
               "advanced": "Bate huevos, vierte sobre espinacas a fuego medio-bajo, pliega cuando cuaje 3 min."
             },
             "timerSeconds": 180,
@@ -1060,7 +1138,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Rompe el huevo en un bol apto micro, pincha yema 2 veces, tapa parcialmente. Potencia media 45-60 s; reposa 30 s. Clara cuajada.",
               "intermediate": "Rompe el huevo en un bol apto micro, pincha yema 2 veces, tapa parcialmente. Potencia media 45-60 s; reposa 30 s.",
-              "advanced": "Rompe el huevo en un bol apto micro, pincha yema 2 veces, tapa parcialmente. Potencia media 45-60 s; reposa 30 s."
+              "advanced": "Coloca huevos en un recipiente apto para microondas, sazónalo y cúbrelo parcialmente. Cocina a potencia media hasta el punto y deja reposar un minuto."
             },
             "timerSeconds": 60,
             "timerLabel": "Huevo micro",
@@ -1120,8 +1198,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Mezcla avena y leche en bol alto. Microondas media potencia 2 min, remueve, otros 1 min hasta espesar.",
-              "intermediate": "Micro 2+1 min removiendo.",
-              "advanced": "Mezcla avena y leche en bol alto. Microondas media potencia 2 min, remueve, otros 1 min hasta espesar."
+              "intermediate": "Mezcla avena y leche en bol alto. Microondas media potencia 2 min, remueve, otros 1 min hasta espesar.",
+              "advanced": "Coloca avena en un recipiente apto para microondas, sazónalo y cúbrelo parcialmente. Cocina a potencia media hasta el punto y deja reposar un minuto."
             },
             "timerSeconds": 180,
             "timerLabel": "Avena",
@@ -1178,7 +1256,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Mezcla avena y leche fría en un bol; deja 2 min para hidratar y come.",
               "intermediate": "Avena + leche fría; reposar 2 min.",
-              "advanced": "Avena + leche fría; reposar 2 min."
+              "advanced": "Mezcla avena y leche fría en un bol; deja 2 min para hidratar y come."
             },
             "phaseId": "assemble"
           }
@@ -1521,7 +1599,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Tuesta el pan en tostadora o sartén seca hasta dorado y crujiente por fuera, sin quemar los bordes.",
               "intermediate": "Tuesta el pan hasta dorado uniforme y crujiente.",
-              "advanced": "Pan tostado dorado y crujiente, sin quemar."
+              "advanced": "Tuesta el pan en tostadora o sartén seca hasta dorado y crujiente por fuera, sin quemar los bordes."
             },
             "phaseId": "toast"
           },
@@ -1529,15 +1607,12 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "top",
             "text": {
               "beginner": "Ralla o corta tomate fino, colócalo sobre pan caliente y cubre con queso. Opcional: gratinar 1 min en sartén tapada hasta que el queso se derrita.",
-              "intermediate": "Tomate y queso sobre pan caliente; gratinar 1 min si quieres queso fundido.",
-              "advanced": "Tomate + queso en tostada caliente; gratinar opcional 1 min."
+              "intermediate": "Ralla o corta tomate fino, colócalo sobre pan caliente y cubre con queso. Opcional: gratinar 1 min en sartén tapada hasta que el queso se derrita.",
+              "advanced": "Ralla o corta tomate fino, colócalo sobre pan caliente y cubre con queso."
             },
             "phaseId": "top",
             "timerSeconds": 60,
-            "timerLabel": "Gratinar queso",
-            "termIds": [
-              "gratinar"
-            ]
+            "timerLabel": "Gratinar queso"
           }
         ]
       }
@@ -1599,7 +1674,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Tuesta el pan en tostadora o sartén seca hasta dorado y crujiente por fuera, sin quemar los bordes.",
               "intermediate": "Tuesta el pan hasta dorado uniforme y crujiente.",
-              "advanced": "Pan tostado dorado y crujiente, sin quemar."
+              "advanced": "Tuesta el pan en tostadora o sartén seca hasta dorado y crujiente por fuera, sin quemar los bordes."
             },
             "phaseId": "toast"
           },
@@ -1672,7 +1747,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Tuesta el pan en tostadora o sartén seca hasta dorado y crujiente por fuera, sin quemar los bordes.",
               "intermediate": "Tuesta el pan hasta dorado uniforme y crujiente.",
-              "advanced": "Pan tostado dorado y crujiente, sin quemar."
+              "advanced": "Tuesta el pan en tostadora o sartén seca hasta dorado y crujiente por fuera, sin quemar los bordes."
             },
             "phaseId": "toast"
           },
@@ -1680,7 +1755,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "top",
             "text": {
               "beginner": "Coloca rodajas finas de plátano y queso encima del pan caliente; come templado.",
-              "intermediate": "Plátano y queso sobre tostada caliente.",
+              "intermediate": "Coloca rodajas finas de plátano y queso encima del pan caliente; come templado.",
               "advanced": "Montar plátano + queso en pan tostado."
             },
             "phaseId": "top"
@@ -1739,7 +1814,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Tuesta el pan en tostadora o sartén seca hasta dorado y crujiente por fuera, sin quemar los bordes.",
               "intermediate": "Tuesta el pan hasta dorado uniforme y crujiente.",
-              "advanced": "Pan tostado dorado y crujiente, sin quemar."
+              "advanced": "Tuesta el pan en tostadora o sartén seca hasta dorado y crujiente por fuera, sin quemar los bordes."
             },
             "phaseId": "toast"
           },
@@ -1748,7 +1823,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Coloca lonchas de pavo sobre el pan caliente y sirve al momento.",
               "intermediate": "Coloca lonchas de pavo sobre el pan caliente y sirve al momento.",
-              "advanced": "Lonchas de pavo en pan tostado."
+              "advanced": "Coloca lonchas de pavo sobre el pan caliente y sirve al momento."
             },
             "phaseId": "top"
           }
@@ -1806,7 +1881,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Tuesta el pan en tostadora o sartén seca hasta dorado y crujiente por fuera, sin quemar los bordes.",
               "intermediate": "Tuesta el pan hasta dorado uniforme y crujiente.",
-              "advanced": "Pan tostado dorado y crujiente, sin quemar."
+              "advanced": "Tuesta el pan en tostadora o sartén seca hasta dorado y crujiente por fuera, sin quemar los bordes."
             },
             "phaseId": "toast"
           },
@@ -1891,7 +1966,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Tuesta el pan. En sartén con aceite a fuego medio fríe los huevos 2-3 min hasta clara cuajada. Corta tomate en rodajas.",
               "intermediate": "Tuesta pan; fríe huevos 2-3 min; tomate en rodajas.",
-              "advanced": "Pan tostado, huevo frito 2-3 min y tomate en rodajas listos."
+              "advanced": "Tuesta el pan. En sartén con aceite a fuego medio fríe los huevos 2-3 min hasta clara cuajada."
             },
             "phaseId": "prep",
             "heatLevel": "medio"
@@ -1901,7 +1976,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Coloca tomate sobre el pan, encima el huevo frito; salpica sal y sirve al momento.",
               "intermediate": "Monta tostada con tomate y huevo; sal y servir.",
-              "advanced": "Monta tostada con tomate y huevo; sal y servir."
+              "advanced": "Coloca tomate sobre el pan, encima el huevo frito; salpica sal y sirve al momento."
             },
             "phaseId": "serve"
           }
@@ -2022,8 +2097,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "assemble",
             "text": {
               "beginner": "Pan, jamón y rodajas de tomate; opcional un hilo de aceite.",
-              "intermediate": "Pan, jamón y rodajas de tomate; opcional un hilo de aceite.",
-              "advanced": "Pan, jamón y rodajas de tomate; opcional un hilo de aceite."
+              "intermediate": "Monta el bocadillo con jamón y tomate sobre el pan.",
+              "advanced": "Monta el bocadillo con jamón y tomate."
             },
             "phaseId": "assemble"
           }
@@ -2141,8 +2216,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "warm",
             "text": {
               "beginner": "Calienta la tortilla de trigo 15–20 s en sartén seca o micro para que no se rompa al enrollar.",
-              "intermediate": "Calienta la tortilla 15–20 s.",
-              "advanced": "Templar tortilla 15–20 s."
+              "intermediate": "Calienta la tortilla de trigo 15–20 s en sartén seca o micro para que no se rompa al enrollar.",
+              "advanced": "Calienta la tortilla de trigo 15–20 s en sartén seca o micro para que no se rompa al enrollar."
             }
           },
           {
@@ -2150,8 +2225,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "fill",
             "text": {
               "beginner": "Coloca pavo y queso en el centro. Enrolla apretado, metiendo los laterales si puedes. Corta por la mitad si quieres y sirve.",
-              "intermediate": "Rellena con pavo y queso; enrolla; servir.",
-              "advanced": "Rellenar, enrollar y servir."
+              "intermediate": "Coloca pavo y queso en el centro. Enrolla apretado, metiendo los laterales si puedes. Corta por la mitad si quieres y sirve.",
+              "advanced": "Coloca pavo y queso en el centro. Enrolla apretado, metiendo los laterales si puedes."
             }
           }
         ]
@@ -2461,8 +2536,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "dress",
             "text": {
               "beginner": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
-              "intermediate": "Aceite y sal al final; mezcla y sirve.",
-              "advanced": "Aceite y sal al final; mezcla y sirve."
+              "intermediate": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
+              "advanced": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande."
             },
             "phaseId": "dress"
           }
@@ -2538,8 +2613,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "dress",
             "text": {
               "beginner": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
-              "intermediate": "Aceite y sal al final; mezcla y sirve.",
-              "advanced": "Aceite y sal al final; mezcla y sirve."
+              "intermediate": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
+              "advanced": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande."
             },
             "phaseId": "dress"
           }
@@ -2611,8 +2686,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "dress",
             "text": {
               "beginner": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
-              "intermediate": "Aceite y sal al final; mezcla y sirve.",
-              "advanced": "Aceite y sal al final; mezcla y sirve."
+              "intermediate": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
+              "advanced": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande."
             },
             "phaseId": "dress"
           }
@@ -2679,8 +2754,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Escurre garbanzos, añade tomate en cubos.",
-              "intermediate": "Escurre garbanzos, añade tomate en cubos..",
-              "advanced": "Escurre garbanzos, añade tomate en cubos."
+              "intermediate": "Escurre los garbanzos y añade el tomate en cubos.",
+              "advanced": "Escurre los garbanzos e incorpora el tomate en cubos."
             },
             "phaseId": "prep"
           },
@@ -2688,8 +2763,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "dress",
             "text": {
               "beginner": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
-              "intermediate": "Aceite y sal al final; mezcla y sirve.",
-              "advanced": "Aceite y sal al final; mezcla y sirve."
+              "intermediate": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
+              "advanced": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande."
             },
             "phaseId": "dress"
           }
@@ -2758,8 +2833,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Mezcla maíz escurrido, tomate y lechuga.",
-              "intermediate": "Mezcla maíz escurrido, tomate y lechuga..",
-              "advanced": "Mezcla maíz escurrido, tomate y lechuga."
+              "intermediate": "Mezcla el maíz escurrido con el tomate y la lechuga.",
+              "advanced": "Mezcla el maíz, el tomate y la lechuga."
             },
             "phaseId": "prep"
           },
@@ -2767,8 +2842,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "dress",
             "text": {
               "beginner": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
-              "intermediate": "Aceite y sal al final; mezcla y sirve.",
-              "advanced": "Aceite y sal al final; mezcla y sirve."
+              "intermediate": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
+              "advanced": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande."
             },
             "phaseId": "dress"
           }
@@ -2844,8 +2919,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "dress",
             "text": {
               "beginner": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
-              "intermediate": "Aceite y sal al final; mezcla y sirve.",
-              "advanced": "Aceite y sal al final; mezcla y sirve."
+              "intermediate": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
+              "advanced": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande."
             },
             "phaseId": "dress"
           }
@@ -2921,8 +2996,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "dress",
             "text": {
               "beginner": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
-              "intermediate": "Aceite y sal al final; mezcla y sirve.",
-              "advanced": "Aceite y sal al final; mezcla y sirve."
+              "intermediate": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande.",
+              "advanced": "Aliña con aceite y sal justo antes de comer para que la lechuga no se ablande."
             },
             "phaseId": "dress"
           }
@@ -3000,7 +3075,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro. Reserva 2 cucharadas del agua de cocción y escurre.",
               "intermediate": "Cuece {qty:pasta} de pasta en agua con sal 9-11 min al dente; reserva 2 cucharadas del agua y escurre.",
-              "advanced": "Pasta {qty:pasta} al dente; reservar 2 cdas agua de cocción y escurrir."
+              "advanced": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro."
             },
             "phaseId": "boil-pasta",
             "timerSeconds": 660,
@@ -3015,7 +3090,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "En sartén calienta tomate frito 2 min. Escurre atún y añade sin cocinar mucho.",
               "intermediate": "En sartén calienta tomate frito 2 min. Escurre atún y añade sin cocinar mucho.",
-              "advanced": "En sartén calienta tomate frito 2 min. Escurre atún y añade sin cocinar mucho."
+              "advanced": "Calienta el tomate frito 2 minutos, añade el atún escurrido sin cocinarlo mucho."
             },
             "timerSeconds": 120,
             "timerLabel": "Salsa",
@@ -3096,7 +3171,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro. Reserva 2 cucharadas del agua de cocción y escurre.",
               "intermediate": "Cuece {qty:pasta} de pasta en agua con sal 9-11 min al dente; reserva 2 cucharadas del agua y escurre.",
-              "advanced": "Pasta {qty:pasta} al dente; reservar 2 cdas agua de cocción y escurrir."
+              "advanced": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro."
             },
             "phaseId": "boil-pasta",
             "timerSeconds": 660,
@@ -3190,7 +3265,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro. Reserva 2 cucharadas del agua de cocción y escurre.",
               "intermediate": "Cuece {qty:pasta} de pasta en agua con sal 9-11 min al dente; reserva 2 cucharadas del agua y escurre.",
-              "advanced": "Pasta {qty:pasta} al dente; reservar 2 cdas agua de cocción y escurrir."
+              "advanced": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro."
             },
             "phaseId": "boil-pasta",
             "timerSeconds": 660,
@@ -3291,7 +3366,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro. Reserva 2 cucharadas del agua de cocción y escurre.",
               "intermediate": "Cuece {qty:pasta} de pasta en agua con sal 9-11 min al dente; reserva 2 cucharadas del agua y escurre.",
-              "advanced": "Pasta {qty:pasta} al dente; reservar 2 cdas agua de cocción y escurrir."
+              "advanced": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro."
             },
             "phaseId": "boil-pasta",
             "timerSeconds": 660,
@@ -3306,7 +3381,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "En sartén, aceite frío con ajo laminado a fuego muy bajo 2 min removiendo hasta dorado claro, sin quemar.",
               "intermediate": "Sofríe ajo laminado en aceite frío a fuego muy bajo 2 min, dorado claro sin quemar.",
-              "advanced": "Ajo en aceite frío, fuego muy bajo 2 min hasta dorado claro."
+              "advanced": "Sofríe el ajo en aceite a fuego medio sin quemarlo y mezcla con la pasta."
             },
             "phaseId": "garlic-oil",
             "termIds": [
@@ -3320,7 +3395,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "finish",
             "text": {
               "beginner": "Vierte pasta escurrida en la sartén del ajo, mezcla con un chorrito de agua de cocción si hace falta y sirve.",
-              "intermediate": "Pasta escurrida a la sartén del ajo; ligar con agua de cocción si está seca; servir.",
+              "intermediate": "Vierte pasta escurrida en la sartén del ajo, mezcla con un chorrito de agua de cocción si hace falta y sirve.",
               "advanced": "Integrar pasta con ajo y aceite; hidratar con agua de cocción si hace falta; servir."
             },
             "phaseId": "finish",
@@ -3394,7 +3469,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro. Reserva 2 cucharadas del agua de cocción y escurre.",
               "intermediate": "Cuece {qty:pasta} de pasta en agua con sal 9-11 min al dente; reserva 2 cucharadas del agua y escurre.",
-              "advanced": "Pasta {qty:pasta} al dente; reservar 2 cdas agua de cocción y escurrir."
+              "advanced": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro."
             },
             "phaseId": "boil-pasta",
             "timerSeconds": 660,
@@ -3408,7 +3483,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "sauce",
             "text": {
               "beginner": "Calienta tomate frito en sartén 3 min removiendo.",
-              "intermediate": "Tomate frito 3 min.",
+              "intermediate": "Calienta tomate frito en sartén 3 min removiendo.",
               "advanced": "Calienta tomate frito en sartén 3 min removiendo."
             },
             "timerSeconds": 180,
@@ -3493,7 +3568,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro. Reserva 2 cucharadas del agua de cocción y escurre.",
               "intermediate": "Cuece {qty:pasta} de pasta en agua con sal 9-11 min al dente; reserva 2 cucharadas del agua y escurre.",
-              "advanced": "Pasta {qty:pasta} al dente; reservar 2 cdas agua de cocción y escurrir."
+              "advanced": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro."
             },
             "phaseId": "boil-pasta",
             "timerSeconds": 660,
@@ -3510,9 +3585,6 @@ export const RECIPE_CATALOG: Recipe[] = [
               "intermediate": "Cuece brócoli troceado en la misma olla 4 min antes de sacar pasta; o blanquea aparte.",
               "advanced": "Cuece brócoli troceado en la misma olla 4 min antes de sacar pasta; o blanquea aparte."
             },
-            "termIds": [
-              "blanquear"
-            ],
             "timerSeconds": 240,
             "timerLabel": "Brócoli",
             "phaseId": "broccoli",
@@ -3598,7 +3670,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro. Reserva 2 cucharadas del agua de cocción y escurre.",
               "intermediate": "Cuece {qty:pasta} de pasta en agua con sal 9-11 min al dente; reserva 2 cucharadas del agua y escurre.",
-              "advanced": "Pasta {qty:pasta} al dente; reservar 2 cdas agua de cocción y escurrir."
+              "advanced": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro."
             },
             "phaseId": "boil-pasta",
             "timerSeconds": 660,
@@ -3684,7 +3756,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro. Reserva 2 cucharadas del agua de cocción y escurre.",
               "intermediate": "Cuece {qty:pasta} de pasta en agua con sal 9-11 min al dente; reserva 2 cucharadas del agua y escurre.",
-              "advanced": "Pasta {qty:pasta} al dente; reservar 2 cdas agua de cocción y escurrir."
+              "advanced": "En una olla grande con agua hirviendo y sal, cuece {qty:pasta} de pasta 9-11 min. Para al dente, prueba 1 min antes del fin: debe resistir un poco en el centro."
             },
             "phaseId": "boil-pasta",
             "timerSeconds": 660,
@@ -3697,9 +3769,9 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "pavo",
             "text": {
-              "beginner": "Saltea tiras de pavo en sartén 4-5 min hasta cocinado.",
-              "intermediate": "Saltea tiras de pavo en sartén 4-5 min hasta cocinado.",
-              "advanced": "Saltea tiras de pavo en sartén 4-5 min hasta cocinado."
+              "beginner": "Calienta la sartén con aceite a fuego medio-alto. Cocina el pavo removiendo hasta que no quede rosado por dentro (abre un trozo; los jugos deben salir claros). Sala y continúa con el siguiente paso o sirve. Remueve con frecuencia (saltear).",
+              "intermediate": "Cocina el pavo a fuego medio-alto hasta que esté hecho por dentro; sala, salteando.",
+              "advanced": "Cocina el pavo a fuego medio-alto al punto seguro; sala, salteando."
             },
             "termIds": [
               "saltear"
@@ -3784,8 +3856,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep-rice",
             "text": {
               "beginner": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal. Ten tomate frito listo.",
-              "intermediate": "Olla: arroz {qty:arroz}, agua ~2:1, sal. Ten tomate frito listo.",
-              "advanced": "Arroz {qty:arroz} / 160 ml agua."
+              "intermediate": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal. Ten tomate frito listo.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal."
             },
             "phaseId": "prep-rice",
             "heatLevel": "medio"
@@ -3794,8 +3866,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook-rice",
             "text": {
               "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
-              "intermediate": "Hierve, tapa, 12 min a fuego bajo; reposa 3 min.",
-              "advanced": "Cuece 12 min tapado; reposar."
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
             },
             "timerSeconds": 720,
             "timerLabel": "Arroz a fuego lento",
@@ -3821,8 +3893,64 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Prueba sal y sirve el arroz caliente en un plato hondo.",
-              "intermediate": "Ajusta sal y emplata el arroz caliente.",
-              "advanced": "Ajusta sal y emplata el arroz caliente."
+              "intermediate": "Prueba sal y sirve el arroz caliente en un plato hondo.",
+              "advanced": "Prueba sal y sirve el arroz caliente en un plato hondo."
+            },
+            "phaseId": "serve"
+          }
+        ]
+      },
+      {
+        "id": "sarten",
+        "label": "Sartén / cazo",
+        "equipmentIds": [
+          "sarten",
+          "vitro"
+        ],
+        "steps": [
+          {
+            "id": "prep-rice",
+            "text": {
+              "beginner": "Mide {qty:arroz} de arroz en un bol. En una sartén honda o cazo amplio vierte 160 ml de agua fría, el arroz y una pizca de sal. Ten tomate frito listo.",
+              "intermediate": "Mide {qty:arroz} de arroz en un bol. En una sartén honda o cazo amplio vierte 160 ml de agua fría, el arroz y una pizca de sal. Ten tomate frito listo.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una sartén honda o cazo amplio vierte 160 ml de agua fría, el arroz y una pizca de sal."
+            },
+            "phaseId": "prep-rice",
+            "heatLevel": "medio"
+          },
+          {
+            "id": "cook-rice",
+            "text": {
+              "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
+            },
+            "timerSeconds": 720,
+            "timerLabel": "Arroz a fuego lento",
+            "termIds": [
+              "reposar"
+            ],
+            "phaseId": "cook-rice",
+            "heatLevel": "bajo"
+          },
+          {
+            "id": "mix",
+            "text": {
+              "beginner": "Tras reposar arroz, incorpora tomate frito calentado en sartén 2 min y mezcla.",
+              "intermediate": "Tras reposar arroz, incorpora tomate frito calentado en sartén 2 min y mezcla.",
+              "advanced": "Tras reposar arroz, incorpora tomate frito calentado en sartén 2 min y mezcla."
+            },
+            "timerSeconds": 120,
+            "timerLabel": "Tomate",
+            "phaseId": "mix",
+            "heatLevel": "medio"
+          },
+          {
+            "id": "serve",
+            "text": {
+              "beginner": "Prueba sal y sirve el arroz caliente en un plato hondo.",
+              "intermediate": "Prueba sal y sirve el arroz caliente en un plato hondo.",
+              "advanced": "Prueba sal y sirve el arroz caliente en un plato hondo."
             },
             "phaseId": "serve"
           }
@@ -3894,7 +4022,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal. Escurre garbanzos.",
               "intermediate": "Olla: arroz {qty:arroz}, agua ~2:1, sal. Escurre garbanzos.",
-              "advanced": "Arroz {qty:arroz} / 160 ml agua."
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal."
             },
             "phaseId": "prep-rice",
             "heatLevel": "medio"
@@ -3903,8 +4031,61 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook-rice",
             "text": {
               "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
-              "intermediate": "Hierve, tapa, 12 min a fuego bajo; reposa 3 min.",
-              "advanced": "Cuece 12 min tapado; reposar."
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
+            },
+            "timerSeconds": 720,
+            "timerLabel": "Arroz a fuego lento",
+            "termIds": [
+              "reposar"
+            ],
+            "phaseId": "cook-rice",
+            "heatLevel": "bajo"
+          },
+          {
+            "id": "mix",
+            "text": {
+              "beginner": "Mezcla garbanzos escurridos con arroz cocido y aceite.",
+              "intermediate": "Mezcla garbanzos escurridos con arroz cocido y aceite.",
+              "advanced": "Mezcla garbanzos escurridos con arroz cocido y aceite."
+            },
+            "phaseId": "mix"
+          },
+          {
+            "id": "serve",
+            "text": {
+              "beginner": "Sirve el arroz con garbanzos caliente en un plato hondo.",
+              "intermediate": "Sirve el arroz con garbanzos caliente en un plato hondo.",
+              "advanced": "Sirve el arroz con garbanzos caliente en un plato hondo."
+            },
+            "phaseId": "serve"
+          }
+        ]
+      },
+      {
+        "id": "sarten",
+        "label": "Sartén / cazo",
+        "equipmentIds": [
+          "sarten",
+          "vitro"
+        ],
+        "steps": [
+          {
+            "id": "prep-rice",
+            "text": {
+              "beginner": "Mide {qty:arroz} de arroz en un bol. En una sartén honda o cazo amplio vierte 160 ml de agua fría, el arroz y una pizca de sal. Escurre garbanzos.",
+              "intermediate": "Pon {qty:arroz} de arroz en una sartén honda o cazo con aproximadamente el doble de agua y una pizca de sal. Escurre los garbanzos.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una sartén honda o cazo amplio vierte 160 ml de agua fría, el arroz y una pizca de sal."
+            },
+            "phaseId": "prep-rice",
+            "heatLevel": "medio"
+          },
+          {
+            "id": "cook-rice",
+            "text": {
+              "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
             },
             "timerSeconds": 720,
             "timerLabel": "Arroz a fuego lento",
@@ -4004,8 +4185,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep-rice",
             "text": {
               "beginner": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal.",
-              "intermediate": "Olla: arroz {qty:arroz}, agua ~2:1, sal.",
-              "advanced": "Arroz {qty:arroz} / 160 ml agua."
+              "intermediate": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal."
             },
             "phaseId": "prep-rice",
             "heatLevel": "medio"
@@ -4014,8 +4195,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook-rice",
             "text": {
               "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
-              "intermediate": "Hierve, tapa, 12 min a fuego bajo; reposa 3 min.",
-              "advanced": "Cuece 12 min tapado; reposar."
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
             },
             "timerSeconds": 720,
             "timerLabel": "Arroz a fuego lento",
@@ -4028,9 +4209,59 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "veg-egg",
             "text": {
-              "beginner": "Saltea zanahoria en cubos 4 min; empuja a un lado, casca huevo y revuelve 1 min. Mezcla con arroz.",
-              "intermediate": "Saltea zanahoria en cubos 4 min; empuja a un lado, casca huevo y revuelve 1 min. Mezcla con arroz.",
-              "advanced": "Saltea zanahoria en cubos 4 min; empuja a un lado, casca huevo y revuelve 1 min. Mezcla con arroz."
+              "beginner": "Bate los huevos con una pizca de sal. Vierte en la sartén a fuego medio-bajo y remueve (o cuaja sin remover, según el plato) hasta el punto deseado. Sirve al momento. Remueve con frecuencia (saltear).",
+              "intermediate": "Cocina los huevos a fuego medio-bajo hasta el punto deseado y sirve, salteando.",
+              "advanced": "Cocina los huevos a fuego medio-bajo al punto y sirve, salteando."
+            },
+            "termIds": [
+              "saltear"
+            ],
+            "timerSeconds": 300,
+            "timerLabel": "Salteado",
+            "phaseId": "veg-egg",
+            "heatLevel": "medio"
+          }
+        ]
+      },
+      {
+        "id": "sarten",
+        "label": "Sartén / cazo",
+        "equipmentIds": [
+          "sarten",
+          "vitro"
+        ],
+        "steps": [
+          {
+            "id": "prep-rice",
+            "text": {
+              "beginner": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal.",
+              "intermediate": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal."
+            },
+            "phaseId": "prep-rice",
+            "heatLevel": "medio"
+          },
+          {
+            "id": "cook-rice",
+            "text": {
+              "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
+            },
+            "timerSeconds": 720,
+            "timerLabel": "Arroz a fuego lento",
+            "termIds": [
+              "reposar"
+            ],
+            "phaseId": "cook-rice",
+            "heatLevel": "bajo"
+          },
+          {
+            "id": "veg-egg",
+            "text": {
+              "beginner": "Bate los huevos con una pizca de sal. Vierte en la sartén a fuego medio-bajo y remueve (o cuaja sin remover, según el plato) hasta el punto deseado. Sirve al momento. Remueve con frecuencia (saltear).",
+              "intermediate": "Cocina los huevos a fuego medio-bajo hasta el punto deseado y sirve, salteando.",
+              "advanced": "Cocina los huevos a fuego medio-bajo al punto y sirve, salteando."
             },
             "termIds": [
               "saltear"
@@ -4106,8 +4337,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep-rice",
             "text": {
               "beginner": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal. Descongela verduras si hace falta.",
-              "intermediate": "Olla: arroz {qty:arroz}, agua ~2:1, sal. Descongela verduras si hace falta.",
-              "advanced": "Arroz {qty:arroz} / 160 ml agua."
+              "intermediate": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal. Descongela verduras si hace falta.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal."
             },
             "phaseId": "prep-rice",
             "heatLevel": "medio"
@@ -4116,8 +4347,58 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook-rice",
             "text": {
               "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
-              "intermediate": "Hierve, tapa, 12 min a fuego bajo; reposa 3 min.",
-              "advanced": "Cuece 12 min tapado; reposar."
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
+            },
+            "timerSeconds": 720,
+            "timerLabel": "Arroz a fuego lento",
+            "termIds": [
+              "reposar"
+            ],
+            "phaseId": "cook-rice",
+            "heatLevel": "bajo"
+          },
+          {
+            "id": "veg",
+            "text": {
+              "beginner": "Saltea verduras mixtas 5 min, incorpora arroz y mezcla 1 min.",
+              "intermediate": "Saltea verduras mixtas 5 min, incorpora arroz y mezcla 1 min.",
+              "advanced": "Saltea verduras mixtas 5 min, incorpora arroz y mezcla 1 min."
+            },
+            "termIds": [
+              "saltear"
+            ],
+            "timerSeconds": 300,
+            "timerLabel": "Verduras",
+            "phaseId": "veg",
+            "heatLevel": "medio"
+          }
+        ]
+      },
+      {
+        "id": "sarten",
+        "label": "Sartén / cazo",
+        "equipmentIds": [
+          "sarten",
+          "vitro"
+        ],
+        "steps": [
+          {
+            "id": "prep-rice",
+            "text": {
+              "beginner": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal. Descongela verduras si hace falta.",
+              "intermediate": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal. Descongela verduras si hace falta.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal."
+            },
+            "phaseId": "prep-rice",
+            "heatLevel": "medio"
+          },
+          {
+            "id": "cook-rice",
+            "text": {
+              "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
             },
             "timerSeconds": 720,
             "timerLabel": "Arroz a fuego lento",
@@ -4209,8 +4490,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep-rice",
             "text": {
               "beginner": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal.",
-              "intermediate": "Olla: arroz {qty:arroz}, agua ~2:1, sal.",
-              "advanced": "Arroz {qty:arroz} / 160 ml agua."
+              "intermediate": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal."
             },
             "phaseId": "prep-rice",
             "heatLevel": "medio"
@@ -4219,8 +4500,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook-rice",
             "text": {
               "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
-              "intermediate": "Hierve, tapa, 12 min a fuego bajo; reposa 3 min.",
-              "advanced": "Cuece 12 min tapado; reposar."
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
             },
             "timerSeconds": 720,
             "timerLabel": "Arroz a fuego lento",
@@ -4233,9 +4514,56 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "egg",
             "text": {
-              "beginner": "Fríe huevo en sartén 2-3 min. Sirve sobre arroz.",
-              "intermediate": "Fríe huevo en sartén 2-3 min. Sirve sobre arroz.",
-              "advanced": "Fríe huevo en sartén 2-3 min. Sirve sobre arroz."
+              "beginner": "Bate los huevos con una pizca de sal. Vierte en la sartén a fuego medio-bajo y remueve (o cuaja sin remover, según el plato) hasta el punto deseado. Sirve al momento.",
+              "intermediate": "Cocina los huevos a fuego medio-bajo hasta el punto deseado y sirve.",
+              "advanced": "Cocina los huevos a fuego medio-bajo al punto y sirve."
+            },
+            "timerSeconds": 180,
+            "timerLabel": "Huevo",
+            "phaseId": "egg",
+            "heatLevel": "medio"
+          }
+        ]
+      },
+      {
+        "id": "sarten",
+        "label": "Sartén / cazo",
+        "equipmentIds": [
+          "sarten",
+          "vitro"
+        ],
+        "steps": [
+          {
+            "id": "prep-rice",
+            "text": {
+              "beginner": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal.",
+              "intermediate": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal."
+            },
+            "phaseId": "prep-rice",
+            "heatLevel": "medio"
+          },
+          {
+            "id": "cook-rice",
+            "text": {
+              "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
+            },
+            "timerSeconds": 720,
+            "timerLabel": "Arroz a fuego lento",
+            "termIds": [
+              "reposar"
+            ],
+            "phaseId": "cook-rice",
+            "heatLevel": "bajo"
+          },
+          {
+            "id": "egg",
+            "text": {
+              "beginner": "Bate los huevos con una pizca de sal. Vierte en la sartén a fuego medio-bajo y remueve (o cuaja sin remover, según el plato) hasta el punto deseado. Sirve al momento.",
+              "intermediate": "Cocina los huevos a fuego medio-bajo hasta el punto deseado y sirve.",
+              "advanced": "Cocina los huevos a fuego medio-bajo al punto y sirve."
             },
             "timerSeconds": 180,
             "timerLabel": "Huevo",
@@ -4310,7 +4638,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal. Corta pollo en dados.",
               "intermediate": "Olla: arroz {qty:arroz}, agua ~2:1, sal. Corta pollo en dados.",
-              "advanced": "Arroz {qty:arroz} / 160 ml agua."
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal."
             },
             "phaseId": "prep-rice",
             "heatLevel": "medio"
@@ -4319,8 +4647,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook-rice",
             "text": {
               "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
-              "intermediate": "Hierve, tapa, 12 min a fuego bajo; reposa 3 min.",
-              "advanced": "Cuece 12 min tapado; reposar."
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
             },
             "timerSeconds": 720,
             "timerLabel": "Arroz a fuego lento",
@@ -4333,9 +4661,59 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "chicken",
             "text": {
-              "beginner": "Saltea pollo en sartén 8 min hasta cocinado. Mezcla con arroz.",
-              "intermediate": "Saltea pollo en sartén 8 min hasta cocinado. Mezcla con arroz.",
-              "advanced": "Saltea pollo en sartén 8 min hasta cocinado. Mezcla con arroz."
+              "beginner": "Calienta la sartén con aceite a fuego medio-alto. Cocina el pollo removiendo hasta que no quede rosado por dentro (abre un trozo; los jugos deben salir claros). Sala y continúa con el siguiente paso o sirve. Remueve con frecuencia (saltear).",
+              "intermediate": "Cocina el pollo a fuego medio-alto hasta que esté hecho por dentro; sala, salteando.",
+              "advanced": "Cocina el pollo a fuego medio-alto al punto seguro; sala, salteando."
+            },
+            "termIds": [
+              "saltear"
+            ],
+            "timerSeconds": 480,
+            "timerLabel": "Pollo",
+            "phaseId": "chicken",
+            "heatLevel": "medio"
+          }
+        ]
+      },
+      {
+        "id": "sarten",
+        "label": "Sartén / cazo",
+        "equipmentIds": [
+          "sarten",
+          "vitro"
+        ],
+        "steps": [
+          {
+            "id": "prep-rice",
+            "text": {
+              "beginner": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal. Corta pollo en dados.",
+              "intermediate": "Pon {qty:arroz} de arroz en una sartén honda o cazo con aproximadamente el doble de agua y una pizca de sal. Corta el pollo en dados.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal."
+            },
+            "phaseId": "prep-rice",
+            "heatLevel": "medio"
+          },
+          {
+            "id": "cook-rice",
+            "text": {
+              "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
+            },
+            "timerSeconds": 720,
+            "timerLabel": "Arroz a fuego lento",
+            "termIds": [
+              "reposar"
+            ],
+            "phaseId": "cook-rice",
+            "heatLevel": "bajo"
+          },
+          {
+            "id": "chicken",
+            "text": {
+              "beginner": "Calienta la sartén con aceite a fuego medio-alto. Cocina el pollo removiendo hasta que no quede rosado por dentro (abre un trozo; los jugos deben salir claros). Sala y continúa con el siguiente paso o sirve. Remueve con frecuencia (saltear).",
+              "intermediate": "Cocina el pollo a fuego medio-alto hasta que esté hecho por dentro; sala, salteando.",
+              "advanced": "Cocina el pollo a fuego medio-alto al punto seguro; sala, salteando."
             },
             "termIds": [
               "saltear"
@@ -4412,7 +4790,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal. Sazona pollo.",
               "intermediate": "Olla: arroz {qty:arroz}, agua ~2:1, sal. Sazona pollo.",
-              "advanced": "Arroz {qty:arroz} / 160 ml agua."
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal."
             },
             "phaseId": "prep-rice",
             "heatLevel": "medio"
@@ -4421,8 +4799,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook-rice",
             "text": {
               "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
-              "intermediate": "Hierve, tapa, 12 min a fuego bajo; reposa 3 min.",
-              "advanced": "Cuece 12 min tapado; reposar."
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
             },
             "timerSeconds": 720,
             "timerLabel": "Arroz a fuego lento",
@@ -4435,9 +4813,59 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "chicken",
             "text": {
-              "beginner": "Saltea pollo 8 min. Sirve junto a arroz o mezcla.",
-              "intermediate": "Saltea pollo 8 min. Sirve junto a arroz o mezcla.",
-              "advanced": "Saltea pollo 8 min. Sirve junto a arroz o mezcla."
+              "beginner": "Calienta la sartén con aceite a fuego medio-alto. Cocina el pollo removiendo hasta que no quede rosado por dentro (abre un trozo; los jugos deben salir claros). Sala y continúa con el siguiente paso o sirve. Remueve con frecuencia (saltear).",
+              "intermediate": "Cocina el pollo a fuego medio-alto hasta que esté hecho por dentro; sala, salteando.",
+              "advanced": "Cocina el pollo a fuego medio-alto al punto seguro; sala, salteando."
+            },
+            "termIds": [
+              "saltear"
+            ],
+            "timerSeconds": 480,
+            "timerLabel": "Pollo",
+            "phaseId": "chicken",
+            "heatLevel": "medio"
+          }
+        ]
+      },
+      {
+        "id": "sarten",
+        "label": "Sartén / cazo",
+        "equipmentIds": [
+          "sarten",
+          "vitro"
+        ],
+        "steps": [
+          {
+            "id": "prep-rice",
+            "text": {
+              "beginner": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal. Sazona pollo.",
+              "intermediate": "Pon {qty:arroz} de arroz en una sartén honda o cazo con aproximadamente el doble de agua y una pizca de sal. Sazona el pollo.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal."
+            },
+            "phaseId": "prep-rice",
+            "heatLevel": "medio"
+          },
+          {
+            "id": "cook-rice",
+            "text": {
+              "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
+            },
+            "timerSeconds": 720,
+            "timerLabel": "Arroz a fuego lento",
+            "termIds": [
+              "reposar"
+            ],
+            "phaseId": "cook-rice",
+            "heatLevel": "bajo"
+          },
+          {
+            "id": "chicken",
+            "text": {
+              "beginner": "Calienta la sartén con aceite a fuego medio-alto. Cocina el pollo removiendo hasta que no quede rosado por dentro (abre un trozo; los jugos deben salir claros). Sala y continúa con el siguiente paso o sirve. Remueve con frecuencia (saltear).",
+              "intermediate": "Cocina el pollo a fuego medio-alto hasta que esté hecho por dentro; sala, salteando.",
+              "advanced": "Cocina el pollo a fuego medio-alto al punto seguro; sala, salteando."
             },
             "termIds": [
               "saltear"
@@ -4515,8 +4943,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep-rice",
             "text": {
               "beginner": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal.",
-              "intermediate": "Olla: arroz {qty:arroz}, agua ~2:1, sal.",
-              "advanced": "Arroz {qty:arroz} / 160 ml agua."
+              "intermediate": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una olla mediana vierte 160 ml de agua fría, el arroz y una pizca de sal."
             },
             "phaseId": "prep-rice",
             "heatLevel": "medio"
@@ -4525,8 +4953,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook-rice",
             "text": {
               "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
-              "intermediate": "Hierve, tapa, 12 min a fuego bajo; reposa 3 min.",
-              "advanced": "Cuece 12 min tapado; reposar."
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
             },
             "timerSeconds": 720,
             "timerLabel": "Arroz a fuego lento",
@@ -4540,8 +4968,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "salmon",
             "text": {
               "beginner": "Seca el salmón. Sartén con aceite a fuego medio-alto: cocina 3-4 min por lado hasta opaco por fuera y que se separe en lascas; centro aún jugoso.",
-              "intermediate": "Sella salmón 3-4 min por lado a fuego medio-alto hasta opaco y lascas fáciles; centro jugoso.",
-              "advanced": "Salmón 3-4 min/lado hasta opaco; lascas fáciles; centro jugoso."
+              "intermediate": "Seca el salmón y cocínalo en sartén con aceite a fuego medio-alto, 3–4 minutos por lado, hasta opaco y en lascas; deja el centro jugoso.",
+              "advanced": "Sella el salmón 3–4 minutos por lado a fuego medio-alto hasta opaco y lascas, dejando el centro jugoso."
             },
             "phaseId": "cook-salmon",
             "termIds": [
@@ -4555,8 +4983,67 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "bowl",
             "text": {
               "beginner": "Pon arroz en un bol, coloca el salmón encima y sirve al momento.",
-              "intermediate": "Arroz en bol con salmón encima; servir.",
-              "advanced": "Arroz en bol con salmón encima; servir."
+              "intermediate": "Pon arroz en un bol, coloca el salmón encima y sirve al momento.",
+              "advanced": "Pon arroz en un bol, coloca el salmón encima y sirve al momento."
+            },
+            "phaseId": "serve"
+          }
+        ]
+      },
+      {
+        "id": "sarten",
+        "label": "Sartén / cazo",
+        "equipmentIds": [
+          "sarten",
+          "vitro"
+        ],
+        "steps": [
+          {
+            "id": "prep-rice",
+            "text": {
+              "beginner": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal.",
+              "intermediate": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal.",
+              "advanced": "Mide {qty:arroz} de arroz en un bol. En una sartén honda vierte 160 ml de agua fría, el arroz y una pizca de sal."
+            },
+            "phaseId": "prep-rice",
+            "heatLevel": "medio"
+          },
+          {
+            "id": "cook-rice",
+            "text": {
+              "beginner": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar. Apaga y reposa 3 min; luego suelta con tenedor.",
+              "intermediate": "Cuando hierva, tapa y cuece 12 minutos a fuego bajo; reposa 3 minutos.",
+              "advanced": "Lleva a fuego fuerte hasta que hierva con la tapa al lado. Baja a fuego mínimo, tapa y cuece 12 min sin destapar."
+            },
+            "timerSeconds": 720,
+            "timerLabel": "Arroz a fuego lento",
+            "termIds": [
+              "reposar"
+            ],
+            "phaseId": "cook-rice",
+            "heatLevel": "bajo"
+          },
+          {
+            "id": "salmon",
+            "text": {
+              "beginner": "Seca el salmón. Sartén con aceite a fuego medio-alto: cocina 3-4 min por lado hasta opaco por fuera y que se separe en lascas; centro aún jugoso.",
+              "intermediate": "Seca el salmón y cocínalo en sartén con aceite a fuego medio-alto, 3–4 minutos por lado, hasta opaco y en lascas; deja el centro jugoso.",
+              "advanced": "Sella el salmón 3–4 minutos por lado a fuego medio-alto hasta opaco y lascas, dejando el centro jugoso."
+            },
+            "phaseId": "cook-salmon",
+            "termIds": [
+              "sellar"
+            ],
+            "timerSeconds": 420,
+            "timerLabel": "Salmón",
+            "heatLevel": "medio-alto"
+          },
+          {
+            "id": "bowl",
+            "text": {
+              "beginner": "Pon arroz en un bol, coloca el salmón encima y sirve al momento.",
+              "intermediate": "Pon arroz en un bol, coloca el salmón encima y sirve al momento.",
+              "advanced": "Pon arroz en un bol, coloca el salmón encima y sirve al momento."
             },
             "phaseId": "serve"
           }
@@ -4626,17 +5113,17 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Corta {qty:pollo} y el pimiento en tiras similares. Seca el pollo. Mezcla el pollo con un chorrito de aceite y sal (sazonar = repartir sal/aceite sobre la carne).",
-              "intermediate": "Tiras de pollo y pimiento; sazona el pollo.",
-              "advanced": "Pollo y pimiento en tiras; pollo sazonado."
+              "intermediate": "Corta {qty:pollo} y el pimiento en tiras similares. Seca el pollo. Mezcla el pollo con un chorrito de aceite y sal (sazonar = repartir sal/aceite sobre la carne).",
+              "advanced": "Corta {qty:pollo} y el pimiento en tiras similares. Seca el pollo."
             }
           },
           {
             "id": "chicken",
             "phaseId": "chicken",
             "text": {
-              "beginner": "Sartén caliente con aceite a fuego medio-alto. Saltea el pollo 5–6 min hasta opaco por fuera. Remueve.",
-              "intermediate": "Saltea pollo 5–6 min a fuego medio-alto.",
-              "advanced": "Pollo 5–6 min a fuego medio-alto."
+              "beginner": "Calienta la sartén con aceite a fuego medio-alto. Cocina el pollo removiendo hasta que no quede rosado por dentro (abre un trozo; los jugos deben salir claros). Sala y continúa con el siguiente paso o sirve. Remueve con frecuencia (saltear).",
+              "intermediate": "Cocina el pollo a fuego medio-alto hasta que esté hecho por dentro; sala, salteando.",
+              "advanced": "Cocina el pollo a fuego medio-alto al punto seguro; sala, salteando."
             },
             "heatLevel": "medio-alto",
             "termIds": [
@@ -4650,8 +5137,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "pepper",
             "text": {
               "beginner": "Añade pimiento 4–5 min. El pollo debe estar sin rosa dentro (abre un trozo); el pimiento tierno. Prueba sal y sirve.",
-              "intermediate": "Pimiento 4–5 min; pollo sin rosa interior; salar.",
-              "advanced": "Pimiento 4–5 min; pollo al punto; salar."
+              "intermediate": "Añade pimiento 4–5 min. El pollo debe estar sin rosa dentro (abre un trozo); el pimiento tierno. Prueba sal y sirve.",
+              "advanced": "Añade pimiento 4–5 min. El pollo debe estar sin rosa dentro (abre un trozo); el pimiento tierno."
             },
             "heatLevel": "medio-alto",
             "timerSeconds": 270,
@@ -4706,8 +5193,8 @@ export const RECIPE_CATALOG: Recipe[] = [
     "baseServings": 1,
     "imageHue": 274,
     "steps": [
-      "Trocea pollo; lamina ajo.",
-      "Sofríe ajo; saltea pollo 8-10 min al punto; sirve."
+      "Trocear pollo; laminar ajo.",
+      "Sofreír ajo; saltear pollo 8–10 min; servir."
     ],
     "methods": [
       {
@@ -4719,29 +5206,60 @@ export const RECIPE_CATALOG: Recipe[] = [
         ],
         "steps": [
           {
-            "id": "prep",
+            "id": "prep-b",
+            "phaseId": "prep",
+            "levels": [
+              "beginner"
+            ],
             "text": {
-              "beginner": "Trocea el pollo. Pela y lamina el ajo.",
-              "intermediate": "Trocea pollo; lamina ajo.",
-              "advanced": "Pollo en dados; ajo laminado."
-            },
-            "phaseId": "prep"
+              "beginner": "Corta {qty:pollo} en trozos del tamaño de un bocado. Pela {qty:ajo} y láminalos (rodajas finas). Ten sal y {qty:aceite} listos.",
+              "intermediate": "",
+              "advanced": ""
+            }
           },
           {
-            "id": "cook",
+            "id": "prep",
+            "phaseId": "prep",
+            "levels": [
+              "intermediate",
+              "advanced"
+            ],
             "text": {
-              "beginner": "Sofríe el ajo sin quemar a fuego medio; saltea el pollo 8-10 min a fuego medio-alto hasta cocinado. Sirve con el ajo.",
-              "intermediate": "Sofríe ajo; saltea pollo 8-10 min al punto; sirve.",
-              "advanced": "Ajo sofrito; saltear pollo 8-10 min; servir."
-            },
+              "beginner": "",
+              "intermediate": "Trocea el pollo en dados y lamina el ajo.",
+              "advanced": "Trocea el pollo y lamina el ajo."
+            }
+          },
+          {
+            "id": "cook-garlic",
+            "phaseId": "cook",
+            "levels": [
+              "beginner"
+            ],
+            "heatLevel": "medio",
+            "termIds": [
+              "sofreir"
+            ],
+            "text": {
+              "beginner": "En una sartén, pon el aceite y el ajo laminado EN FRÍO. Enciende a fuego medio y sofríe 1–2 min removiendo hasta que el ajo esté dorado claro (no negro: si se quema, amarga). Retira el ajo a un plato si se dora muy rápido y sigue con el pollo en el mismo aceite. Esta cocción suave en aceite se llama sofreír.",
+              "intermediate": "",
+              "advanced": ""
+            }
+          },
+          {
+            "id": "cook-chicken",
             "phaseId": "cook",
             "heatLevel": "medio-alto",
             "termIds": [
-              "sofreir",
               "saltear"
             ],
             "timerSeconds": 600,
-            "timerLabel": "Pollo"
+            "timerLabel": "Pollo",
+            "text": {
+              "beginner": "Sube a fuego medio-alto. Añade el pollo en una sola capa. Cocina 8–10 min removiendo de vez en cuando (saltear: mover a fuego vivo). Está listo cuando el interior ya no está rosado (abre un trozo) y los jugos salen claros. Vuelve a poner el ajo, mezcla 30 s, prueba la sal y sirve caliente con el aceite de la sartén.",
+              "intermediate": "Sofríe el ajo sin quemarlo y saltea el pollo 8–10 minutos a fuego medio-alto hasta que esté cocinado por dentro; sala y sirve con el ajo.",
+              "advanced": "Sofríe el ajo sin quemarlo, saltea el pollo 8–10 minutos a fuego medio-alto al punto, sala y sirve."
+            }
           }
         ]
       }
@@ -4803,7 +5321,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Seca y trocea el pollo en piezas uniformes. Calienta una sartén con aceite a fuego medio-alto hasta que brille sin humear.",
               "intermediate": "Trocea pollo; calienta aceite en sartén a fuego medio-alto.",
-              "advanced": "pollo troceado; sartén con aceite a fuego medio-alto."
+              "advanced": "Seca y trocea el pollo en piezas uniformes."
             },
             "phaseId": "prep",
             "heatLevel": "medio-alto"
@@ -4811,9 +5329,9 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "cook",
             "text": {
-              "beginner": "Saltea pollo 8 min; al final un chorrito de limón si tienes (opcional).",
-              "intermediate": "Cocina pollo 8 min a fuego medio-alto hasta cocinado por dentro; comprueba corte y jugos claros; sirve.",
-              "advanced": "Saltea pollo 8 min al punto interior; jugos claros; servir."
+              "beginner": "Calienta la sartén con aceite a fuego medio-alto. Cocina el pollo removiendo hasta que no quede rosado por dentro (abre un trozo; los jugos deben salir claros). Sala y continúa con el siguiente paso o sirve. Remueve con frecuencia (saltear).",
+              "intermediate": "Cocina el pollo a fuego medio-alto hasta que esté hecho por dentro; sala, salteando.",
+              "advanced": "Cocina el pollo a fuego medio-alto al punto seguro; sala, salteando."
             },
             "phaseId": "cook",
             "heatLevel": "medio-alto",
@@ -4897,17 +5415,17 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "salad",
             "text": {
               "beginner": "Lava lechuga y tomate. Trocea la lechuga y corta el tomate en gajos. Reserva en un bol sin aliñar todavía.",
-              "intermediate": "Prepara lechuga y tomate; reserva.",
-              "advanced": "Ensalada troceada en espera (sin aliñar)."
+              "intermediate": "Lava lechuga y tomate. Trocea la lechuga y corta el tomate en gajos. Reserva en un bol sin aliñar todavía.",
+              "advanced": "Lava lechuga y tomate. Trocea la lechuga y corta el tomate en gajos."
             }
           },
           {
             "id": "prep-chicken",
             "phaseId": "prep-chicken",
             "text": {
-              "beginner": "Seca {qty:pollo}. Úntalo con {qty:aceite} y sal por ambos lados.",
-              "intermediate": "Seca el pollo y sazona con aceite y sal.",
-              "advanced": "Pollo seco, aceite y sal."
+              "beginner": "Calienta la sartén con aceite a fuego medio-alto. Cocina el pollo removiendo hasta que no quede rosado por dentro (abre un trozo; los jugos deben salir claros). Sala y continúa con el siguiente paso o sirve.",
+              "intermediate": "Cocina el pollo a fuego medio-alto hasta que esté hecho por dentro; sala.",
+              "advanced": "Cocina el pollo a fuego medio-alto al punto seguro; sala."
             }
           },
           {
@@ -4915,8 +5433,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "cook",
             "text": {
               "beginner": "Calienta plancha o sartén a fuego medio-alto con un hilo de aceite. Cocina el pollo 5–6 min por lado. Está listo sin rosa en el centro y con jugos claros (o ~74 °C). Reposa 2 min, corta en tiras.",
-              "intermediate": "Pollo 5–6 min/lado a fuego medio-alto hasta punto seguro; reposar 2 min.",
-              "advanced": "Pollo 5–6 min/lado al punto; reposar; cortar."
+              "intermediate": "Calienta plancha o sartén a fuego medio-alto con un hilo de aceite. Cocina el pollo 5–6 min por lado. Está listo sin rosa en el centro y con jugos claros (o ~74 °C). Reposa 2 min, corta en tiras.",
+              "advanced": "Cocina el pollo 5–6 min por lado. Está listo sin rosa en el centro y con jugos claros (o ~74 °C). Reposa 2 min, corta en tiras."
             },
             "heatLevel": "medio-alto",
             "termIds": [
@@ -4930,8 +5448,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "serve",
             "text": {
               "beginner": "Aliña la ensalada con un chorrito de aceite y sal. Coloca el pollo encima y sirve.",
-              "intermediate": "Aliña ensalada; pollo encima; servir.",
-              "advanced": "Ensalada aliñada con pollo encima."
+              "intermediate": "Aliña la ensalada con un chorrito de aceite y sal. Coloca el pollo encima y sirve.",
+              "advanced": "Aliña la ensalada con un chorrito de aceite y sal. Coloca el pollo encima y sirve."
             }
           }
         ]
@@ -5008,7 +5526,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Corta calabacín y zanahoria en cubos pequeños. Seca el salmón y sálalo. Aceite listo.",
               "intermediate": "Verduras en cubos; salmón seco y sazonado.",
-              "advanced": "Verduras troceadas; salmón seco y sazonado."
+              "advanced": "Corta calabacín y zanahoria en cubos pequeños. Seca el salmón y sálalo."
             }
           },
           {
@@ -5016,8 +5534,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "veg",
             "text": {
               "beginner": "Sartén con aceite a fuego medio: saltea verduras 6–7 min hasta tiernas al pincho. Apártalas a un lado de la sartén.",
-              "intermediate": "Saltea verduras 6–7 min; aparta.",
-              "advanced": "Verduras 6–7 min; reservar en sartén."
+              "intermediate": "Sartén con aceite a fuego medio: saltea verduras 6–7 min hasta tiernas al pincho. Apártalas a un lado de la sartén.",
+              "advanced": "Sartén con aceite a fuego medio: saltea verduras 6–7 min hasta tiernas al pincho. Apártalas a un lado de la sartén."
             },
             "heatLevel": "medio",
             "termIds": [
@@ -5032,7 +5550,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Sube a fuego medio-alto. En el espacio libre (añade aceite si hace falta) coloca el salmón. Cocina 3–4 min por lado hasta que la carne pase a opaco-rosado y se separe en lascas. Sirve con las verduras.",
               "intermediate": "Salmón 3–4 min/lado a fuego medio-alto hasta lascas; servir con verduras.",
-              "advanced": "Salmón 3–4 min/lado al punto; emplatar con verduras."
+              "advanced": "Sube a fuego medio-alto. En el espacio libre (añade aceite si hace falta) coloca el salmón."
             },
             "heatLevel": "medio-alto",
             "timerSeconds": 420,
@@ -5098,17 +5616,17 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Saca la ternera del frío 5–10 min. Sécala muy bien con papel (si está húmeda no dora). Sala justo antes de cocinar. Aceite listo.",
-              "intermediate": "Atempera y seca la ternera; sala al cocinar.",
-              "advanced": "Ternera seca; salar justo al cocinar."
+              "intermediate": "Saca la ternera del frío 5–10 min. Sécala muy bien con papel (si está húmeda no dora). Sala justo antes de cocinar. Aceite listo.",
+              "advanced": "Saca la ternera del frío 5–10 min. Sécala muy bien con papel (si está húmeda no dora)."
             }
           },
           {
             "id": "heat",
             "phaseId": "heat",
             "text": {
-              "beginner": "Calienta plancha o sartén fuerte con un hilo de aceite a fuego alto 1–2 min hasta muy caliente.",
-              "intermediate": "Plancha muy caliente con aceite, fuego alto.",
-              "advanced": "Plancha al máximo con aceite."
+              "beginner": "Sube a fuego medio-alto. Añade la ternera en tiras en una sola capa. Cocina 4–5 min removiendo. Está lista cuando se dore por fuera; el centro puede quedar jugoso. Sala y sirve.",
+              "intermediate": "A fuego medio-alto, cocina la ternera en tiras 4–5 min hasta el punto deseado; sala y sirve.",
+              "advanced": "Saltea la ternera 4–5 min a fuego medio-alto al punto; sala y sirve."
             },
             "heatLevel": "alto"
           },
@@ -5176,8 +5694,9 @@ export const RECIPE_CATALOG: Recipe[] = [
       "cena"
     ],
     "steps": [
-      "Sofrito cebolla 8 min.",
-      "Sube fuego, añade ternera en tiras 4-5 min removiendo."
+      "Cortar cebolla en juliana y ternera en tiras.",
+      "Pochar cebolla 8 min.",
+      "Saltear ternera 4–5 min; integrar y servir."
     ],
     "methods": [
       {
@@ -5189,31 +5708,66 @@ export const RECIPE_CATALOG: Recipe[] = [
         ],
         "steps": [
           {
-            "id": "onion",
-            "text": {
-              "beginner": "Cebolla en juliana a fuego medio 8 min hasta blanda.",
-              "intermediate": "Sofrito cebolla 8 min.",
-              "advanced": "Cebolla en juliana a fuego medio 8 min hasta blanda."
-            },
+            "id": "prep-b",
+            "phaseId": "prep",
+            "levels": [
+              "beginner"
+            ],
             "termIds": [
-              "sofreir"
+              "juliana"
+            ],
+            "text": {
+              "beginner": "Pela {qty:cebolla}. Córtala por la mitad, apoya la parte plana en la tabla y haz tiras finas de unos 2–3 mm. Ese corte se llama juliana. Corta {qty:ternera} en tiras del tamaño de un bocado. Ten {qty:aceite} y sal a mano.",
+              "intermediate": "",
+              "advanced": ""
+            }
+          },
+          {
+            "id": "prep",
+            "phaseId": "prep",
+            "levels": [
+              "intermediate",
+              "advanced"
+            ],
+            "termIds": [
+              "juliana"
+            ],
+            "text": {
+              "beginner": "",
+              "intermediate": "Corta la cebolla en juliana fina y prepara la ternera en tiras de tamaño uniforme para que se cocine de forma homogénea.",
+              "advanced": "Corta la cebolla en juliana y la ternera en tiras uniformes. Déjalas preparadas antes de empezar la cocción."
+            }
+          },
+          {
+            "id": "onion",
+            "phaseId": "onion",
+            "heatLevel": "medio",
+            "termIds": [
+              "sofreir",
+              "juliana"
             ],
             "timerSeconds": 480,
             "timerLabel": "Cebolla",
-            "phaseId": "onion",
-            "heatLevel": "medio"
+            "text": {
+              "beginner": "Usa una sartén amplia. Añade 2 cucharadas de aceite y caliéntalo a fuego medio. Incorpora la cebolla en juliana. Remueve cada minuto. Cocina unos 8 min hasta que esté blanda, translúcida y algo dorada en los bordes (no negra). Si se tuesta demasiado rápido, baja el fuego. Sofreír es cocinar en poco aceite removiendo sin quemar.",
+              "intermediate": "Sofríe la cebolla en juliana a fuego medio unos 8 minutos hasta que quede blanda y ligeramente dorada.",
+              "advanced": "Sofríe la cebolla en juliana a fuego medio hasta que quede tierna y ligeramente dorada."
+            }
           },
           {
             "id": "beef",
-            "text": {
-              "beginner": "Sube fuego, añade ternera en tiras 4-5 min removiendo.",
-              "intermediate": "Sube fuego, añade ternera en tiras 4-5 min removiendo.",
-              "advanced": "Sube fuego, añade ternera en tiras 4-5 min removiendo."
-            },
+            "phaseId": "beef",
+            "heatLevel": "medio-alto",
+            "termIds": [
+              "saltear"
+            ],
             "timerSeconds": 300,
             "timerLabel": "Ternera",
-            "phaseId": "beef",
-            "heatLevel": "medio"
+            "text": {
+              "beginner": "Sube a fuego medio-alto. Aparta la cebolla a un lado de la sartén (o retírala un momento). Añade un poco más de aceite si hace falta y coloca la ternera en una sola capa. Cocina 4–5 min removiendo: primero se dora por fuera; abre un trozo — el interior puede quedar rosado-jugoso o más hecho, según prefieras. Mezcla con la cebolla 30 s, prueba la sal y sirve caliente.",
+              "intermediate": "Sube a fuego medio-alto y saltea la ternera en tiras 4–5 minutos hasta el punto deseado. Intégrala con la cebolla, sala y sirve.",
+              "advanced": "Saltea la ternera 4–5 minutos a fuego medio-alto hasta el punto, intégrala con la cebolla, sala y sirve."
+            }
           }
         ]
       }
@@ -5275,7 +5829,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Seca y trocea el pavo en piezas uniformes. Calienta una sartén con aceite a fuego medio-alto hasta que brille sin humear.",
               "intermediate": "Trocea pavo; calienta aceite en sartén a fuego medio-alto.",
-              "advanced": "pavo troceado; sartén con aceite a fuego medio-alto."
+              "advanced": "Seca y trocea el pavo en piezas uniformes. Calienta una sartén con aceite a fuego medio-alto hasta que brille sin humear."
             },
             "phaseId": "prep",
             "heatLevel": "medio-alto"
@@ -5283,9 +5837,9 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "cook",
             "text": {
-              "beginner": "Plancha lonchas de pavo 2-3 min por lado.",
-              "intermediate": "Cocina pavo 8 min a fuego medio-alto hasta cocinado por dentro; comprueba corte y jugos claros; sirve.",
-              "advanced": "Saltea pavo 8 min al punto interior; jugos claros; servir."
+              "beginner": "Calienta la sartén con aceite a fuego medio-alto. Cocina el pavo removiendo hasta que no quede rosado por dentro (abre un trozo; los jugos deben salir claros). Sala y continúa con el siguiente paso o sirve. Remueve con frecuencia (saltear).",
+              "intermediate": "Cocina el pavo a fuego medio-alto hasta que esté hecho por dentro; sala, salteando.",
+              "advanced": "Cocina el pavo a fuego medio-alto al punto seguro; sala, salteando."
             },
             "phaseId": "cook",
             "heatLevel": "medio-alto",
@@ -5361,8 +5915,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Corta {qty:pavo} en tiras o dados similares. Lava el pimiento, quita semillas y córtalo en tiras. Ten {qty:aceite} y sal a mano.",
-              "intermediate": "Trocea pavo y pimiento en tiras.",
-              "advanced": "Pavo y pimiento en tiras uniformes."
+              "intermediate": "Corta {qty:pavo} en tiras o dados similares. Lava el pimiento, quita semillas y córtalo en tiras.",
+              "advanced": "Corta {qty:pavo} en tiras o dados similares. Lava el pimiento, quita semillas y córtalo en tiras."
             }
           },
           {
@@ -5371,7 +5925,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Calienta una sartén con aceite a fuego medio-alto. Añade el pavo en una sola capa. Cocina 4 min removiendo hasta que deje de verse rosa por fuera.",
               "intermediate": "Saltea pavo 4 min a fuego medio-alto hasta opaco por fuera.",
-              "advanced": "Saltear pavo 4 min a fuego medio-alto."
+              "advanced": "Añade el pavo en una sola capa. Cocina 4 min removiendo hasta que deje de verse rosa por fuera."
             },
             "heatLevel": "medio-alto",
             "termIds": [
@@ -5386,7 +5940,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Añade el pimiento. Cocina 3–4 min más removiendo. El pavo debe estar opaco por dentro (abre un trozo) y el pimiento tierno-crujiente. Sala y sirve.",
               "intermediate": "Añade pimiento 3–4 min; salar. Pavo opaco por dentro.",
-              "advanced": "Pimiento 3–4 min; salar; pavo al punto."
+              "advanced": "Añade el pimiento. Cocina 3–4 min más removiendo."
             },
             "heatLevel": "medio-alto",
             "timerSeconds": 210,
@@ -5435,73 +5989,180 @@ export const RECIPE_CATALOG: Recipe[] = [
       "cena"
     ],
     "steps": [
-      "Templa {qty:salmon}, retira espinas y seca la piel por completo para favorecer el dorado.",
-      "Sella por la piel 4 minutos sin mover; presiona al inicio y deja que el calor ascienda por dos tercios de la pieza.",
-      "Termina 2-3 minutos por la cara de la carne a fuego medio; retira a 52-55 °C para un centro jugoso y reposa 2 minutos."
+      "Secar y salar salmón.",
+      "Plancha caliente.",
+      "Piel abajo ~4 min; vuelta 2–3 min al punto."
     ],
     "methods": [
       {
         "id": "plancha",
-        "label": "Plancha",
+        "label": "Plancha / sartén",
         "equipmentIds": [
           "plancha",
           "vitro"
         ],
         "steps": [
           {
-            "id": "temper-and-dry",
+            "id": "prep-b",
             "phaseId": "prep",
-            "text": {
-              "beginner": "Saca {qty:salmon} del frío 10 minutos antes. Seca muy bien la piel con papel, revisa que no queden espinas y sazona justo antes de cocinar.",
-              "intermediate": "Templa {qty:salmon}, retira espinas y seca la piel por completo para favorecer el dorado.",
-              "advanced": "Atempera {qty:salmon}, desespina y deja la piel totalmente seca; sala en el último momento."
-            },
-            "heatLevel": "medio"
-          },
-          {
-            "id": "heat-plancha",
-            "phaseId": "preheat",
             "levels": [
               "beginner"
             ],
             "text": {
-              "beginner": "Calienta la plancha a fuego medio-alto durante 2 minutos y reparte {qty:aceite}; debe brillar sin humear.",
-              "intermediate": "Precalienta la plancha a fuego medio-alto y extiende {qty:aceite} en una película fina.",
-              "advanced": "Estabiliza la plancha a fuego medio-alto con una película de {qty:aceite}, sin llegar al humo."
-            },
-            "timerSeconds": 120,
-            "timerLabel": "Precalentar plancha",
-            "heatLevel": "medio-alto"
+              "beginner": "Saca el salmón ({qty:salmon}) de la nevera 5–10 min. Sécalo bien con papel de cocina por ambos lados (si está húmedo no dora). Si tiene piel, déjala: ayuda a que no se rompa. Espolvorea sal por encima (y un poco de pimienta si tienes). Ten {qty:aceite} a mano.",
+              "intermediate": "",
+              "advanced": ""
+            }
           },
           {
-            "id": "crisp-skin",
-            "phaseId": "cook-skin",
+            "id": "prep",
+            "phaseId": "prep",
+            "levels": [
+              "intermediate",
+              "advanced"
+            ],
             "text": {
-              "beginner": "Coloca el salmón con la piel hacia abajo. Presiona suavemente 20 segundos para que no se arquee y cocina 4 minutos sin mover, hasta que el cambio de color alcance dos tercios del grosor.",
-              "intermediate": "Sella por la piel 4 minutos sin mover; presiona al inicio y deja que el calor ascienda por dos tercios de la pieza.",
-              "advanced": "Sella la piel 4 minutos, plana y en contacto continuo, hasta observar cocción en dos tercios del lomo."
-            },
+              "beginner": "",
+              "intermediate": "Seca el salmón bien, sazónalo y ten el aceite a mano.",
+              "advanced": "Seca y sazona el salmón; deja el aceite listo."
+            }
+          },
+          {
+            "id": "heat-pan-b",
+            "phaseId": "heat",
+            "levels": [
+              "beginner"
+            ],
+            "heatLevel": "medio-alto",
+            "text": {
+              "beginner": "Usa una sartén o plancha antiadherente (o bien caliente). Pon 1 cucharada de aceite y caliéntala a fuego medio-alto 1–2 min. El aceite debe brillar y chisporrotear suavemente al echar una gota de agua; si humea mucho, baja un poco el fuego.",
+              "intermediate": "",
+              "advanced": ""
+            }
+          },
+          {
+            "id": "heat-pan",
+            "phaseId": "heat",
+            "levels": [
+              "intermediate",
+              "advanced"
+            ],
+            "heatLevel": "medio-alto",
+            "text": {
+              "beginner": "",
+              "intermediate": "Precalienta la sartén o plancha con aceite a fuego medio-alto.",
+              "advanced": "Calienta la plancha con aceite a fuego medio-alto."
+            }
+          },
+          {
+            "id": "side1",
+            "phaseId": "side1",
+            "heatLevel": "medio-alto",
             "timerSeconds": 240,
-            "timerLabel": "Salmón por la piel",
-            "termIds": [
-              "sellar"
-            ],
-            "heatLevel": "medio"
+            "timerLabel": "Salmón lado 1",
+            "text": {
+              "beginner": "Coloca el salmón: si tiene piel, piel abajo primero. No lo muevas los primeros minutos. Cocina unos 4 min (filete de ~2 cm; si es más grueso, 5 min). Debe formarse una costra dorada y despegarse con facilidad.",
+              "intermediate": "Cocina el salmón piel abajo unos 4 minutos a fuego medio-alto sin moverlo hasta que dore.",
+              "advanced": "Cocina piel abajo unos 4 minutos hasta que dore y se suelte."
+            }
           },
           {
-            "id": "finish-and-rest",
-            "phaseId": "finish",
-            "text": {
-              "beginner": "Da la vuelta, baja a fuego medio y cocina 2-3 minutos. Retira cuando se separe en lascas y el centro aún esté jugoso; deja reposar 2 minutos.",
-              "intermediate": "Termina 2-3 minutos por la cara de la carne a fuego medio; retira a 52-55 °C para un centro jugoso y reposa 2 minutos.",
-              "advanced": "Acaba por la cara de la carne hasta 52-55 °C —o 60-63 °C bien hecho— y deja reposar 2 minutos."
-            },
+            "id": "side2",
+            "phaseId": "side2",
+            "heatLevel": "medio",
             "timerSeconds": 150,
-            "timerLabel": "Terminar salmón",
-            "termIds": [
-              "reposar"
+            "timerLabel": "Salmón lado 2",
+            "text": {
+              "beginner": "Dale la vuelta con cuidado (espátula ancha). Baja un poco a fuego medio. Cocina 2–3 min más. Está listo cuando la carne pasa de rojo/translúcido a tono rosado-opaco y se abre en escamas al pinchar el centro; el centro puede quedar ligeramente jugoso. Si prefieres más hecho, 1 min extra. Sirve.",
+              "intermediate": "Da la vuelta y cocina 2–3 minutos a fuego medio hasta opaco-rosado en el centro; sirve.",
+              "advanced": "Da la vuelta 2–3 minutos al punto (opaco, centro jugoso) y sirve."
+            }
+          }
+        ]
+      },
+      {
+        "id": "sarten",
+        "label": "Sartén",
+        "equipmentIds": [
+          "sarten",
+          "vitro"
+        ],
+        "steps": [
+          {
+            "id": "prep-b",
+            "phaseId": "prep",
+            "levels": [
+              "beginner"
             ],
-            "heatLevel": "medio"
+            "text": {
+              "beginner": "Saca el salmón ({qty:salmon}) de la nevera 5–10 min. Sécalo bien con papel de cocina por ambos lados (si está húmedo no dora). Si tiene piel, déjala: ayuda a que no se rompa. Espolvorea sal por encima (y un poco de pimienta si tienes). Ten {qty:aceite} a mano.",
+              "intermediate": "",
+              "advanced": ""
+            }
+          },
+          {
+            "id": "prep",
+            "phaseId": "prep",
+            "levels": [
+              "intermediate",
+              "advanced"
+            ],
+            "text": {
+              "beginner": "",
+              "intermediate": "Seca el salmón bien, sazónalo y ten el aceite a mano.",
+              "advanced": "Seca y sazona el salmón; deja el aceite listo."
+            }
+          },
+          {
+            "id": "heat-pan-b",
+            "phaseId": "heat",
+            "levels": [
+              "beginner"
+            ],
+            "heatLevel": "medio-alto",
+            "text": {
+              "beginner": "Usa una sartén o plancha antiadherente (o bien caliente). Pon 1 cucharada de aceite y caliéntala a fuego medio-alto 1–2 min. El aceite debe brillar y chisporrotear suavemente al echar una gota de agua; si humea mucho, baja un poco el fuego.",
+              "intermediate": "",
+              "advanced": ""
+            }
+          },
+          {
+            "id": "heat-pan",
+            "phaseId": "heat",
+            "levels": [
+              "intermediate",
+              "advanced"
+            ],
+            "heatLevel": "medio-alto",
+            "text": {
+              "beginner": "",
+              "intermediate": "Precalienta la sartén o plancha con aceite a fuego medio-alto.",
+              "advanced": "Calienta la plancha con aceite a fuego medio-alto."
+            }
+          },
+          {
+            "id": "side1",
+            "phaseId": "side1",
+            "heatLevel": "medio-alto",
+            "timerSeconds": 240,
+            "timerLabel": "Salmón lado 1",
+            "text": {
+              "beginner": "Coloca el salmón: si tiene piel, piel abajo primero. No lo muevas los primeros minutos. Cocina unos 4 min (filete de ~2 cm; si es más grueso, 5 min). Debe formarse una costra dorada y despegarse con facilidad.",
+              "intermediate": "Cocina el salmón piel abajo unos 4 minutos a fuego medio-alto sin moverlo hasta que dore.",
+              "advanced": "Cocina piel abajo unos 4 minutos hasta que dore y se suelte."
+            }
+          },
+          {
+            "id": "side2",
+            "phaseId": "side2",
+            "heatLevel": "medio",
+            "timerSeconds": 150,
+            "timerLabel": "Salmón lado 2",
+            "text": {
+              "beginner": "Dale la vuelta con cuidado (espátula ancha). Baja un poco a fuego medio. Cocina 2–3 min más. Está listo cuando la carne pasa de rojo/translúcido a tono rosado-opaco y se abre en escamas al pinchar el centro; el centro puede quedar ligeramente jugoso. Si prefieres más hecho, 1 min extra. Sirve.",
+              "intermediate": "Da la vuelta y cocina 2–3 minutos a fuego medio hasta opaco-rosado en el centro; sirve.",
+              "advanced": "Da la vuelta 2–3 minutos al punto (opaco, centro jugoso) y sirve."
+            }
           }
         ]
       }
@@ -5540,8 +6201,8 @@ export const RECIPE_CATALOG: Recipe[] = [
       "cena"
     ],
     "steps": [
-      "Salmón en plato, sazonado, tapado parcialmente.",
-      "Potencia media 2–3 min hasta lascas; reposo 1 min."
+      "Coloca el salmón en plato apto, sazona y tapa parcialmente.",
+      "Cocina a potencia media 2–3 min hasta lascas; reposa 1 min."
     ],
     "methods": [
       {
@@ -5556,23 +6217,23 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Coloca {qty:salmon} en un plato apto para microondas. Sala. Tapa parcialmente (papel film agujereado o tapa entreabierta) para que no salpique.",
-              "intermediate": "Salmón en plato, sazonado, tapado parcialmente.",
-              "advanced": "Salmón sazonado con tapado parcial."
+              "intermediate": "Coloca el salmón en un plato apto para microondas, sazónalo y cúbrelo parcialmente para evitar salpicaduras.",
+              "advanced": "Coloca el salmón en un recipiente apto para microondas, sazónalo y cúbrelo parcialmente."
             }
           },
           {
             "id": "cook",
             "phaseId": "cook",
-            "text": {
-              "beginner": "Microondas a potencia media 2 min. Comprueba: si el centro sigue muy traslúcido, 30–60 s más. Está listo cuando se separa en lascas y el centro está opaco-rosado, no crudo rojo. Deja 1 min en reposo y sirve.",
-              "intermediate": "Potencia media 2–3 min hasta lascas; reposo 1 min.",
-              "advanced": "Media 2–3 min al punto; reposar 1 min."
-            },
             "timerSeconds": 150,
             "timerLabel": "Salmón micro",
             "termIds": [
               "reposar"
-            ]
+            ],
+            "text": {
+              "beginner": "Microondas a potencia media 2 min. Comprueba: si el centro sigue muy traslúcido, 30–60 s más. Está listo cuando se separa en lascas y el centro está opaco-rosado, no crudo rojo. Deja 1 min en reposo y sirve.",
+              "intermediate": "Cocina a potencia media 2–3 minutos hasta que se separe en lascas; deja reposar 1 minuto y sirve.",
+              "advanced": "Cocina a potencia media 2–3 minutos hasta lascas; reposa 1 minuto y sirve."
+            }
           }
         ]
       }
@@ -5636,7 +6297,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Si el pescado está congelado, descongélalo antes (nevera o agua fría en bolsa). Sécalo con papel. Sala ligeramente por ambos lados. Ten {qty:aceite} listo.",
               "intermediate": "Descongela si hace falta; seca y sala el filete.",
-              "advanced": "Filete seco y sazonado al gusto."
+              "advanced": "Seca y sazona el filete; descongela antes si hace falta."
             }
           },
           {
@@ -5644,8 +6305,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "heat",
             "text": {
               "beginner": "Calienta una sartén con 1–2 cucharadas de aceite a fuego medio-alto 1 min. El aceite debe brillar sin humear.",
-              "intermediate": "Sartén con aceite a fuego medio-alto.",
-              "advanced": "Aceite a fuego medio-alto."
+              "intermediate": "Calienta una sartén con 1–2 cucharadas de aceite a fuego medio-alto 1 min. El aceite debe brillar sin humear.",
+              "advanced": "Calienta una sartén con 1–2 cucharadas de aceite a fuego medio-alto 1 min. El aceite debe brillar sin humear."
             },
             "heatLevel": "medio-alto"
           },
@@ -5654,8 +6315,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "cook",
             "text": {
               "beginner": "Coloca el pescado. Cocina 3–4 min por el primer lado sin mover. Dale la vuelta y cocina 3–4 min más. Está listo cuando se desmenuza fácil con un tenedor y la carne ya no está traslúcida. Sirve.",
-              "intermediate": "3–4 min por lado hasta desmenuzar fácil y opaco; servir.",
-              "advanced": "3–4 min/lado al punto (opaco, se desmenuza); servir."
+              "intermediate": "Cocina 3–4 minutos por cada lado hasta que se desmenuce fácil y quede opaco; sirve.",
+              "advanced": "Cocina 3–4 minutos por lado hasta el punto (opaco, se desmenuza) y sirve."
             },
             "heatLevel": "medio-alto",
             "timerSeconds": 420,
@@ -5734,8 +6395,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Lava lechuga y tomate; trocea. Corta el pollo en dados. Sazónalo con aceite y sal.",
-              "intermediate": "Ensalada troceada; pollo en dados sazonado.",
-              "advanced": "Ensalada lista; pollo en dados sazonado."
+              "intermediate": "Lava lechuga y tomate; trocea. Corta el pollo en dados. Sazónalo con aceite y sal.",
+              "advanced": "Lava lechuga y tomate; trocea. Corta el pollo en dados."
             }
           },
           {
@@ -5743,8 +6404,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "chicken",
             "text": {
               "beginner": "Sartén con aceite a fuego medio-alto: cocina el pollo 8–10 min removiendo hasta sin rosa dentro y jugos claros. Reposa 1 min.",
-              "intermediate": "Pollo 8–10 min a fuego medio-alto al punto seguro.",
-              "advanced": "Pollo 8–10 min al punto."
+              "intermediate": "Sartén con aceite a fuego medio-alto: cocina el pollo 8–10 min removiendo hasta sin rosa dentro y jugos claros. Reposa 1 min.",
+              "advanced": "Sartén con aceite a fuego medio-alto: cocina el pollo 8–10 min removiendo hasta sin rosa dentro y jugos claros. Reposa 1 min."
             },
             "heatLevel": "medio-alto",
             "timerSeconds": 540,
@@ -5758,8 +6419,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "bowl",
             "text": {
               "beginner": "En un bol: lechuga, tomate, pollo encima. Aliña con aceite y sal. Sirve.",
-              "intermediate": "Monta bol: ensalada + pollo; aliñar.",
-              "advanced": "Bol de ensalada con pollo aliñado."
+              "intermediate": "En un bol: lechuga, tomate, pollo encima. Aliña con aceite y sal. Sirve.",
+              "advanced": "En un bol: lechuga, tomate, pollo encima. Aliña con aceite y sal."
             }
           }
         ]
@@ -5825,9 +6486,9 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "cook",
             "text": {
-              "beginner": "Fuego alto: ternera 2 min, verduras 5 min removiendo constante.",
-              "intermediate": "Fuego alto: ternera 2 min, verduras 5 min removiendo constante.",
-              "advanced": "Fuego alto: ternera 2 min, verduras 5 min removiendo constante."
+              "beginner": "Sube a fuego medio-alto. Añade la ternera en tiras en una sola capa. Cocina 4–5 min removiendo. Está lista cuando se dore por fuera; el centro puede quedar jugoso. Sala y sirve.",
+              "intermediate": "A fuego medio-alto, cocina la ternera en tiras 4–5 min hasta el punto deseado; sala y sirve.",
+              "advanced": "Saltea la ternera 4–5 min a fuego medio-alto al punto; sala y sirve."
             },
             "timerSeconds": 420,
             "timerLabel": "Salteado",
@@ -5889,8 +6550,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "boil",
             "text": {
               "beginner": "Llena una olla con agua y llévala a hervor a fuego alto. Introduce las salchichas y cuece 5 min. Escurre.",
-              "intermediate": "Hierve salchichas 5 min; escurre.",
-              "advanced": "Salchichas 5 min en agua hirviendo."
+              "intermediate": "Llena una olla con agua y llévala a hervor a fuego alto. Introduce las salchichas y cuece 5 min. Escurre.",
+              "advanced": "Llena una olla con agua y llévala a hervor a fuego alto. Introduce las salchichas y cuece 5 min."
             },
             "heatLevel": "alto",
             "timerSeconds": 300,
@@ -5901,8 +6562,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "bun",
             "text": {
               "beginner": "Calienta el pan 1 min en sartén seca o micro. Coloca la salchicha dentro y sirve caliente.",
-              "intermediate": "Calienta pan; monta el perrito; servir.",
-              "advanced": "Montar salchicha en pan caliente; servir."
+              "intermediate": "Calienta el pan 1 min en sartén seca o micro. Coloca la salchicha dentro y sirve caliente.",
+              "advanced": "Calienta el pan 1 min en sartén seca o micro. Coloca la salchicha dentro y sirve caliente."
             }
           }
         ]
@@ -5971,8 +6632,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Abre el bote de garbanzos, escúrrelos en un colador y acláralos con agua. Ten {qty:tomate-frito} y {qty:aceite} a mano.",
-              "intermediate": "Escurre y aclara los garbanzos.",
-              "advanced": "Garbanzos escurridos y listos."
+              "intermediate": "Abre el bote de garbanzos, escúrrelos en un colador y acláralos con agua.",
+              "advanced": "Abre el bote de garbanzos, escúrrelos en un colador y acláralos con agua."
             }
           },
           {
@@ -5981,7 +6642,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "En una sartén, calienta el aceite a fuego medio. Añade garbanzos y tomate frito. Remueve 5–6 min hasta que hierva suave y los garbanzos estén calientes de dentro. Prueba sal y sirve.",
               "intermediate": "Saltea garbanzos con tomate 5–6 min a fuego medio; salar.",
-              "advanced": "Garbanzos + tomate 5–6 min a fuego medio; salar."
+              "advanced": "En una sartén, calienta el aceite a fuego medio. Añade garbanzos y tomate frito."
             },
             "heatLevel": "medio",
             "termIds": [
@@ -6057,8 +6718,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Escurre y aclara los garbanzos. Lava las espinacas si hace falta. Ten aceite y sal listos.",
-              "intermediate": "Escurre garbanzos; espinacas listas.",
-              "advanced": "Garbanzos escurridos y espinacas listas."
+              "intermediate": "Escurre y aclara los garbanzos. Lava las espinacas si hace falta. Ten aceite y sal listos.",
+              "advanced": "Escurre y aclara los garbanzos. Lava las espinacas si hace falta."
             }
           },
           {
@@ -6067,7 +6728,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Sartén con un chorrito de aceite a fuego medio. Añade espinacas: en 1–2 min menguarán. Remueve.",
               "intermediate": "Saltea espinacas 1–2 min hasta que mengüen.",
-              "advanced": "Espinacas 1–2 min hasta menguar."
+              "advanced": "Sartén con un chorrito de aceite a fuego medio. Añade espinacas: en 1–2 min menguarán."
             },
             "heatLevel": "medio",
             "termIds": [
@@ -6081,8 +6742,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "finish",
             "text": {
               "beginner": "Añade los garbanzos escurridos. Cocina 4 min removiendo hasta calientes. Sala y sirve.",
-              "intermediate": "Garbanzos 4 min con las espinacas; salar.",
-              "advanced": "Garbanzos 4 min; salar; servir."
+              "intermediate": "Añade los garbanzos escurridos. Cocina 4 min removiendo hasta calientes. Sala y sirve.",
+              "advanced": "Añade los garbanzos escurridos. Cocina 4 min removiendo hasta calientes."
             },
             "heatLevel": "medio",
             "timerSeconds": 240,
@@ -6154,8 +6815,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Escurre las lentejas de bote y acláralas. Ten tomate frito, aceite y sal.",
-              "intermediate": "Escurre lentejas; tomate listo.",
-              "advanced": "Lentejas escurridas y listas."
+              "intermediate": "Escurre las lentejas de bote y acláralas. Ten tomate frito, aceite y sal.",
+              "advanced": "Escurre las lentejas de bote y acláralas. Ten tomate frito, aceite y sal."
             }
           },
           {
@@ -6163,8 +6824,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "cook",
             "text": {
               "beginner": "Sartén con aceite a fuego medio: añade lentejas y tomate frito. Remueve 6 min hasta que burbujee suave y esté bien caliente. Prueba sal y sirve.",
-              "intermediate": "Lentejas con tomate 6 min a fuego medio; salar.",
-              "advanced": "Lentejas + tomate 6 min; salar."
+              "intermediate": "Sartén con aceite a fuego medio: añade lentejas y tomate frito. Remueve 6 min hasta que burbujee suave y esté bien caliente. Prueba sal y sirve.",
+              "advanced": "Sartén con aceite a fuego medio: añade lentejas y tomate frito. Remueve 6 min hasta que burbujee suave y esté bien caliente."
             },
             "heatLevel": "medio",
             "timerSeconds": 360,
@@ -6235,8 +6896,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Si los guisantes son congelados, no hace falta descongelarlos. Trocea el jamón en daditos. Aceite y sal a mano.",
-              "intermediate": "Trocea jamón; guisantes listos.",
-              "advanced": "Jamón troceado; guisantes preparados."
+              "intermediate": "Ten listos los guisantes y el jamón troceado antes de saltear.",
+              "advanced": "Prepara guisantes y jamón troceado antes de empezar."
             }
           },
           {
@@ -6244,8 +6905,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "cook",
             "text": {
               "beginner": "Sartén con aceite a fuego medio: saltea guisantes 5 min removiendo. Añade jamón 2 min más. Deben quedar calientes y el jamón ligeramente dorado. Sala poco (el jamón ya aporta sal) y sirve.",
-              "intermediate": "Guisantes 5 min; jamón 2 min a fuego medio.",
-              "advanced": "Guisantes 5 min + jamón 2 min; salar con tiento."
+              "intermediate": "Sartén con aceite a fuego medio: saltea guisantes 5 min removiendo. Añade jamón 2 min más. Deben quedar calientes y el jamón ligeramente dorado. Sala poco (el jamón ya aporta sal) y sirve.",
+              "advanced": "Sartén con aceite a fuego medio: saltea guisantes 5 min removiendo. Añade jamón 2 min más."
             },
             "heatLevel": "medio",
             "termIds": [
@@ -6320,7 +6981,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Sartén con aceite a fuego medio: saltea {qty:guisantes} 4–5 min hasta calientes y de color vivo.",
               "intermediate": "Saltea guisantes 4–5 min a fuego medio.",
-              "advanced": "Guisantes 4–5 min a fuego medio."
+              "advanced": "Sartén con aceite a fuego medio: saltea {qty:guisantes} 4–5 min hasta calientes y de color vivo."
             },
             "heatLevel": "medio",
             "termIds": [
@@ -6335,7 +6996,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Aparta los guisantes a un lado de la sartén (o usa otra). Bate {qty:huevos} con sal. Vierte a fuego bajo-medio y remueve 1–2 min hasta cuajado cremoso. Mezcla con los guisantes y sirve.",
               "intermediate": "Revuelve huevos 1–2 min a fuego bajo-medio; mezcla con guisantes.",
-              "advanced": "Huevos revueltos 1–2 min; integrar con guisantes."
+              "advanced": "Aparta los guisantes a un lado de la sartén (o usa otra). Bate {qty:huevos} con sal."
             },
             "heatLevel": "medio-bajo",
             "timerSeconds": 120,
@@ -6401,8 +7062,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Si las verduras son grandes, córtalas en trozos similares (2–3 cm). Ten {qty:aceite} y sal.",
-              "intermediate": "Trocea verduras de tamaño uniforme.",
-              "advanced": "Verduras en trozos de tamaño uniforme."
+              "intermediate": "Lava y corta las verduras en trozos similares para saltear.",
+              "advanced": "Corta las verduras en trozos uniformes y tenlas listas."
             }
           },
           {
@@ -6411,7 +7072,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Sartén amplia con aceite a fuego medio-alto. Añade verduras. Remueve cada minuto. Cocina 6–8 min hasta tiernas al pincho pero no pastosas. Sala y sirve.",
               "intermediate": "Saltea verduras 6–8 min a fuego medio-alto hasta tiernas.",
-              "advanced": "Saltear verduras 6–8 min al dente-tierno."
+              "advanced": "Sartén amplia con aceite a fuego medio-alto. Añade verduras. Cocina 6–8 min hasta tiernas al pincho pero no pastosas. Sala y sirve."
             },
             "heatLevel": "medio-alto",
             "termIds": [
@@ -6493,7 +7154,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Lamina el ajo. Sartén con aceite a fuego medio: sofríe el ajo 30–40 s hasta dorado claro (no negro).",
               "intermediate": "Sofríe ajo 30–40 s a fuego medio.",
-              "advanced": "Ajo sofrito 30–40 s."
+              "advanced": "Lamina el ajo. Sartén con aceite a fuego medio: sofríe el ajo 30–40 s hasta dorado claro (no negro)."
             },
             "heatLevel": "medio",
             "termIds": [
@@ -6505,8 +7166,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "spinach",
             "text": {
               "beginner": "Añade espinacas. En 1–2 min menguarán. Remueve.",
-              "intermediate": "Espinacas 1–2 min hasta menguar.",
-              "advanced": "Espinacas 1–2 min hasta menguar."
+              "intermediate": "Añade espinacas. En 1–2 min menguarán. Remueve.",
+              "advanced": "Añade las espinacas y cocina 1–2 minutos hasta que mengüen."
             },
             "heatLevel": "medio",
             "timerSeconds": 90,
@@ -6516,9 +7177,9 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "eggs",
             "phaseId": "eggs",
             "text": {
-              "beginner": "Bate huevos con sal. Baja a fuego medio-bajo, vierte y remueve 2 min hasta cuajado cremoso. Sirve.",
-              "intermediate": "Huevos revueltos 2 min a fuego medio-bajo sobre espinacas.",
-              "advanced": "Revuelto 2 min; servir."
+              "beginner": "Bate los huevos con una pizca de sal. Vierte en la sartén a fuego medio-bajo y remueve (o cuaja sin remover, según el plato) hasta el punto deseado. Sirve al momento.",
+              "intermediate": "Cocina los huevos a fuego medio-bajo hasta el punto deseado y sirve.",
+              "advanced": "Cocina los huevos a fuego medio-bajo al punto y sirve."
             },
             "heatLevel": "medio-bajo",
             "timerSeconds": 120,
@@ -6584,8 +7245,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Lava el pimiento, quita el pedúnculo y las semillas. Córtalo en tiras de 1 cm.",
-              "intermediate": "Pimiento en tiras de 1 cm.",
-              "advanced": "Pimiento limpio en tiras."
+              "intermediate": "Lava el pimiento, quita el pedúnculo y las semillas. Córtalo en tiras de 1 cm.",
+              "advanced": "Lava el pimiento, quita el pedúnculo y las semillas. Córtalo en tiras de 1 cm."
             }
           },
           {
@@ -6594,7 +7255,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Sartén con aceite a fuego medio-alto. Saltea las tiras 6–8 min removiendo hasta blando y algo dorado en bordes. Sala y sirve.",
               "intermediate": "Saltea pimiento 6–8 min a fuego medio-alto hasta tierno.",
-              "advanced": "Pimiento 6–8 min a fuego medio-alto."
+              "advanced": "Sartén con aceite a fuego medio-alto. Saltea las tiras 6–8 min removiendo hasta blando y algo dorado en bordes."
             },
             "heatLevel": "medio-alto",
             "termIds": [
@@ -6662,8 +7323,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Pela la zanahoria y córtala en rodajas finas (2–3 mm) para que se cocine antes.",
-              "intermediate": "Zanahoria en rodajas finas.",
-              "advanced": "Zanahoria en rodajas finas."
+              "intermediate": "Pela la zanahoria y córtala en rodajas finas (2–3 mm) para que se cocine antes.",
+              "advanced": "Pela la zanahoria y córtala en rodajas finas (2–3 mm) para que se cocine antes."
             }
           },
           {
@@ -6744,8 +7405,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Separa el brócoli en ramos pequeños. Pela el ajo y lámina fino. Aceite y sal listos.",
-              "intermediate": "Ramos de brócoli; ajo laminado.",
-              "advanced": "Brócoli en ramos; ajo laminado."
+              "intermediate": "Separa el brócoli en ramos pequeños. Pela el ajo y lámina fino. Aceite y sal listos.",
+              "advanced": "Separa el brócoli en ramos pequeños. Pela el ajo y lámina fino."
             }
           },
           {
@@ -6828,8 +7489,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Lava calabacín y tomate. Corta el calabacín en cubos de 1–2 cm y el tomate en cubos.",
-              "intermediate": "Calabacín y tomate en cubos.",
-              "advanced": "Calabacín y tomate en cubos."
+              "intermediate": "Lava calabacín y tomate. Corta el calabacín en cubos de 1–2 cm y el tomate en cubos.",
+              "advanced": "Lava calabacín y tomate. Corta el calabacín en cubos de 1–2 cm y el tomate en cubos."
             }
           },
           {
@@ -6837,8 +7498,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "cook",
             "text": {
               "beginner": "Sartén con aceite a fuego medio: saltea calabacín 5 min. Añade tomate 4 min más hasta que suelte jugo y el calabacín esté tierno. Sala y sirve.",
-              "intermediate": "Calabacín 5 min + tomate 4 min a fuego medio.",
-              "advanced": "Calabacín 5 min; tomate 4 min; salar."
+              "intermediate": "Sartén con aceite a fuego medio: saltea calabacín 5 min. Añade tomate 4 min más hasta que suelte jugo y el calabacín esté tierno. Sala y sirve.",
+              "advanced": "Sartén con aceite a fuego medio: saltea calabacín 5 min. Añade tomate 4 min más hasta que suelte jugo y el calabacín esté tierno."
             },
             "heatLevel": "medio",
             "termIds": [
@@ -6912,8 +7573,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "veg",
             "text": {
               "beginner": "Corta el calabacín en cubos pequeños. Sartén con aceite a fuego medio: saltea 6 min hasta empezar a ablandarse.",
-              "intermediate": "Saltea calabacín en cubos 6 min.",
-              "advanced": "Calabacín 6 min a fuego medio."
+              "intermediate": "Corta el calabacín en cubos pequeños. Sartén con aceite a fuego medio: saltea 6 min hasta empezar a ablandarse.",
+              "advanced": "Corta el calabacín en cubos pequeños. Sartén con aceite a fuego medio: saltea 6 min hasta empezar a ablandarse."
             },
             "heatLevel": "medio",
             "termIds": [
@@ -6928,7 +7589,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Bate {qty:huevos} con sal. Vierte sobre el calabacín. Cocina 3–4 min a fuego medio-bajo hasta que la clara cuaje. Puedes tapar 1 min. Sirve en porciones.",
               "intermediate": "Huevo batido encima; cuaja 3–4 min a fuego medio-bajo.",
-              "advanced": "Huevo sobre calabacín; cuajar 3–4 min."
+              "advanced": "Bate {qty:huevos} con sal. Vierte sobre el calabacín."
             },
             "heatLevel": "medio-bajo",
             "timerSeconds": 210,
@@ -7007,8 +7668,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Corta pimiento y calabacín en cubos de 1–2 cm. Ten tomate frito, aceite y sal.",
-              "intermediate": "Pimiento y calabacín en cubos.",
-              "advanced": "Pimiento y calabacín en cubos."
+              "intermediate": "Corta pimiento y calabacín en cubos de 1–2 cm. Ten tomate frito, aceite y sal.",
+              "advanced": "Corta pimiento y calabacín en cubos de 1–2 cm. Ten tomate frito, aceite y sal."
             }
           },
           {
@@ -7017,7 +7678,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Sartén amplia con aceite a fuego medio: saltea pimiento y calabacín 8 min removiendo hasta que empiecen a ablandarse.",
               "intermediate": "Saltea pimiento y calabacín 8 min a fuego medio.",
-              "advanced": "Verduras 8 min a fuego medio."
+              "advanced": "Sartén amplia con aceite a fuego medio: saltea pimiento y calabacín 8 min removiendo hasta que empiecen a ablandarse."
             },
             "heatLevel": "medio",
             "termIds": [
@@ -7031,8 +7692,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "finish",
             "text": {
               "beginner": "Añade el tomate frito. Cocina 5 min más hasta salsa espesa y verduras tiernas. Prueba sal y sirve.",
-              "intermediate": "Tomate frito 5 min hasta pisto espeso; salar.",
-              "advanced": "Tomate 5 min; espesar; salar."
+              "intermediate": "Añade el tomate frito. Cocina 5 min más hasta salsa espesa y verduras tiernas. Prueba sal y sirve.",
+              "advanced": "Añade el tomate frito. Cocina 5 min más hasta salsa espesa y verduras tiernas."
             },
             "heatLevel": "medio",
             "timerSeconds": 300,
@@ -7103,8 +7764,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Pela las patatas y córtalas en cubos pequeños (1–1,5 cm) para que se hagan antes. Lamina el ajo. Aceite y sal.",
-              "intermediate": "Patata en cubos pequeños; ajo laminado.",
-              "advanced": "Patata en cubos; ajo laminado."
+              "intermediate": "Pela las patatas y córtalas en cubos pequeños (1–1,5 cm) para que se hagan antes. Lamina el ajo. Aceite y sal.",
+              "advanced": "Pela las patatas y córtalas en cubos pequeños (1–1,5 cm) para que se hagan antes. Lamina el ajo."
             }
           },
           {
@@ -7113,7 +7774,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Sartén con 2–3 cucharadas de aceite a fuego medio. Añade patata, tapa y cocina 12–15 min removiendo cada 3–4 min. Cuando se pinchen fáciles, añade ajo 1–2 min sin quemar. Sala y sirve.",
               "intermediate": "Patata tapada 12–15 min a fuego medio; ajo 1–2 min al final.",
-              "advanced": "Patata 12–15 min tapada; ajo final 1–2 min."
+              "advanced": "Sartén con 2–3 cucharadas de aceite a fuego medio. Añade patata, tapa y cocina 12–15 min removiendo cada 3–4 min."
             },
             "heatLevel": "medio",
             "timerSeconds": 780,
@@ -7168,7 +7829,7 @@ export const RECIPE_CATALOG: Recipe[] = [
       "cena"
     ],
     "steps": [
-      "Patata ~12 min hasta tierna.",
+      "Patata en rodajas; freír ~12 min.",
       "Huevos encima, tapa ~3 min; servir."
     ],
     "methods": [
@@ -7181,27 +7842,72 @@ export const RECIPE_CATALOG: Recipe[] = [
         ],
         "steps": [
           {
-            "id": "potato",
+            "id": "prep-b",
+            "phaseId": "prep",
+            "levels": [
+              "beginner"
+            ],
             "text": {
-              "beginner": "Patata en rodajas en sartén con aceite ~12 min hasta tiernas (ver override).",
-              "intermediate": "Patata ~12 min hasta tierna.",
-              "advanced": "Patata ~12 min al punto."
-            },
-            "phaseId": "cook-potato",
-            "timerSeconds": 720,
-            "timerLabel": "Patatas",
-            "heatLevel": "medio"
+              "beginner": "Lava {qty:patatas}. Pélalas si la piel es gruesa o está dañada. Córtalas en rodajas de unos 3–4 mm. Casca {qty:huevos} en un bol aparte y ten sal a mano.",
+              "intermediate": "",
+              "advanced": ""
+            }
           },
           {
-            "id": "egg",
+            "id": "prep",
+            "phaseId": "prep",
+            "levels": [
+              "intermediate",
+              "advanced"
+            ],
             "text": {
-              "beginner": "Huevos encima, tapa ~3 min hasta clara cuajada; servir.",
-              "intermediate": "Huevos encima, tapa ~3 min; servir.",
-              "advanced": "Huevos 3 min tapa; servir."
-            },
+              "beginner": "",
+              "intermediate": "Corta las patatas en rodajas de 3–4 mm y deja los huevos listos para cascar.",
+              "advanced": "Corta las patatas en rodajas de 3–4 mm y ten los huevos preparados."
+            }
+          },
+          {
+            "id": "cook-potato",
+            "phaseId": "cook-potato",
+            "heatLevel": "medio",
+            "timerSeconds": 720,
+            "timerLabel": "Patatas",
+            "text": {
+              "beginner": "Calienta una sartén mediana con 2 cucharadas de aceite a fuego medio. Extiende las rodajas en una sola capa (o casi). Cocina unos 12 min, dándoles la vuelta a mitad. Están listas cuando se pinchan fáciles con un tenedor y empiezan a dorarse. Sala ligeramente.",
+              "intermediate": "Saltea la patata en aceite a fuego medio unos 12 minutos hasta que quede tierna y algo dorada; salpimienta.",
+              "advanced": "Saltea la patata a fuego medio unos 12 minutos hasta tierna y dorada; sala."
+            }
+          },
+          {
+            "id": "eggs-b",
             "phaseId": "eggs",
+            "levels": [
+              "beginner"
+            ],
+            "heatLevel": "medio-bajo",
             "timerSeconds": 180,
-            "timerLabel": "Huevos"
+            "timerLabel": "Huevos",
+            "text": {
+              "beginner": "Baja a fuego medio-bajo. Con una cuchara abre huecos entre las patatas y casca un huevo en cada hueco (o encima, sin romper la yema si puedes). Tapa la sartén 3 min aproximadamente. La clara debe cuajarse (ponerse blanca y firme) y la yema puede quedar cremosa. Sirve en el plato con cuidado.",
+              "intermediate": "",
+              "advanced": ""
+            }
+          },
+          {
+            "id": "eggs",
+            "phaseId": "eggs",
+            "levels": [
+              "intermediate",
+              "advanced"
+            ],
+            "heatLevel": "medio-bajo",
+            "timerSeconds": 180,
+            "timerLabel": "Huevos",
+            "text": {
+              "beginner": "",
+              "intermediate": "A fuego medio-bajo, casca los huevos sobre las patatas, tapa unos 3 minutos hasta que la clara cuaje y sirve.",
+              "advanced": "Casca los huevos sobre la patata a fuego medio-bajo, tapa 3 minutos hasta clara cuajada y sirve."
+            }
           }
         ]
       }
@@ -7255,8 +7961,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Lava la patata. Pínchala varias veces con un tenedor (para que no explote). Opcional: un hilo de aceite y sal en la piel.",
-              "intermediate": "Lava y pincha la patata.",
-              "advanced": "Patata lavada y pinchada varias veces."
+              "intermediate": "Lava la patata. Pínchala varias veces con un tenedor (para que no explote). Opcional: un hilo de aceite y sal en la piel.",
+              "advanced": "Coloca patatas en un recipiente apto para microondas, sazónalo y cúbrelo parcialmente. Cocina a potencia media hasta el punto y deja reposar un minuto."
             }
           },
           {
@@ -7265,7 +7971,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Microondas a potencia alta 4–5 min. Dale la vuelta a mitad. Está lista cuando un cuchillo entre fácil hasta el centro. Si no, 1 min más. Abre con cuidado (sale vapor).",
               "intermediate": "Alta 4–5 min volteando; lista al pincho fácil.",
-              "advanced": "Alta 4–5 min; comprobar pincho."
+              "advanced": "Microondas a potencia alta 4–5 min. Dale la vuelta a mitad. Está lista cuando un cuchillo entre fácil hasta el centro. Abre con cuidado (sale vapor)."
             },
             "timerSeconds": 270,
             "timerLabel": "Patata micro"
@@ -7312,8 +8018,8 @@ export const RECIPE_CATALOG: Recipe[] = [
       "cena"
     ],
     "steps": [
-      "Patata micro 4 min. Corta en rodajas.",
-      "Fríe huevo en sartén 2 min; sirve con patata."
+      "Patata al microondas unos 4 min hasta tierna.",
+      "Huevo sobre la patata al microondas hasta clara cuajada."
     ],
     "methods": [
       {
@@ -7329,9 +8035,9 @@ export const RECIPE_CATALOG: Recipe[] = [
             "timerSeconds": 240,
             "timerLabel": "Patata",
             "text": {
-              "beginner": "Lava y pincha la patata. Microondas alta 4 min (vuelta a mitad). Debe pincharse fácil.",
-              "intermediate": "Patata micro 4 min hasta tierna.",
-              "advanced": "Patata micro 4 min al pincho."
+              "beginner": "Lava bien la patata y pincha la piel varias veces con un tenedor (así no explota). Colócala en un plato apto para microondas. Cocina a potencia alta unos 4 minutos; a mitad de tiempo, dale la vuelta con cuidado. Está lista cuando se pincha fácilmente con el tenedor. Si sigue dura, añade 30–60 segundos más.",
+              "intermediate": "Lava y pincha la patata varias veces. Cocínala en el microondas a potencia alta durante unos 4 minutos, dándole la vuelta a mitad, hasta que esté tierna al pincharla.",
+              "advanced": "Pincha la patata y cocínala en el microondas a potencia alta unos 4 minutos, girándola a mitad, hasta que esté tierna."
             }
           },
           {
@@ -7340,9 +8046,9 @@ export const RECIPE_CATALOG: Recipe[] = [
             "timerSeconds": 90,
             "timerLabel": "Huevo",
             "text": {
-              "beginner": "Corta la patata en rodajas en un plato. Casca un huevo encima (pincha la yema). Micro 45–90 s hasta clara cuajada. Sala y sirve.",
-              "intermediate": "Huevo sobre patata; micro 45–90 s hasta clara cuajada.",
-              "advanced": "Huevo sobre patata; micro hasta clara cuajada."
+              "beginner": "Corta la patata caliente en rodajas sobre un plato apto para microondas. Casca un huevo encima (puedes pinchar la yema con cuidado). Cocina a potencia media-alta 45–90 segundos hasta que la clara esté cuajada. Sala y sirve.",
+              "intermediate": "Corta la patata en rodajas, casca el huevo encima y cocina al microondas 45–90 segundos hasta que la clara cuaje; sala y sirve.",
+              "advanced": "Coloca el huevo sobre la patata en rodajas y cocina al microondas hasta clara cuajada; sala y sirve."
             }
           }
         ]
@@ -7394,8 +8100,8 @@ export const RECIPE_CATALOG: Recipe[] = [
       "cena"
     ],
     "steps": [
-      "Brócoli micro 3 min.",
-      "Huevo frito o revuelto en sartén 2 min; sirve con brócoli."
+      "Brócoli al microondas unos 3 min.",
+      "Huevo sobre el brócoli al microondas hasta clara cuajada."
     ],
     "methods": [
       {
@@ -7411,9 +8117,9 @@ export const RECIPE_CATALOG: Recipe[] = [
             "timerSeconds": 180,
             "timerLabel": "Brócoli",
             "text": {
-              "beginner": "Pon el brócoli en un bol con 2 cucharadas de agua. Tapa. Micro 3 min hasta tierno-crujiente. Escurre.",
-              "intermediate": "Brócoli con agua, micro 3 min; escurrir.",
-              "advanced": "Brócoli micro 3 min; escurrir."
+              "beginner": "Lava el brócoli y córtalo en floretes. Ponlo en un bol apto para microondas con 2 cucharadas de agua, tapa y cocina a potencia alta unos 3 minutos hasta que quede tierno-crujiente. Escurre el exceso de agua.",
+              "intermediate": "Cocina el brócoli en el microondas con un poco de agua unos 3 minutos, tapado, hasta tierno-crujiente; escurre.",
+              "advanced": "Cocina el brócoli al microondas con un poco de agua unos 3 minutos hasta tierno-crujiente; escurre."
             }
           },
           {
@@ -7422,9 +8128,9 @@ export const RECIPE_CATALOG: Recipe[] = [
             "timerSeconds": 120,
             "timerLabel": "Huevo",
             "text": {
-              "beginner": "En sartén o micro: cocina el huevo (frito 2–3 min o revuelto). Sirve sobre el brócoli con sal y un chorrito de aceite.",
-              "intermediate": "Huevo frito/revuelto; servir sobre brócoli.",
-              "advanced": "Huevo al punto sobre brócoli; salar."
+              "beginner": "Deja el brócoli en el bol. Casca un huevo encima (puedes pinchar la yema). Cocina a potencia media-alta 45–90 segundos hasta que la clara esté cuajada. Sala y sirve.",
+              "intermediate": "Casca el huevo sobre el brócoli y cocina al microondas 45–90 segundos hasta clara cuajada; sala y sirve.",
+              "advanced": "Casca el huevo sobre el brócoli y cocina al microondas hasta clara cuajada; sala y sirve."
             }
           }
         ]
@@ -7479,8 +8185,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "simmer",
             "text": {
               "beginner": "Olla con agua: verduras 10 min hasta tiernas; tritura si quieres.",
-              "intermediate": "Caldo verduras 10 min.",
-              "advanced": "Olla con agua: verduras 10 min hasta tiernas; tritura si quieres."
+              "intermediate": "Cuece las verduras a fuego medio hasta que estén tiernas.",
+              "advanced": "Cuece las verduras hasta que queden tiernas."
             },
             "timerSeconds": 620,
             "timerLabel": "Caldo",
@@ -7564,8 +8270,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "timerLabel": "Verduras",
             "text": {
               "beginner": "Corta calabacín y zanahoria en cubos pequeños. Sartén con aceite a fuego medio: saltea 6 min hasta tiernos.",
-              "intermediate": "Saltea calabacín y zanahoria 6 min.",
-              "advanced": "Verduras 6 min a fuego medio."
+              "intermediate": "Corta calabacín y zanahoria en cubos pequeños. Sartén con aceite a fuego medio: saltea 6 min hasta tiernos.",
+              "advanced": "Corta calabacín y zanahoria en cubos pequeños. Sartén con aceite a fuego medio: saltea 6 min hasta tiernos."
             }
           },
           {
@@ -7717,9 +8423,9 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "cook",
             "text": {
-              "beginner": "Esp. 1 min, huevo revuelto 2 min a fuego bajo.",
-              "intermediate": "Esp. 1 min, huevo revuelto 2 min a fuego bajo.",
-              "advanced": "Esp. 1 min, huevo revuelto 2 min a fuego bajo."
+              "beginner": "Bate los huevos con una pizca de sal. Vierte en la sartén a fuego medio-bajo y remueve (o cuaja sin remover, según el plato) hasta el punto deseado. Sirve al momento.",
+              "intermediate": "Cocina los huevos a fuego medio-bajo hasta el punto deseado y sirve.",
+              "advanced": "Cocina los huevos a fuego medio-bajo al punto y sirve."
             },
             "timerSeconds": 180,
             "timerLabel": "Revuelto",
@@ -7788,9 +8494,9 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "cook",
             "text": {
-              "beginner": "Calabacín cubos 4 min; huevos revueltos 2 min.",
-              "intermediate": "Calabacín cubos 4 min; huevos revueltos 2 min.",
-              "advanced": "Calabacín cubos 4 min; huevos revueltos 2 min."
+              "beginner": "Bate los huevos con una pizca de sal. Vierte en la sartén a fuego medio-bajo y remueve (o cuaja sin remover, según el plato) hasta el punto deseado. Sirve al momento.",
+              "intermediate": "Cocina los huevos a fuego medio-bajo hasta el punto deseado y sirve.",
+              "advanced": "Cocina los huevos a fuego medio-bajo al punto y sirve."
             },
             "timerSeconds": 360,
             "timerLabel": "Revuelto",
@@ -7867,7 +8573,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Corta el pimiento en tiras finas. Sartén con aceite a fuego medio: saltea 4–5 min hasta tierno.",
               "intermediate": "Saltea pimiento en tiras 4–5 min a fuego medio.",
-              "advanced": "Pimiento en tiras 4–5 min a fuego medio."
+              "advanced": "Corta el pimiento en tiras finas. Sartén con aceite a fuego medio: saltea 4–5 min hasta tierno."
             }
           },
           {
@@ -7945,9 +8651,9 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "onion",
             "text": {
-              "beginner": "Cebolla en juliana a fuego bajo 8 min.",
-              "intermediate": "Pochar cebolla 8 min.",
-              "advanced": "Cebolla en juliana a fuego bajo 8 min."
+              "beginner": "Cebolla en juliana a fuego bajo 8 min Cocínala despacio (pochar) hasta blanda.",
+              "intermediate": "Cebolla en juliana a fuego bajo 8 min Pochar hasta blanda.",
+              "advanced": "Cebolla en juliana a fuego bajo 8 min Cocínala despacio (pochar) hasta blanda."
             },
             "termIds": [
               "pochar"
@@ -7960,9 +8666,9 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "egg",
             "text": {
-              "beginner": "Huevo batido, mezcla, cuaja 4 min y voltea.",
-              "intermediate": "Huevo batido, mezcla, cuaja 4 min y voltea.",
-              "advanced": "Huevo batido, mezcla, cuaja 4 min y voltea."
+              "beginner": "Bate los huevos con una pizca de sal. Vierte en la sartén a fuego medio-bajo y remueve (o cuaja sin remover, según el plato) hasta el punto deseado. Sirve al momento.",
+              "intermediate": "Cocina los huevos a fuego medio-bajo hasta el punto deseado y sirve.",
+              "advanced": "Cocina los huevos a fuego medio-bajo al punto y sirve."
             },
             "timerSeconds": 240,
             "timerLabel": "Tortilla",
@@ -8034,17 +8740,17 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Corta el pavo en dados. Si las verduras son grandes, trocéalas. Aceite y sal.",
-              "intermediate": "Pavo en dados; verduras troceadas.",
-              "advanced": "Pavo en dados y verduras troceadas."
+              "intermediate": "Corta el pavo en dados. Si las verduras son grandes, trocéalas. Aceite y sal.",
+              "advanced": "Corta el pavo en dados. Aceite y sal."
             }
           },
           {
             "id": "pavo",
             "phaseId": "pavo",
             "text": {
-              "beginner": "Sartén con aceite a fuego medio-alto: saltea pavo 4–5 min hasta opaco.",
-              "intermediate": "Saltea pavo 4–5 min.",
-              "advanced": "Pavo 4–5 min hasta opaco."
+              "beginner": "Calienta la sartén con aceite a fuego medio-alto. Cocina el pavo removiendo hasta que no quede rosado por dentro (abre un trozo; los jugos deben salir claros). Sala y continúa con el siguiente paso o sirve. Remueve con frecuencia (saltear).",
+              "intermediate": "Cocina el pavo a fuego medio-alto hasta que esté hecho por dentro; sala, salteando.",
+              "advanced": "Cocina el pavo a fuego medio-alto al punto seguro; sala, salteando."
             },
             "heatLevel": "medio-alto",
             "termIds": [
@@ -8058,8 +8764,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "veg",
             "text": {
               "beginner": "Añade verduras 5–6 min removiendo hasta tiernas. El pavo sin rosa dentro. Sala y sirve.",
-              "intermediate": "Verduras 5–6 min; pavo al punto; salar.",
-              "advanced": "Verduras 5–6 min; salar; servir."
+              "intermediate": "Añade verduras 5–6 min removiendo hasta tiernas. El pavo sin rosa dentro. Sala y sirve.",
+              "advanced": "Añade verduras 5–6 min removiendo hasta tiernas. El pavo sin rosa dentro."
             },
             "heatLevel": "medio-alto",
             "timerSeconds": 330,
@@ -8120,8 +8826,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "heatLevel": "medio",
             "text": {
               "beginner": "Calienta plancha o sartén a fuego medio. Ten el queso en lonchas y el pan listos.",
-              "intermediate": "Plancha a fuego medio; queso y pan listos.",
-              "advanced": "Plancha media; queso y pan preparados."
+              "intermediate": "Calienta plancha o sartén a fuego medio. Ten el queso en lonchas y el pan listos.",
+              "advanced": "Calienta plancha o sartén a fuego medio. Ten el queso en lonchas y el pan listos."
             }
           },
           {
@@ -8199,8 +8905,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "temperatureC": 180,
             "text": {
               "beginner": "Corta las patatas en gajos. Mézclalas con aceite y sal. Precalienta Air Fryer a 180 °C. Extiende en una sola capa.",
-              "intermediate": "Gajos con aceite y sal; capa única; 180 °C.",
-              "advanced": "Gajos, aceite y sal; capa única a 180 °C."
+              "intermediate": "Corta las patatas en gajos. Mézclalas con aceite y sal. Precalienta Air Fryer a 180 °C. Extiende en una sola capa.",
+              "advanced": "Distribuye patatas en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             }
           },
           {
@@ -8211,8 +8917,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "timerLabel": "Air Fryer",
             "text": {
               "beginner": "Cocina 18 min a 180 °C; agita a mitad. Listas cuando estén doradas por fuera y tiernas al pincho. Sirve.",
-              "intermediate": "18 min a 180 °C con volteo; doradas y tiernas.",
-              "advanced": "18 min @ 180 °C; volteo; doradas."
+              "intermediate": "Cocina 18 min a 180 °C; agita a mitad. Listas cuando estén doradas por fuera y tiernas al pincho. Sirve.",
+              "advanced": "Distribuye patatas en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             }
           }
         ]
@@ -8233,8 +8939,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "temperatureC": 200,
             "text": {
               "beginner": "Corta las patatas en gajos. Mézclalas con aceite y sal. Precalienta Horno a 200 °C. Extiende en una sola capa.",
-              "intermediate": "Gajos con aceite y sal; capa única; 200 °C.",
-              "advanced": "Gajos, aceite y sal; capa única a 200 °C."
+              "intermediate": "Corta las patatas en gajos. Mézclalas con aceite y sal. Precalienta Horno a 200 °C. Extiende en una sola capa.",
+              "advanced": "Hornea patatas a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             }
           },
           {
@@ -8245,8 +8951,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "timerLabel": "Horno",
             "text": {
               "beginner": "Cocina 30 min a 200 °C; da la vuelta a mitad. Listas cuando estén doradas por fuera y tiernas al pincho. Sirve.",
-              "intermediate": "30 min a 200 °C con volteo; doradas y tiernas.",
-              "advanced": "30 min @ 200 °C; volteo; doradas."
+              "intermediate": "Cocina 30 min a 200 °C; da la vuelta a mitad. Listas cuando estén doradas por fuera y tiernas al pincho. Sirve.",
+              "advanced": "Hornea patatas a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             }
           }
         ]
@@ -8265,8 +8971,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Corta patatas en gajos o rodajas. Aceite y sal a mano.",
-              "intermediate": "Patatas en gajos; aceite listo.",
-              "advanced": "Patatas cortadas; aceite listo."
+              "intermediate": "Corta patatas en gajos o rodajas. Aceite y sal a mano.",
+              "advanced": "Corta patatas en gajos o rodajas. Aceite y sal a mano."
             }
           },
           {
@@ -8277,8 +8983,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "timerLabel": "Patatas",
             "text": {
               "beginner": "Sartén con aceite a fuego medio: cocina 15–20 min removiendo, tapado a ratos, hasta doradas y tiernas al pincho. Sala y sirve.",
-              "intermediate": "Patatas 15–20 min a fuego medio hasta doradas.",
-              "advanced": "Patatas 15–20 min a fuego medio al punto."
+              "intermediate": "Sartén con aceite a fuego medio: cocina 15–20 min removiendo, tapado a ratos, hasta doradas y tiernas al pincho. Sala y sirve.",
+              "advanced": "Sartén con aceite a fuego medio: cocina 15–20 min removiendo, tapado a ratos, hasta doradas y tiernas al pincho. Sala y sirve."
             }
           }
         ]
@@ -8332,8 +9038,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Saca los nuggets del congelador. Precalienta Air Fryer a 190 °C 3 min si tu modelo lo indica. Colócalos en una sola capa en la cestilla.",
-              "intermediate": "Capa única; precalienta 190 °C.",
-              "advanced": "Capa única a 190 °C."
+              "intermediate": "Saca los nuggets del congelador. Precalienta Air Fryer a 190 °C 3 min si tu modelo lo indica. Colócalos en una sola capa en la cestilla.",
+              "advanced": "Saca los nuggets del congelador. PreColócalos en una sola capa en la cestilla."
             }
           },
           {
@@ -8341,8 +9047,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "cook",
             "text": {
               "beginner": "Cocina 12 min a 190 °C; agita o da la vuelta a los 6 min. Deben quedar dorados y crujientes por fuera; el interior bien caliente (abre uno: sin zonas frías/gelatinosas). Sirve.",
-              "intermediate": "12 min a 190 °C con volteo a mitad; dorados y calientes por dentro.",
-              "advanced": "12 min @ 190 °C; volteo; dorado y caliente interior."
+              "intermediate": "Cocina 12 min a 190 °C; agita o da la vuelta a los 6 min. Deben quedar dorados y crujientes por fuera; el interior bien caliente (abre uno: sin zonas frías/gelatinosas). Sirve.",
+              "advanced": "Distribuye nuggets en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "timerSeconds": 720,
             "timerLabel": "Nuggets AF",
@@ -8365,8 +9071,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Precalienta el horno a 200 °C. Coloca los nuggets congelados en bandeja en una sola capa.",
-              "intermediate": "Horno 200 °C; capa única en bandeja.",
-              "advanced": "200 °C; capa única."
+              "intermediate": "Precalienta el horno a 200 °C. Coloca los nuggets congelados en bandeja en una sola capa.",
+              "advanced": "Hornea nuggets a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "temperatureC": 200
           },
@@ -8375,8 +9081,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "cook",
             "text": {
               "beginner": "Hornea 18 min; da la vuelta a mitad. Dorados por fuera e interior caliente al cortar uno. Sirve.",
-              "intermediate": "18 min a 200 °C con volteo; dorados y calientes dentro.",
-              "advanced": "18 min @ 200 °C; volteo; al punto."
+              "intermediate": "Hornea 18 min; da la vuelta a mitad. Dorados por fuera e interior caliente al cortar uno. Sirve.",
+              "advanced": "Hornea nuggets a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "timerSeconds": 1080,
             "timerLabel": "Nuggets horno",
@@ -8431,8 +9137,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón croquetas en una sola capa sin amontonar. Precalienta Air Fryer a 180 °C si el aparato lo indica.",
-              "intermediate": "Capa única sin amontonar; 180 °C.",
-              "advanced": "Una capa; 180 °C."
+              "intermediate": "Dispón croquetas en una sola capa sin amontonar. Precalienta Air Fryer a 180 °C si el aparato lo indica.",
+              "advanced": "Distribuye croquetas jamon en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "phaseId": "prep"
           },
@@ -8440,8 +9146,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 10 min a 180 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "10 min a 180 °C con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "10 min @ 180°C; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 10 min a 180 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Distribuye croquetas jamon en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "timerSeconds": 600,
             "timerLabel": "Air Fryer",
@@ -8453,8 +9159,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Sirve al momento en plato caliente.",
-              "intermediate": "Sirve al momento en plato caliente.",
-              "advanced": "Sirve al momento en plato caliente."
+              "intermediate": "Coloca croquetas jamon en una sola capa en el Air Fryer. Cocina a la temperatura indicada, agita o voltea a mitad, y comprueba que quede dorado por fuera y cocinado por dentro.",
+              "advanced": "Distribuye croquetas jamon en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "phaseId": "serve"
           }
@@ -8474,8 +9180,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón croquetas en una sola capa sin amontonar. Precalienta Horno a 200 °C si el aparato lo indica.",
-              "intermediate": "Capa única sin amontonar; 200 °C.",
-              "advanced": "Una capa; 200 °C."
+              "intermediate": "Dispón croquetas en una sola capa sin amontonar. Precalienta Horno a 200 °C si el aparato lo indica.",
+              "advanced": "Hornea croquetas jamon a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "phaseId": "prep"
           },
@@ -8483,8 +9189,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 14 min a 200 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "14 min a 200 °C con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "14 min @ 200°C; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 14 min a 200 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Hornea croquetas jamon a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "timerSeconds": 840,
             "timerLabel": "Horno",
@@ -8495,8 +9201,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Sirve al momento en plato caliente.",
-              "intermediate": "Sirve al momento en plato caliente.",
-              "advanced": "Sirve al momento en plato caliente."
+              "intermediate": "Precalienta el horno si hace falta, dispone croquetas jamon en bandeja y hornea a la temperatura indicada hasta el punto, volteando a mitad cuando corresponda.",
+              "advanced": "Hornea croquetas jamon a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "phaseId": "serve"
           }
@@ -8516,8 +9222,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón croquetas en una sola capa sin amontonar.",
-              "intermediate": "Dispón croquetas en una sola capa sin amontonar.",
-              "advanced": "Dispón croquetas en una sola capa sin amontonar."
+              "intermediate": "Coloca las croquetas en la cestilla sin amontonar.",
+              "advanced": "Distribuye las croquetas en la cestilla sin amontonar."
             },
             "phaseId": "prep"
           },
@@ -8525,8 +9231,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 5 min; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "5 min con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "5 min; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 5 min; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Cocina 5 min; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas)."
             },
             "timerSeconds": 300,
             "timerLabel": "Freidora",
@@ -8595,8 +9301,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón patatas fritas congeladas en una sola capa sin amontonar. Precalienta Air Fryer a 200 °C si el aparato lo indica.",
-              "intermediate": "Capa única sin amontonar; 200 °C.",
-              "advanced": "Una capa; 200 °C."
+              "intermediate": "Dispón patatas fritas congeladas en una sola capa sin amontonar. Precalienta Air Fryer a 200 °C si el aparato lo indica.",
+              "advanced": "Distribuye patatas fritas congeladas en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "phaseId": "prep"
           },
@@ -8604,8 +9310,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 15 min a 200 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "15 min a 200 °C con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "15 min @ 200°C; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 15 min a 200 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Distribuye patatas fritas congeladas en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "timerSeconds": 900,
             "timerLabel": "Air Fryer",
@@ -8617,8 +9323,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Sirve al momento en plato caliente.",
-              "intermediate": "Sirve al momento en plato caliente.",
-              "advanced": "Sirve al momento en plato caliente."
+              "intermediate": "Coloca patatas fritas congeladas en una sola capa en el Air Fryer. Cocina a la temperatura indicada, agita o voltea a mitad, y comprueba que quede dorado por fuera y cocinado por dentro.",
+              "advanced": "Distribuye patatas fritas congeladas en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "phaseId": "serve"
           }
@@ -8638,8 +9344,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón patatas fritas congeladas en una sola capa sin amontonar. Precalienta Horno a 220 °C si el aparato lo indica.",
-              "intermediate": "Capa única sin amontonar; 220 °C.",
-              "advanced": "Una capa; 220 °C."
+              "intermediate": "Dispón patatas fritas congeladas en una sola capa sin amontonar. Precalienta Horno a 220 °C si el aparato lo indica.",
+              "advanced": "Hornea patatas fritas congeladas a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "phaseId": "prep"
           },
@@ -8647,8 +9353,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 20 min a 220 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "20 min a 220 °C con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "20 min @ 220°C; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 20 min a 220 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Hornea patatas fritas congeladas a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "timerSeconds": 1200,
             "timerLabel": "Horno",
@@ -8659,8 +9365,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Sirve al momento en plato caliente.",
-              "intermediate": "Sirve al momento en plato caliente.",
-              "advanced": "Sirve al momento en plato caliente."
+              "intermediate": "Precalienta el horno si hace falta, dispone patatas fritas congeladas en bandeja y hornea a la temperatura indicada hasta el punto, volteando a mitad cuando corresponda.",
+              "advanced": "Hornea patatas fritas congeladas a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "phaseId": "serve"
           }
@@ -8681,8 +9387,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón patatas fritas congeladas en una sola capa sin amontonar.",
-              "intermediate": "Dispón patatas fritas congeladas en una sola capa sin amontonar.",
-              "advanced": "Dispón patatas fritas congeladas en una sola capa sin amontonar."
+              "intermediate": "Extiende las patatas fritas congeladas en la sartén o bandeja.",
+              "advanced": "Distribuye las patatas fritas congeladas sin amontonar."
             },
             "phaseId": "prep"
           },
@@ -8690,8 +9396,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 12 min; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "12 min con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "12 min; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 12 min; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Cocina 12 min; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas)."
             },
             "timerSeconds": 720,
             "timerLabel": "Sartén",
@@ -8757,8 +9463,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón pizza congelada en una sola capa sin amontonar. Precalienta Horno a 210 °C si el aparato lo indica.",
-              "intermediate": "Capa única sin amontonar; 210 °C.",
-              "advanced": "Una capa; 210 °C."
+              "intermediate": "Dispón pizza congelada en una sola capa sin amontonar. Precalienta Horno a 210 °C si el aparato lo indica.",
+              "advanced": "Hornea pizza congelada a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "phaseId": "prep"
           },
@@ -8766,8 +9472,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 15 min a 210 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "15 min a 210 °C con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "15 min @ 210°C; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 15 min a 210 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Hornea pizza congelada a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "timerSeconds": 900,
             "timerLabel": "Horno",
@@ -8779,8 +9485,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Sirve al momento en plato caliente.",
-              "intermediate": "Sirve al momento en plato caliente.",
-              "advanced": "Sirve al momento en plato caliente."
+              "intermediate": "Precalienta el horno si hace falta, dispone pizza congelada en bandeja y hornea a la temperatura indicada hasta el punto, volteando a mitad cuando corresponda.",
+              "advanced": "Hornea pizza congelada a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "phaseId": "serve"
           }
@@ -8800,8 +9506,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón pizza congelada en una sola capa sin amontonar. Precalienta Air Fryer a 180 °C si el aparato lo indica.",
-              "intermediate": "Capa única sin amontonar; 180 °C.",
-              "advanced": "Una capa; 180 °C."
+              "intermediate": "Dispón pizza congelada en una sola capa sin amontonar. Precalienta Air Fryer a 180 °C si el aparato lo indica.",
+              "advanced": "Distribuye pizza congelada en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "phaseId": "prep"
           },
@@ -8809,8 +9515,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 9 min a 180 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "9 min a 180 °C con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "9 min @ 180°C; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 9 min a 180 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Distribuye pizza congelada en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "timerSeconds": 540,
             "timerLabel": "Air Fryer",
@@ -8821,8 +9527,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Sirve al momento en plato caliente.",
-              "intermediate": "Sirve al momento en plato caliente.",
-              "advanced": "Sirve al momento en plato caliente."
+              "intermediate": "Coloca pizza congelada en una sola capa en el Air Fryer. Cocina a la temperatura indicada, agita o voltea a mitad, y comprueba que quede dorado por fuera y cocinado por dentro.",
+              "advanced": "Distribuye pizza congelada en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "phaseId": "serve"
           }
@@ -8878,8 +9584,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón lasaña en una sola capa sin amontonar.",
-              "intermediate": "Dispón lasaña en una sola capa sin amontonar.",
-              "advanced": "Dispón lasaña en una sola capa sin amontonar."
+              "intermediate": "Coloca lasana preparada en un plato apto para microondas, sazona y tapa parcialmente. Cocina a potencia media hasta el punto deseado y deja reposar 1 minuto.",
+              "advanced": "Coloca lasana preparada en un recipiente apto para microondas, sazónalo y cúbrelo parcialmente. Cocina a potencia media hasta el punto y deja reposar un minuto."
             },
             "phaseId": "prep"
           },
@@ -8887,8 +9593,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 6 min; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "6 min con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "6 min; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 6 min; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Coloca lasana preparada en un recipiente apto para microondas, sazónalo y cúbrelo parcialmente. Cocina a potencia media hasta el punto y deja reposar un minuto."
             },
             "timerSeconds": 360,
             "timerLabel": "Microondas",
@@ -8898,8 +9604,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Sirve al momento en plato caliente.",
-              "intermediate": "Sirve al momento en plato caliente.",
-              "advanced": "Sirve al momento en plato caliente."
+              "intermediate": "Coloca lasana preparada en un plato apto para microondas, sazona y tapa parcialmente. Cocina a potencia media hasta el punto deseado y deja reposar 1 minuto.",
+              "advanced": "Coloca lasana preparada en un recipiente apto para microondas, sazónalo y cúbrelo parcialmente. Cocina a potencia media hasta el punto y deja reposar un minuto."
             },
             "phaseId": "serve"
           }
@@ -8917,8 +9623,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón lasaña en una sola capa sin amontonar. Precalienta Horno a 180 °C si el aparato lo indica.",
-              "intermediate": "Capa única sin amontonar; 180 °C.",
-              "advanced": "Una capa; 180 °C."
+              "intermediate": "Dispón lasaña en una sola capa sin amontonar. Precalienta Horno a 180 °C si el aparato lo indica.",
+              "advanced": "Hornea lasana preparada a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "phaseId": "prep"
           },
@@ -8926,8 +9632,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 20 min a 180 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "20 min a 180 °C con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "20 min @ 180°C; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 20 min a 180 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Hornea lasana preparada a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "timerSeconds": 1200,
             "timerLabel": "Horno",
@@ -8938,8 +9644,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Sirve al momento en plato caliente.",
-              "intermediate": "Sirve al momento en plato caliente.",
-              "advanced": "Sirve al momento en plato caliente."
+              "intermediate": "Precalienta el horno si hace falta, dispone lasana preparada en bandeja y hornea a la temperatura indicada hasta el punto, volteando a mitad cuando corresponda.",
+              "advanced": "Hornea lasana preparada a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "phaseId": "serve"
           }
@@ -8994,8 +9700,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón empanadillas en una sola capa sin amontonar. Precalienta Air Fryer a 180 °C si el aparato lo indica.",
-              "intermediate": "Capa única sin amontonar; 180 °C.",
-              "advanced": "Una capa; 180 °C."
+              "intermediate": "Dispón empanadillas en una sola capa sin amontonar. Precalienta Air Fryer a 180 °C si el aparato lo indica.",
+              "advanced": "Distribuye empanadillas en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "phaseId": "prep"
           },
@@ -9003,8 +9709,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 10 min a 180 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "10 min a 180 °C con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "10 min @ 180°C; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 10 min a 180 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Distribuye empanadillas en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "timerSeconds": 600,
             "timerLabel": "Air Fryer",
@@ -9015,8 +9721,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Sirve al momento en plato caliente.",
-              "intermediate": "Sirve al momento en plato caliente.",
-              "advanced": "Sirve al momento en plato caliente."
+              "intermediate": "Coloca empanadillas en una sola capa en el Air Fryer. Cocina a la temperatura indicada, agita o voltea a mitad, y comprueba que quede dorado por fuera y cocinado por dentro.",
+              "advanced": "Distribuye empanadillas en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "phaseId": "serve"
           }
@@ -9036,8 +9742,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón empanadillas en una sola capa sin amontonar. Precalienta Horno a 200 °C si el aparato lo indica.",
-              "intermediate": "Capa única sin amontonar; 200 °C.",
-              "advanced": "Una capa; 200 °C."
+              "intermediate": "Dispón empanadillas en una sola capa sin amontonar. Precalienta Horno a 200 °C si el aparato lo indica.",
+              "advanced": "Hornea empanadillas a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "phaseId": "prep"
           },
@@ -9045,8 +9751,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 14 min a 200 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "14 min a 200 °C con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "14 min @ 200°C; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 14 min a 200 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Hornea empanadillas a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "timerSeconds": 840,
             "timerLabel": "Horno",
@@ -9057,8 +9763,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Sirve al momento en plato caliente.",
-              "intermediate": "Sirve al momento en plato caliente.",
-              "advanced": "Sirve al momento en plato caliente."
+              "intermediate": "Precalienta el horno si hace falta, dispone empanadillas en bandeja y hornea a la temperatura indicada hasta el punto, volteando a mitad cuando corresponda.",
+              "advanced": "Hornea empanadillas a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "phaseId": "serve"
           }
@@ -9079,8 +9785,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón empanadillas en una sola capa sin amontonar.",
-              "intermediate": "Dispón empanadillas en una sola capa sin amontonar.",
-              "advanced": "Dispón empanadillas en una sola capa sin amontonar."
+              "intermediate": "Coloca las empanadillas en la sartén con un poco de aceite.",
+              "advanced": "Dispone las empanadillas en la sartén con aceite."
             },
             "phaseId": "prep"
           },
@@ -9088,8 +9794,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 7 min; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "7 min con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "7 min; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 7 min; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Cocina 7 min; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas)."
             },
             "timerSeconds": 420,
             "timerLabel": "Sartén",
@@ -9165,8 +9871,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón filete de pescado congelado en una sola capa sin amontonar. Precalienta Horno a 200 °C si el aparato lo indica.",
-              "intermediate": "Capa única sin amontonar; 200 °C.",
-              "advanced": "Una capa; 200 °C."
+              "intermediate": "Dispón filete de pescado congelado en una sola capa sin amontonar. Precalienta Horno a 200 °C si el aparato lo indica.",
+              "advanced": "Hornea pescado congelado a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "phaseId": "prep"
           },
@@ -9174,8 +9880,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 22 min a 200 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "22 min a 200 °C con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "22 min @ 200°C; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 22 min a 200 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Hornea pescado congelado a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "timerSeconds": 1320,
             "timerLabel": "Horno",
@@ -9187,8 +9893,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Sirve al momento en plato caliente.",
-              "intermediate": "Sirve al momento en plato caliente.",
-              "advanced": "Sirve al momento en plato caliente."
+              "intermediate": "Precalienta el horno si hace falta, dispone pescado congelado en bandeja y hornea a la temperatura indicada hasta el punto, volteando a mitad cuando corresponda.",
+              "advanced": "Hornea pescado congelado a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "phaseId": "serve"
           }
@@ -9208,8 +9914,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "prep",
             "text": {
               "beginner": "Dispón filete de pescado congelado en una sola capa sin amontonar. Precalienta Air Fryer a 180 °C si el aparato lo indica.",
-              "intermediate": "Capa única sin amontonar; 180 °C.",
-              "advanced": "Una capa; 180 °C."
+              "intermediate": "Dispón filete de pescado congelado en una sola capa sin amontonar. Precalienta Air Fryer a 180 °C si el aparato lo indica.",
+              "advanced": "Distribuye pescado congelado en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "phaseId": "prep"
           },
@@ -9217,8 +9923,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "cook",
             "text": {
               "beginner": "Cocina 15 min a 180 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
-              "intermediate": "15 min a 180 °C con volteo a mitad; dorado por fuera y cocido por dentro.",
-              "advanced": "15 min @ 180°C; volteo a mitad hasta dorado y cocido."
+              "intermediate": "Cocina 15 min a 180 °C; voltea o agita a mitad de tiempo. Por fuera dorado; por dentro bien caliente y cocido (abre uno si dudas).",
+              "advanced": "Distribuye pescado congelado en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "timerSeconds": 900,
             "timerLabel": "Air Fryer",
@@ -9229,8 +9935,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "id": "serve",
             "text": {
               "beginner": "Sirve al momento en plato caliente.",
-              "intermediate": "Sirve al momento en plato caliente.",
-              "advanced": "Sirve al momento en plato caliente."
+              "intermediate": "Coloca pescado congelado en una sola capa en el Air Fryer. Cocina a la temperatura indicada, agita o voltea a mitad, y comprueba que quede dorado por fuera y cocinado por dentro.",
+              "advanced": "Distribuye pescado congelado en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "phaseId": "serve"
           }
@@ -9280,9 +9986,9 @@ export const RECIPE_CATALOG: Recipe[] = [
       "cena"
     ],
     "steps": [
-      "Precalienta a 200 °C; seca y sazona {qty:pollo} con {qty:aceite}, separando las piezas en la bandeja.",
-      "Asa 25-30 minutos, gira a mitad y retira cuando el centro de la pieza más gruesa llegue a 74 °C.",
-      "Deja reposar el pollo 3 minutos antes de servir."
+      "Sazonar pollo.",
+      "Capa única.",
+      "Cocinar y voltear a mitad hasta punto seguro."
     ],
     "methods": [
       {
@@ -9291,48 +9997,80 @@ export const RECIPE_CATALOG: Recipe[] = [
         "equipmentIds": [
           "horno"
         ],
-        "timeMinutes": 30,
-        "temperature": "200 °C",
-        "temperatureC": 200,
         "steps": [
           {
-            "id": "preheat-season",
+            "id": "prep-b",
             "phaseId": "prep",
+            "levels": [
+              "beginner"
+            ],
             "text": {
-              "beginner": "Precalienta el horno a 200 °C. Seca {qty:pollo}, mézclalo con {qty:aceite} y sal, y distribúyelo en una bandeja dejando espacio entre piezas.",
-              "intermediate": "Precalienta a 200 °C; seca y sazona {qty:pollo} con {qty:aceite}, separando las piezas en la bandeja.",
-              "advanced": "Horno a 200 °C; pollo seco, sazonado y espaciado sobre bandeja para favorecer el asado."
-            },
-            "temperatureC": 200
+              "beginner": "Corta {qty:pollo} en trozos similares (dados o tiras de bocado). Sécalos con papel. En un bol: mezcla el pollo con {qty:aceite}, una pizca generosa de sal y pimienta si tienes. Remueve hasta que cada trozo quede untado (sazonar = sal + oil / especias sobre el alimento).",
+              "intermediate": "",
+              "advanced": ""
+            }
           },
           {
-            "id": "roast",
-            "phaseId": "cook",
+            "id": "prep",
+            "phaseId": "prep",
+            "levels": [
+              "intermediate",
+              "advanced"
+            ],
             "text": {
-              "beginner": "Asa 25-30 minutos y gira las piezas a mitad. Comprueba la más gruesa: debe alcanzar 74 °C en el centro, sin zonas rosadas y con jugos claros.",
-              "intermediate": "Asa 25-30 minutos, gira a mitad y retira cuando el centro de la pieza más gruesa llegue a 74 °C.",
-              "advanced": "Asa con volteo a mitad hasta 74 °C internos; prolonga solo lo necesario para dorar sin resecar."
-            },
-            "timerSeconds": 1650,
-            "timerLabel": "Pollo al horno",
+              "beginner": "",
+              "intermediate": "Trocea el pollo y úntalo con aceite, sal y pimienta.",
+              "advanced": "Trocea el pollo y sazónalo con aceite y sal."
+            }
+          },
+          {
+            "id": "preheat",
+            "phaseId": "preheat",
             "temperatureC": 200,
-            "similarKey": "pollo+horno+200C"
+            "text": {
+              "beginner": "Enciende el horno a 200 °C (calor arriba y abajo si puedes). Espera a que alcance temperatura: muchas puertas tienen un piloto o pitido. Mientras, forra una bandeja con papel o unge ligeramente.",
+              "intermediate": "Precalienta el horno a 200 °C y prepara la bandeja.",
+              "advanced": "Precalienta el horno a 200 °C y deja la bandeja lista."
+            }
           },
           {
-            "id": "rest",
-            "phaseId": "rest",
+            "id": "arrange",
+            "phaseId": "arrange",
             "text": {
-              "beginner": "Pasa el pollo a un plato y déjalo reposar 3 minutos antes de cortar para que conserve sus jugos.",
-              "intermediate": "Deja reposar el pollo 3 minutos antes de servir.",
-              "advanced": "Reposa 3 minutos fuera de la bandeja y sirve con sus jugos."
-            },
-            "timerSeconds": 180,
-            "timerLabel": "Reposo del pollo",
-            "termIds": [
-              "reposar"
-            ]
+              "beginner": "Extiende el pollo en una sola capa sin amontonar (si se apila, se cuece al vapor y no dora). Deja un poco de espacio entre trozos.",
+              "intermediate": "Extiende el pollo en una sola capa sobre la bandeja.",
+              "advanced": "Distribuye el pollo en capa única sobre la bandeja."
+            }
+          },
+          {
+            "id": "cook1",
+            "phaseId": "cook",
+            "timerSeconds": 900,
+            "timerLabel": "Horno 1.ª mitad",
+            "temperatureC": 200,
+            "similarKey": "pollo+horno+200C",
+            "text": {
+              "beginner": "Mete la bandeja a media altura. Cocina 15 min a 200 °C. Cuando suene el temporizador, saca con cuidado (usa manoplas) y da la vuelta a cada trozo.",
+              "intermediate": "Hornea 15 minutos a 200 °C y voltea los trozos.",
+              "advanced": "Hornea 15 minutos a 200 °C y voltea."
+            }
+          },
+          {
+            "id": "cook2",
+            "phaseId": "finish",
+            "timerSeconds": 900,
+            "timerLabel": "Horno 2.ª mitad",
+            "temperatureC": 200,
+            "text": {
+              "beginner": "Vuelve a meter 12–15 min más. El pollo está listo cuando el interior ya no está rosado (abre el trozo más grueso) y los jugos salen claros; si tienes termómetro, apunta a ~75 °C en el centro. Sirve caliente.",
+              "intermediate": "Hornea 12–15 minutos más a 200 °C hasta interior sin rosa y jugos claros (~75 °C); sirve.",
+              "advanced": "Termina 12–15 minutos a 200 °C al punto (~75 °C interior) y sirve."
+            }
           }
-        ]
+        ],
+        "timeMinutes": 30,
+        "temperature": "200 °C",
+        "temperatureC": 200
       },
       {
         "id": "air",
@@ -9340,50 +10078,80 @@ export const RECIPE_CATALOG: Recipe[] = [
         "equipmentIds": [
           "airfryer"
         ],
-        "timeMinutes": 25,
-        "temperature": "180 °C",
-        "temperatureC": 180,
         "steps": [
           {
-            "id": "preheat-season",
+            "id": "prep-b",
             "phaseId": "prep",
+            "levels": [
+              "beginner"
+            ],
             "text": {
-              "beginner": "Precalienta la Air Fryer a 180 °C durante 3 minutos. Seca {qty:pollo}, mézclalo con {qty:aceite} y sal, y colócalo en una sola capa sin tapar la circulación de aire.",
-              "intermediate": "Precalienta a 180 °C; seca y sazona {qty:pollo} con {qty:aceite}, formando una sola capa en la cesta.",
-              "advanced": "Air Fryer a 180 °C; pollo seco, sazonado y espaciado para maximizar la convección."
-            },
-            "timerSeconds": 180,
-            "timerLabel": "Precalentar Air Fryer",
-            "temperatureC": 180
+              "beginner": "Corta {qty:pollo} en trozos similares. Sécalos. Mézclalos en un bol con {qty:aceite}, sal y pimienta hasta que queden bien untados.",
+              "intermediate": "",
+              "advanced": ""
+            }
           },
           {
-            "id": "airfry",
-            "phaseId": "cook",
+            "id": "prep",
+            "phaseId": "prep",
+            "levels": [
+              "intermediate",
+              "advanced"
+            ],
             "text": {
-              "beginner": "Cocina 20-25 minutos y gira las piezas a los 12 minutos. Comprueba la pieza más gruesa: centro a 74 °C, sin zonas rosadas y con jugos claros.",
-              "intermediate": "Cocina 20-25 minutos, gira a mitad y retira al alcanzar 74 °C en el centro.",
-              "advanced": "Cocina con volteo a mitad hasta 74 °C internos; evita prolongar el ciclo una vez alcanzado el punto."
-            },
-            "timerSeconds": 1320,
-            "timerLabel": "Pollo en Air Fryer",
+              "beginner": "",
+              "intermediate": "Trocea y sazona el pollo con aceite y sal.",
+              "advanced": "Trocea el pollo y sazónalo con aceite y sal."
+            }
+          },
+          {
+            "id": "preheat",
+            "phaseId": "preheat",
             "temperatureC": 180,
-            "similarKey": "pollo+airfryer+180C"
+            "text": {
+              "beginner": "Precalienta el Air Fryer a 180 °C unos 3 min si tu modelo lo recomienda (muchos van mejor en caliente).",
+              "intermediate": "Precalienta el Air Fryer a 180 °C.",
+              "advanced": "Precalienta el Air Fryer a 180 °C."
+            }
           },
           {
-            "id": "rest",
-            "phaseId": "rest",
+            "id": "arrange",
+            "phaseId": "arrange",
             "text": {
-              "beginner": "Deja reposar el pollo 3 minutos fuera de la cesta antes de cortarlo; así pierde menos jugo.",
-              "intermediate": "Reposa el pollo 3 minutos fuera de la cesta antes de servir.",
-              "advanced": "Reposa 3 minutos fuera de la cesta y sirve de inmediato."
-            },
-            "timerSeconds": 180,
-            "timerLabel": "Reposo del pollo",
-            "termIds": [
-              "reposar"
-            ]
+              "beginner": "Coloca el pollo en la cestilla en una sola capa. No llenes de más: cocina en dos tandas si hace falta.",
+              "intermediate": "Coloca el pollo en capa única en la cestilla.",
+              "advanced": "Distribuye el pollo en capa única; no sobrecargues."
+            }
+          },
+          {
+            "id": "cook1",
+            "phaseId": "cook",
+            "timerSeconds": 720,
+            "timerLabel": "Air Fryer 1.ª mitad",
+            "temperatureC": 180,
+            "similarKey": "pollo+airfryer+180C",
+            "text": {
+              "beginner": "Programa 12 min a 180 °C. Cuando termine, agita la cestilla o da la vuelta a los trozos.",
+              "intermediate": "Cocina 12 minutos a 180 °C y agita o voltea la cestilla.",
+              "advanced": "Cocina 12 minutos a 180 °C y voltea."
+            }
+          },
+          {
+            "id": "cook2",
+            "phaseId": "finish",
+            "timerSeconds": 780,
+            "timerLabel": "Air Fryer 2.ª mitad",
+            "temperatureC": 180,
+            "text": {
+              "beginner": "Otros 10–13 min a 180 °C. Comprueba el trozo más grueso: sin rosa dentro, jugos claros (o ~75 °C). Si falta, 2–3 min más. Sirve.",
+              "intermediate": "Cocina 10–13 minutos más a 180 °C hasta punto seguro y sirve.",
+              "advanced": "Termina 10–13 minutos a 180 °C al punto y sirve."
+            }
           }
-        ]
+        ],
+        "timeMinutes": 25,
+        "temperature": "180 °C",
+        "temperatureC": 180
       }
     ]
   },
@@ -9444,8 +10212,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Corta las verduras en trozos similares si hace falta. Mézclalas con {qty:aceite} y sal. Precalienta Air Fryer a 180 °C. Extiende en una sola capa sin amontonar.",
-              "intermediate": "Verduras con aceite y sal; capa única; 180 °C.",
-              "advanced": "Capa única, aceite y sal; 180 °C."
+              "intermediate": "Corta las verduras en trozos similares si hace falta. Mézclalas con {qty:aceite} y sal. Precalienta Air Fryer a 180 °C. Extiende en una sola capa sin amontonar.",
+              "advanced": "Distribuye verduras mixtas en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "temperatureC": 180
           },
@@ -9454,8 +10222,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "cook",
             "text": {
               "beginner": "Cocina 15 min a 180 °C; agita o voltea a los 7–8 min. Están listas cuando estén doradas en bordes y tiernas al pinchar. Sirve al momento.",
-              "intermediate": "15 min a 180 °C con volteo a mitad; doradas y tiernas.",
-              "advanced": "15 min @ 180 °C; volteo; dorado y tierno."
+              "intermediate": "Cocina 15 min a 180 °C; agita o voltea a los 7–8 min. Están listas cuando estén doradas en bordes y tiernas al pinchar. Sirve al momento.",
+              "advanced": "Distribuye verduras mixtas en una sola capa en la cestilla y cocina en Air Fryer a la temperatura indicada, volteando a mitad, hasta dorado y hecho por dentro."
             },
             "timerSeconds": 900,
             "timerLabel": "Air Fryer",
@@ -9478,8 +10246,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Corta las verduras en trozos similares si hace falta. Mézclalas con {qty:aceite} y sal. Precalienta Horno a 200 °C. Extiende en una sola capa sin amontonar.",
-              "intermediate": "Verduras con aceite y sal; capa única; 200 °C.",
-              "advanced": "Capa única, aceite y sal; 200 °C."
+              "intermediate": "Corta las verduras en trozos similares si hace falta. Mézclalas con {qty:aceite} y sal. Precalienta Horno a 200 °C. Extiende en una sola capa sin amontonar.",
+              "advanced": "Hornea verduras mixtas a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "temperatureC": 200
           },
@@ -9488,8 +10256,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "cook",
             "text": {
               "beginner": "Cocina 25 min a 200 °C; da la vuelta a mitad. Están listas cuando estén doradas en bordes y tiernas al pinchar. Sirve al momento.",
-              "intermediate": "25 min a 200 °C con volteo a mitad; doradas y tiernas.",
-              "advanced": "25 min @ 200 °C; volteo; dorado y tierno."
+              "intermediate": "Cocina 25 min a 200 °C; da la vuelta a mitad. Están listas cuando estén doradas en bordes y tiernas al pinchar. Sirve al momento.",
+              "advanced": "Hornea verduras mixtas a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "timerSeconds": 1500,
             "timerLabel": "Horno",
@@ -9511,8 +10279,8 @@ export const RECIPE_CATALOG: Recipe[] = [
             "phaseId": "prep",
             "text": {
               "beginner": "Trocea las verduras si hace falta. Ten aceite y sal.",
-              "intermediate": "Verduras troceadas; aceite listo.",
-              "advanced": "Verduras troceadas y listas."
+              "intermediate": "Corta las verduras, úntalas con aceite y sal, y tenlas listas.",
+              "advanced": "Corta y sazona las verduras con aceite y sal."
             }
           },
           {
@@ -9521,7 +10289,7 @@ export const RECIPE_CATALOG: Recipe[] = [
             "text": {
               "beginner": "Sartén con aceite a fuego medio-alto: saltea 10–12 min removiendo hasta doradas y tiernas. Sala y sirve.",
               "intermediate": "Saltea 10–12 min a fuego medio-alto hasta tiernas.",
-              "advanced": "Saltear 10–12 min al punto."
+              "advanced": "Sartén con aceite a fuego medio-alto: saltea 10–12 min removiendo hasta doradas y tiernas. Sala y sirve."
             },
             "heatLevel": "medio-alto",
             "termIds": [
@@ -9572,8 +10340,8 @@ export const RECIPE_CATALOG: Recipe[] = [
       "cena"
     ],
     "steps": [
-      "Unta pollo congelado con aceite y sal.",
-      "Air Fryer 180 °C ~22 min con volteo a mitad hasta 74 °C internos."
+      "Unta el pollo congelado con aceite y sal.",
+      "Cocina en Air Fryer a 180 °C ~22 min con volteo a mitad."
     ],
     "methods": [
       {
@@ -9585,25 +10353,25 @@ export const RECIPE_CATALOG: Recipe[] = [
         "steps": [
           {
             "id": "prep",
+            "phaseId": "prep",
             "text": {
-              "beginner": "Unta pollo congelado con aceite y sal.",
-              "intermediate": "Unta pollo congelado con aceite y sal.",
-              "advanced": "Unta pollo congelado con aceite y sal."
-            },
-            "phaseId": "prep"
+              "beginner": "Saca el pollo congelado del envase. Úntalo ligeramente con aceite y sal (aunque esté congelado). Ten lista la cestilla del Air Fryer.",
+              "intermediate": "Unta el pollo congelado con aceite y sal y prepara la cestilla del Air Fryer.",
+              "advanced": "Unta el pollo congelado con aceite y sal y déjalo listo para la cestilla."
+            }
           },
           {
             "id": "cook",
-            "text": {
-              "beginner": "180 °C unos 22 min; voltea a mitad; comprueba centro 74 °C o jugos claros sin rosado.",
-              "intermediate": "Air Fryer 180 °C ~22 min con volteo a mitad hasta 74 °C internos.",
-              "advanced": "180 °C, 22 min, volteo a mitad; 74 °C internos."
-            },
+            "phaseId": "cook",
             "timerSeconds": 1320,
-            "timerLabel": "Pollo congelado",
+            "timerLabel": "Air Fryer",
             "temperatureC": 180,
-            "similarKey": "pollo_congelado+airfryer+180C",
-            "phaseId": "cook"
+            "similarKey": "pollo-congelado+airfryer+180C",
+            "text": {
+              "beginner": "Si tu Air Fryer lo recomienda, precalienta a 180 °C unos 3 minutos. Coloca el pollo en una sola capa en la cestilla (sin amontonar). Cocina unos 22 minutos a 180 °C; a mitad de tiempo, dale la vuelta o agita. Está listo cuando esté bien caliente por dentro y dorado por fuera (abre el trozo más grueso: sin zonas frías ni rosadas).",
+              "intermediate": "Cocina el pollo en Air Fryer a 180 °C unos 22 minutos en una sola capa, volteando a mitad, hasta dorado y cocinado por dentro.",
+              "advanced": "Cocina el pollo en Air Fryer a 180 °C unos 22 minutos en capa única, con volteo a mitad, hasta dorado y punto seguro por dentro."
+            }
           }
         ],
         "temperature": "180 °C",
@@ -9664,18 +10432,18 @@ export const RECIPE_CATALOG: Recipe[] = [
           {
             "id": "prep",
             "text": {
-              "beginner": "Pimientos enteros en bandeja con aceite.",
-              "intermediate": "Pimientos enteros en bandeja con aceite.",
-              "advanced": "Pimientos enteros en bandeja con aceite."
+              "beginner": "Lava los pimientos. Úntalos ligeramente con aceite y colócalos enteros en una bandeja de horno.",
+              "intermediate": "Unta los pimientos con aceite y colócalos enteros en la bandeja del horno.",
+              "advanced": "Unta los pimientos con aceite y dispónlos enteros en la bandeja."
             },
             "phaseId": "prep"
           },
           {
             "id": "roast",
             "text": {
-              "beginner": "200 °C 25 min volteando; piel arrugada y carne tierna.",
-              "intermediate": "200 °C 25 min volteando; piel arrugada y carne tierna.",
-              "advanced": "200 °C 25 min volteando; piel arrugada y carne tierna."
+              "beginner": "Hornea a 200 °C unos 25 minutos, volteando a mitad. Están listos cuando la piel esté arrugada y la carne tierna.",
+              "intermediate": "Hornea a 200 °C unos 25 minutos, volteando a mitad, hasta piel arrugada y carne tierna.",
+              "advanced": "Hornea pimiento a la temperatura indicada, volteando a mitad si procede, hasta el punto de cocción."
             },
             "timerSeconds": 1500,
             "timerLabel": "Pimientos",

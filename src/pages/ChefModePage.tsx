@@ -184,16 +184,6 @@ export function ChefModePage() {
     });
   }
 
-  function openBrowse() {
-    setMode(null);
-    writeParams({
-      view: 'all',
-      q: queryInput.trim() || null,
-      diff: null,
-      role: null,
-    });
-  }
-
   function onSearchSubmit(e: FormEvent) {
     e.preventDefault();
     commitSearch(queryInput);
@@ -210,11 +200,10 @@ export function ChefModePage() {
       commitSearch(queryInput);
     }, 280);
     return () => window.clearTimeout(t);
-    // commitSearch is stable enough via closure; debounce on input only
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryInput, surface]);
 
-  function renderSearchForm(opts: { showAllLink: boolean }) {
+  function renderSearchForm() {
     return (
       <form className="pepper-search" onSubmit={onSearchSubmit} role="search">
         <label className="pepper-search__label" htmlFor="pepper-search-input">
@@ -242,15 +231,6 @@ export function ChefModePage() {
             </button>
           ) : null}
         </div>
-        {opts.showAllLink ? (
-          <button
-            type="button"
-            className="pepper-search__all"
-            onClick={openBrowse}
-          >
-            Ver todas las recetas
-          </button>
-        ) : null}
       </form>
     );
   }
@@ -294,7 +274,7 @@ export function ChefModePage() {
           </div>
 
           <div className="pepper-search-wrap">
-            {renderSearchForm({ showAllLink: true })}
+            {renderSearchForm()}
           </div>
         </section>
       </div>
@@ -317,12 +297,12 @@ export function ChefModePage() {
           <div className="pepper-results-head">
             <img
               src={meta.pepperSrc}
-              alt=""
+              alt="Pepper"
               className="pepper-results-head__img"
-              width={56}
-              height={56}
+              width={132}
+              height={132}
             />
-            <div>
+            <div className="pepper-results-head__text">
               <h1>{meta.title}</h1>
               <p className="subtitle">{meta.message}</p>
             </div>
@@ -393,7 +373,7 @@ export function ChefModePage() {
       </header>
 
       <div className="pepper-search-wrap pepper-search-wrap--results">
-        {renderSearchForm({ showAllLink: surface === 'search' })}
+        {renderSearchForm()}
         {surface === 'browse' && (
           <div className="pepper-filters" aria-label="Filtros">
             <div className="pepper-filters__row">

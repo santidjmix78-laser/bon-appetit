@@ -100,10 +100,14 @@ export const MEAL_TYPE_OPTIONS: {
   emoji: string;
 }[] = [
   { id: 'desayuno', label: 'Desayuno', emoji: '🌅' },
+  { id: 'almuerzo', label: 'Almuerzo', emoji: '🥖' },
   { id: 'comida', label: 'Comida', emoji: '🍽️' },
   { id: 'merienda', label: 'Merienda', emoji: '🍎' },
   { id: 'cena', label: 'Cena', emoji: '🌙' },
 ];
+
+/** Orden canónico de comidas del día (registro e historial). */
+export const ALL_MEAL_TYPES: MealType[] = MEAL_TYPE_OPTIONS.map((m) => m.id);
 
 export function mealTypeLabel(type: MealType): string {
   return MEAL_TYPE_OPTIONS.find((m) => m.id === type)?.label ?? type;

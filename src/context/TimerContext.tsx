@@ -45,7 +45,8 @@ interface TimerContextValue {
 
 const TimerContext = createContext<TimerContextValue | null>(null);
 const STORAGE_KEY = 'bon-appetit-timers-v1';
-const FINISHED_KEEP_MS = 8000;
+/** Tiempo visible tras llegar a cero para reconocer la alarma. */
+const FINISHED_KEEP_MS = 15000;
 
 function loadTimers(): ActiveTimer[] {
   try {
@@ -67,13 +68,17 @@ function saveTimers(timers: ActiveTimer[]) {
 }
 
 function notifyDone(label: string) {
+  // Vibración más clara en dispositivos compatibles (PWA en primer plano).
   try {
     if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-      navigator.vibrate?.([200, 100, 200]);
+      navigator.vibrate?.([280, 120, 280, 120, 400]);
     }
   } catch {
     /* ignore */
   }
+
+  // Alarma audible local (Web Audio). No requiere notificaciones push.
+  // Limitación PWA: si el SO suspende la pestaña/app, el sonido puede no sonar.
   try {
     const Ctx =
       window.AudioContext ||
@@ -81,20 +86,46 @@ function notifyDone(label: string) {
         .webkitAudioContext;
     if (!Ctx) return;
     const ctx = new Ctx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.frequency.value = 880;
-    gain.gain.value = 0.08;
-    osc.start();
+    const playBeep = (freq: number, startAt: number, dur: number) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'square';
+      osc.frequency.value = freq;
+      const t0 = ctx.currentTime + startAt;
+      gain.gain.setValueAtTime(0.0001, t0);
+      gain.gain.exponentialRampToValueAtTime(0.14, t0 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      osc.start(t0);
+      osc.stop(t0 + dur + 0.02);
+    };
+    playBeep(880, 0, 0.22);
+    playBeep(988, 0.28, 0.22);
+    playBeep(1175, 0.56, 0.35);
     setTimeout(() => {
-      osc.stop();
-      ctx.close();
-    }, 400);
+      void ctx.close();
+    }, 1200);
   } catch {
     /* ignore */
   }
+
+  // Notificación local opcional (solo si el permiso ya está concedido).
+  try {
+    if (
+      typeof Notification !== 'undefined' &&
+      Notification.permission === 'granted'
+    ) {
+      new Notification('Bon Appetit', {
+        body: `⏱ Temporizador listo: ${label}`,
+        tag: `timer-done-${label}`,
+        silent: false,
+      });
+    }
+  } catch {
+    /* ignore */
+  }
+
   console.info(`[Bon Appetit] Temporizador listo: ${label}`);
 }
 

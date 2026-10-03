@@ -32,7 +32,12 @@ export type DishRole =
  */
 export type CookingLevel = 'beginner' | 'intermediate' | 'advanced';
 
-export type MealType = 'desayuno' | 'comida' | 'merienda' | 'cena';
+export type MealType =
+  | 'desayuno'
+  | 'almuerzo'
+  | 'comida'
+  | 'merienda'
+  | 'cena';
 
 export type Feeling = 'good' | 'ok' | 'bad';
 

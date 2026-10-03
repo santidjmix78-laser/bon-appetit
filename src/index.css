@@ -45,6 +45,54 @@ html[data-theme='light'] {
   color-scheme: light;
 }
 
+/* Splash de arranque (solo al cargar la app). */
+.app-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: max(1.25rem, env(safe-area-inset-top, 0px))
+    max(1.25rem, env(safe-area-inset-right, 0px))
+    max(1.25rem, env(safe-area-inset-bottom, 0px))
+    max(1.25rem, env(safe-area-inset-left, 0px));
+  background:
+    radial-gradient(900px 520px at 50% 28%, rgba(184, 224, 106, 0.12), transparent 58%),
+    radial-gradient(700px 420px at 80% 90%, rgba(90, 140, 100, 0.14), transparent 55%),
+    #0f1410;
+  opacity: 1;
+  transition: opacity 0.42s ease;
+  pointer-events: none;
+}
+
+.app-splash--out {
+  opacity: 0;
+}
+
+.app-splash__logo {
+  display: block;
+  width: min(72vw, 420px);
+  max-width: 420px;
+  max-height: min(62vh, 420px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.45));
+}
+
+@media (min-width: 768px) {
+  .app-splash__logo {
+    width: min(38vw, 460px);
+    max-width: 460px;
+    max-height: min(58vh, 460px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-splash {
+    transition: none;
+  }
+}
+
 *,
 *::before,
 *::after {
@@ -703,6 +751,86 @@ ul {
   gap: 0.4rem;
 }
 
+.week-date-nav {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding: 0.15rem 0 0.75rem;
+  margin-bottom: 0.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.week-date-chip {
+  flex: 1 0 auto;
+  min-width: 3.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.45rem 0.35rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  cursor: pointer;
+  position: relative;
+}
+
+.week-date-chip.is-active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, var(--bg-card));
+  font-weight: 700;
+}
+
+.week-date-chip.is-future {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.week-date-chip__day {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.week-date-chip__num {
+  font-size: 0.88rem;
+}
+
+.week-date-chip__dot {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: var(--accent);
+  margin-top: 0.1rem;
+}
+
+.week-day__today {
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.week-day--summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+
+.week-list--compact {
+  margin-top: 0.75rem;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin: 0.65rem 0 0.35rem;
+}
+
 .week-day__date {
   margin-left: 0.5rem;
   color: var(--text-muted);
@@ -1135,17 +1263,51 @@ ul {
   text-align: center;
 }
 
+/* Header vertical de submodos Pepper (siempre columna, especialmente móvil). */
 .pepper-results-head {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  text-align: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.25rem 0 0.55rem;
 }
 
 .pepper-results-head__img {
-  width: 56px;
-  height: 56px;
+  width: min(132px, 38vw);
+  height: auto;
   object-fit: contain;
   flex-shrink: 0;
+  margin: 0 auto;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.28));
+}
+
+.pepper-results-head__text {
+  min-width: 0;
+  width: 100%;
+}
+
+.pepper-results-head__text h1 {
+  margin: 0;
+  font-size: clamp(1.25rem, 5vw, 1.55rem);
+}
+
+.pepper-results-head__text .subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.98rem;
+  color: var(--text-muted);
+}
+
+.page--chef .page-header--with-back {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+}
+
+.page--chef .page-header--with-back .back-link {
+  align-self: flex-start;
 }
 
 .pepper-badge {
@@ -1447,8 +1609,22 @@ ul {
 }
 
 .active-timers__item.is-done {
-  border-color: var(--ok, #3d9a5f);
-  color: var(--ok, #3d9a5f);
+  border-color: var(--accent);
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 22%, var(--bg-card));
+  font-weight: 700;
+  animation: timer-done-pulse 1s ease-in-out 3;
+}
+
+@keyframes timer-done-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
 }
 
 .active-timers__text {
